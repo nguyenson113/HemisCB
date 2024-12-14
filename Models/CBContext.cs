@@ -3466,9 +3466,6 @@ public partial class CBContext : DbContext
             entity.Property(e => e.IdNganhDungTenGiangDay).ValueGeneratedNever();
             entity.Property(e => e.NgayBatDau).HasColumnType("datetime");
             entity.Property(e => e.NgayKetThuc).HasColumnType("datetime");
-            entity.Property(e => e.TenCanBo)
-                .HasMaxLength(100)
-                .IsFixedLength();
             entity.Property(e => e.TenNganhGiangDay)
                 .HasMaxLength(100)
                 .IsFixedLength();
