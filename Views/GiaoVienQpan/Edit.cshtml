@@ -1,0 +1,189 @@
+﻿@model HemisCB.Models.TbGiaoVienQpan
+
+@{
+    ViewData["Title"] = "Cập nhật hồ sơ";
+}
+
+
+@section Heads {
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width:device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pridi:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Định dạng cho tiêu đề h1 */
+        h1 {
+            font-family: "Pridi", serif;
+            font-weight: 700;
+            font-style: normal;
+            text-align: center; /*Chỉnh giữa cho nội dung*/
+            color: orange; /*Màu chữ đổ màu cam */
+        }
+
+        /* Định dạng cho tiêu đề h3 */
+        h3 {
+            font-family: "Pridi", serif;
+            font-weight: 700;
+            font-style: normal;
+            text-align: center; /*Căn giữa cho nội dung */
+        }
+
+        /* Định dạng cho lớp row*/
+        .row {
+            background-color: WHITE; /*Màu nền */
+            justify-content: center; /*Nội dung ở giưã */
+            align-items: center; /*Căn chỉnh nằm giữa*/
+            padding: 20px;
+            font-family: "Pridi", serif;
+            font-weight: 700;
+            font-style: normal; /*In đậm chữ */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6); /*Chỉnh đổ bóng hiệu ứng cho lớp row */
+            border-radius: 25px; /*Bo viền cho lớp row */
+        }
+
+        /* Định dạng chuyển màu khi nhấn nút Trở về */
+        .button_a_back:hover {
+            background-color: grey; /*Màu nền nút là màu xám khi di chuyển chuột vào */
+            color: white; /*Màu chữ nút là màu trắng  khi di chuyển chuột vào */
+        }
+
+        /* Định dạng chuyển màu khi nhấn nút Cập nhật */
+        .button_a_update:hover {
+            background-color: orange; /*Màu nền nút là màu cam khi di chuyển chuột vào */
+            color: white; /*Màu chữ nút là màu trắng  khi di chuyển chuột vào */
+        }
+
+
+        /* Định dạng cho nút bấm*/
+        .button_a_back, .button_a_update {
+            border-style: solid; /*Định dạng nét liền cho nút bấm */
+            border-width: 1px; /*Định dạng độ to nhỏ viền nút bấm */
+            text-align: center; /*Định dạng văn bản nhập ở giữa*/
+            padding: 10px 30px; /*Căn chỉnh lề cho văn bản trong nút bấm */
+            font-size: 15px; /*Định dạng cỡ chữ */
+            text-decoration: none; /*Định dạng không trang trí cho chữ đặc biệt là chữ có gắn link*/
+            border-radius: 35px; /*Định dạng bo viền table */
+            width: 50%;
+            color: black; /*Định dạng màu chữ*/
+            font-weight: bold; /*Định dạng in đậm chữ*/
+            margin: 2px; /* Khoảng cách giữa các nút */
+            background-color: white; /*Màu nền của nút*/
+        }
+
+        /* Định dạng cho khối back*/
+        .back {
+            width: 100%; /*Căn chỉnh độ rộng khối*/
+            display: flex; /*Làm nổi khối*/
+            justify-content: center; /* Canh giữa các nút trong div */
+            align-items: center; /*Căn chỉnh khối nằm chính giữa*/
+        }
+
+        /* Định dạng cho body*/
+        body {
+            background-color: rgba(255, 173, 96,0.6);
+        }
+    </style>
+}
+
+<body>
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="IdGiaoVienQpan" />
+        <div class="row">
+            <h1> <i class="fa fa-pencil"></i> CẬP NHẬT HỒ SƠ</h1>
+            <p style="text-align: center;">
+                <img src="https://upload.wikimedia.org/wikipedia/vi/8/85/Logo_hoc_vien_ANND.png" alt="Học viện An ninh nhân dân">
+            </p>
+
+            <h3>
+                Cập nhật hồ sơ </p>
+            </h3>
+            <hr />
+            <div class="row">
+                
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="IdCanBo" class="control-label"></label>
+                        <select asp-for="IdCanBo" class="form-control" asp-items="ViewBag.IdCanBo"></select>
+                        <span asp-validation-for="IdCanBo" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="NamBatDauBietPhai" class="control-label"></label>
+                        <input asp-for="NamBatDauBietPhai" class="form-control" />
+                        <span asp-validation-for="NamBatDauBietPhai" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="SoNamBietPhai" class="control-label"></label>
+                        <input asp-for="SoNamBietPhai" class="form-control" />
+                        <span asp-validation-for="SoNamBietPhai" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="IdLoaiGiangVienQp" class="control-label"></label>
+                        <select asp-for="IdLoaiGiangVienQp" class="form-control" asp-items="ViewBag.IdLoaiGiangVienQp"></select>
+                        <span asp-validation-for="IdLoaiGiangVienQp" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="DaoTaoGdqpan" class="control-label"></label>
+                        <input asp-for="DaoTaoGdqpan" class="form-control" />
+                        <span asp-validation-for="DaoTaoGdqpan" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="IdQuanHam" class="control-label"></label>
+                        <select asp-for="IdQuanHam" class="form-control" asp-items="ViewBag.IdQuanHam"></select>
+                        <span asp-validation-for="IdQuanHam" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="SoTruongCongTac" class="control-label"></label>
+                        <input asp-for="SoTruongCongTac" class="form-control" />
+                        <span asp-validation-for="SoTruongCongTac" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <br />
+                <div class="back">
+                    <input type="hidden" asp-for="IdGiaoVienQpan" />
+                    <input type="submit" value=" CẬP NHẬT HỒ SƠ " class="button_a_update" />
+                </div> 
+
+                <div class="back">
+                    <a class="button_a_back" asp-action="Index"><i class="fa fa-home"></i>TRỞ VỀ</a>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </form>
+
+
+</body>
+
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+    }
+}
+

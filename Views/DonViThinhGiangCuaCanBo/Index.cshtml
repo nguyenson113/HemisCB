@@ -1,0 +1,332 @@
+﻿@model IEnumerable<HemisCB.Models.TbDonViThinhGiangCuaCanBo>
+
+@using Newtonsoft.Json
+@{
+
+
+
+    ViewData["Title"] = "Đơn vị thỉnh giảng của cán bộ ";
+
+
+
+    /*Thay đổi trong Index:
+     *
+    1. CSS cho trang Index
+
+    2. Cài đặt DataTable mở thêm các chức năng Search, Sort, Xuất file PDF, Xuất File Excel, Sao chép dữ liệu
+
+    3. Hiển thị dữ liệu của các trường nhập là SelectList
+
+    */
+}
+
+@section Heads {
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width:device-width, initial-scale=1" />
+
+    <link href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.1.7/r-3.0.3/datatables.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pridi:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-image: url(https://upload.wikimedia.org/wikipedia/vi/8/85/Logo_hoc_vien_ANND.png); /*ẢNh nền */
+            background-position: center; /*Chỉnh ảnh nằm giữa */
+            background-repeat: no-repeat; /*Không lặp lại nền*/
+            background-color: rgba(230,241,216,0.8); /*Chỉnh màu nền */
+        }
+
+        .background-image {
+            opacity: 0.6; /*Làm mờ ảnh*/
+        }
+        /*Định dạng cho Table */
+        table {
+            width: 100%; /*Căn chỉnh bảng hiển thị 100% với màn hình hiển thị*/
+            border-collapse: collapse; /*Thu gọn viền cho table*/
+            margin-top: 20px; /*Căn chỉnh lề trên */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.85); /*hiệu ứng đổ bóng cho bảng */
+        }
+
+            /*Định dạng cho table, tiêu đề table, nội dung các bản ghi hiển thị trong table */
+            table th, table td {
+                padding: 12px; /*Khoảng trống cho nội dung*/
+                text-align: center; /*Căn giữa cho nội dung*/
+                border-bottom: 5px solid #ddd; /*Căn chỉnh đường viền, kiểu viền*/
+                font-family: "Pridi", serif; /*Phông chữ*/
+                font-weight: 600; /*Độ dày chữ*/
+                font-style: normal; /*Kiểu chữ */
+            }
+
+            /*Định dạng chung cho table và tiêu đề của table*/
+            table th {
+                background-color: rgba(200,226,177,0.85); /*Màu nền*/
+                color: black; /*Màu chữ*/
+                font-size: 16px; /*Cỡ chữ */
+                font-family: "Pridi", serif; /*Phông chữ*/
+                font-weight: 600; /*Độ dày chữ*/
+                font-style: normal; /*Kiểu chữ */
+            }
+
+        /*Định dạng khối nổi lên khi di chuyển chuột vào*/
+        .value:hover {
+            background-color: rgba(200,226,177,0.85); /*Chỉnh màu cho nền khi nổi lên trùng với màu nền */
+            transform: scale(1.1); /*Chỉnh trường thông tin nổi lên trước và to hơn so với khi chưa chạm vào*/
+            transition: transform 1s ease; /*Thời gian chuyển cảnh là 1s */
+        }
+
+        /*Định dạng nút sửa + xóa*/
+        /* NÚT CẬP NHẬT, XÓA ,THÊM VÀ NÚT CHỨC NĂNG MƠR RỘNG */
+        .button_a_edit, .button_a_del, .button_a_add, .button_a_function {
+            border-style: solid; /*định dạng kiểu viền của nút  */
+            font-family: "Pridi", serif; /*Phông chữ */
+            font-weight: 600; /*Độ dày của chữ*/
+            font-style: normal; /*Kiểu chữ*/
+            border-width: 0.5px; /*định dạng độ rộng của đuường viền nút */
+            font-size: 14px; /* định dạng cỡ chữ */
+            display: inline-block; /*kiểu hiển thị */
+            justify-content: center; /*Căn giữa nút theo chiều ngang*/
+            align-items: center; /*Căn giữa nút theo chiều dọc*/
+            padding: 5px 15px; /*căn chỉnh lề của nút*/
+            text-decoration: none; /* trang trí nội dung của nút nếu mà không có thì cứ mỗi khi đưa chuột vào thì link sẽ hiện lên màu xanh dương */
+            color: black; /*màu chữ */
+            border-radius: 5px; /*bo tròn của đường viền nút */
+            text-align: center; /*chỉnh chữ ở giữa nút */
+            transition: transform 0.3s ease, background-color 0.3s ease; /* Hiệu ứng chuyển màu khi di chuột */
+            margin: 2px; /* Khoảng cách giữa các nút */
+        }
+
+
+
+        /* màu mặc định của 2 nút trùng màu khi hover vào dòng */
+        .button_a_edit, .button_a_del {
+            background-color: #D3D3D3; /* Trùng màu bảng */
+        }
+
+            /* Khi di chuột vào nút "SỬA" */
+            .button_a_edit:hover {
+                background-color: orange; /* nền màu cam khi di chuyển chuột vào nút */
+                color: white; /*khi di chuyển chuột vào nút thì nền chuyển cam và chữ hiển thị màu trắng */
+            }
+
+            /* Khi di chuột vào nút "XÓA" */
+            .button_a_del:hover {
+                background-color: red; /* nền màu đỏ khi di chuyển chuột vào nút */
+                color: white; /*khi di chuyển chuột vào nút thì nền chuyển đỏ và chữ hiển thị màu trắng */
+            }
+
+        /* Khi di chuột vào nút "+ THEM MOI HO SO" */
+        .button_a_add:hover {
+            background-color: forestgreen; /*Chuyển màu sang màu xanh lá khi di chuyển chuột vào*/
+            color: white; /*Chuyển màu chữ sang trắng */
+        }
+
+        /* Khi di chuột vào nút "Mở rộng chức năng" */
+        .button_a_function:hover {
+            background-color: forestgreen; /*Chuyển màu sang màu xanh lá khi di chuyển chuột vào*/
+            color: white; /*Chuyển màu chữ sang trắng */
+        }
+
+        /* Đặt kiểu bố cục cho khối chứa các nút */
+        .edit_del, .add_button {
+            width: 100%; /*Độ rộng với màn hình 100%*/
+            display: flex; /*Kiểu hiển thị nổi */
+            justify-content: center; /* Canh giữa các nút trong div theo chiều ngang  */
+            align-items: center; /* Canh giữa các nút trong div theo chiều dọc  */
+        }
+
+        /*Căn giữa cho khối contain*/
+        .contain {
+            margin-bottom: 100px;
+        }
+
+        /*Định dạng tiêu đề h1*/
+        h1 {
+            font-family: "Pridi", serif; /*Phông chữ */
+            font-weight: 700; /*Độ dày chữ*/
+            font-style: normal; /*Kiểu chữ*/
+            text-align: center; /*Căn giữa nội dung*/
+            color: forestgreen;
+        }
+    </style>
+}
+
+
+<h1><b>HỒ SƠ ĐƠN VỊ THỈNH GIẢNG CỦA CÁN BỘ (@Model.Count())</b> </h1>
+
+
+<div class="container">
+
+    <div class="add_button">
+        <a class="button_a_add" asp-action="Create"> <i class="fa fa-plus"></i> THÊM MỚI HỒ SƠ  </a>
+    </div>
+    <body>
+        <table class="table" id="ntable" style="background-color:rgba(200,226,177,0.85);">
+            <thead>
+                <tr style="background-color: olivedrab">
+                    <th>
+                        ĐƠN VỊ THỈNH GIẢNG
+                    </th>
+                    <th>
+                        SỐ HỢP ĐỒNG
+                    </th>
+                    <th>
+                        THỜI GIAN BẮT ĐẦU
+                    </th>
+                    <th>
+                        THỜI GIAN KẾT THÚC
+                    </th>
+                    <th>
+                        THÂM NIÊN GIẢNG DẠY
+                    </th>
+                    <th>
+                        ID CÁN BỘ
+                    </th>
+                    <th>CHỨC NĂNG </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+
+
+
+                {
+
+                    // 2 dòng này dùng khi kích chuột vào hàng dữ liệu trong bảng sẽ chuyển sang trang Detail
+
+                    // Kết hợp với hiệu ứng hover khi di chuột
+                    <tr class="value" style="text-align: center; cursor: pointer;"
+                        onclick="window.location.href='@Url.Action("Details", new { id = item.IdDonViThinhGiangCuaCanBo })'">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DonViThinhGiang)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoHopDongThinhGiang)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThoiGianBatDau)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThoiGianKetThuc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThamNienGiangDay)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdCanBoNavigation.IdCanBo)
+                        </td>
+
+                     
+                        <td>
+                            <div class="edit_del">
+
+                                <a class="button_a_edit" asp-action="Edit" asp-route-id="@item.IdDonViThinhGiangCuaCanBo"><i class="fa fa-pencil"></i>CẬP NHẬT</a>
+
+                                <a class="button_a_del" asp-action="Delete" asp-route-id="@item.IdDonViThinhGiangCuaCanBo"><i class="fa fa-trash"></i>XÓA</a>
+
+
+                            </div>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+
+        <div>
+            <canvas id="myChart"></canvas>
+        </div>
+
+
+    </body>
+</div>
+
+@section Scripts {
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-colvis-3.1.2/b-html5-3.1.2/b-print-3.1.2/datatables.min.js"></script>
+    <script>
+
+        new DataTable('#ntable', { //CHỉ có thể áp dụngk cho table
+            //Datatable trong datatable.net. https://datatables.net
+            searching: true, // Mặc định là true, set false nếu muốn tắt chức năng search
+            processing: true,
+            info: true, // Bật thông tin về có bao nhiêu hồ sơ trong table
+            language: {
+                processing: "Bạn vui lòng đợi! Đang tải dữ liệu...",
+                search: "Tìm kiếm: ",
+                lengthMenu: "Số lượng hồ sơ trên 1 trang: _MENU_ ",
+                info: "Hiển thị _TOTAL_ trên _MAX_ hồ sơ", // Thể hiện số bản ghi hồ sơ đang có ở trang hiện tại trên tổng số bản ghi hồ sơ
+                infoEmpty: "Hiển thị 0 bản ghi trong 0 tổng cộng _MAX_ hồ sơ ", //Khi không có dữ liệu sẽ hiển thị tin nhắn
+                infoFiltered: "(Hệ thống không thể tìm thấy hồ sơ nào trong _MAX_ hồ sơ)", //Khi không có dữ liệu sẽ hiển thị tin nhắn liền sau ìnoEmpty
+
+                loadingRecords: "", //Tin nhắn khi đang tải dữ liệu hồ sơ
+                zeroRecords: "Không có hồ sơ nhiệm vụ khớp với tìm kiếm của bạn!!!",  //Thông báo nếu không có hồ sơ khớp với tìm kiếm
+                emptyTable: "Chưa có hồ sơ! Hãy nhập hồ sơ để quản lí!!!",//THông báo ra nếu chưa có hồ sơ đã nhập
+                paginate: {
+                    first: "Trang đầu",
+                    previous: "Trang trước",
+                    next: "Trang sau",
+                    last: "Trang cuối"
+                },
+                aria: {
+                    sortAscending: ": Message khi đang sắp xếp theo column",
+                    sortDescending: ": Message khi đang sắp xếp theo column",
+                }
+            },
+
+
+            layout: { // Bổ sung chức năng trong Datatable như xuất file Excel, file pdf, copy dữ luêyj , In danh sách
+                topStart: {
+                    buttons: [
+                        {
+                            className: 'button_a_function', //Định dạng CSS cho Collection
+                            extend: 'collection', //Để sổ ra các chức năng khác
+                            text: 'Mở rộng chức năng',
+                            buttons: ['print', 'excel', 'pdf', 'copy'],
+                        }
+                    ]
+                }
+            }
+
+            /*className: 'button_a_function',
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ],
+            layout: {
+                className: 'button_a_function',
+                topStart: 'buttons'
+            }*/
+
+            /*topStart: {
+                className:'button_a_function',
+                buttons: [
+                    'csv',
+                    'excel',
+                    'pdf',
+                    {
+                        extend: 'spacer',
+                        style: 'bar'
+                    },
+                    'copy',
+                    'print'
+                ]
+            }
+        }*/
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+
+}

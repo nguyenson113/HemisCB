@@ -1,0 +1,479 @@
+﻿@model HemisCB.Models.TbCanBo
+
+@{
+    ViewData["Title"] = "Xóa hồ sơ";
+}
+
+
+@section Heads {
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width:device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pridi:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: "Pridi", serif; /*Phông chữ */
+            font-style: normal; /*Kiểu chữ*/
+            background-color: rgba(255, 0, 0,0.5); /*Màu nền*/
+        }
+
+        /*ĐỊnh dạng chung cho khối container*/
+        .container {
+            background-color: WHITE; /*Màu nền */
+            justify-content: center; /*Căn chỉnh ở giưã theo chiều ngang */
+            align-items: center; /*Căn chỉnh nằm giữa theo chiều dọc*/
+            padding: 20px; /*Tạo khoảng trông xung quanh phần tử*/
+            font-weight: 500; /*In đậm chữ */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6); /*Chỉnh đổ bóng hiệu ứng cho lớp row */
+            border-radius: 25px; /*Bo viền cho lớp row */
+        }
+
+        /*Định dạng cho tiêu đề h1 */
+        h1 {
+            text-align: center; /*Căn giữa cho nội dung*/
+            font-family: "Pridi", serif; /*Phông chữ */
+            font-weight: 700; /*Độ dày của chữ */
+            font-style: normal; /*Kiểu chữ*/
+            color: red; /*Màu chữ*/
+        }
+
+        /*Định dạng cho tiêu đề h3 */
+        h3 {
+            text-align: center; /*Căn giữa cho nội dung*/
+            font-family: "Pridi", serif; /*Phông chữ */
+            font-weight: 700; /*Độ dày của chữ */
+            font-style: normal; /*Kiểu chữ*/
+        }
+
+        /*Định dạng cho ảnh logo*/
+        img {
+            max-width: 150px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /*Định dạng cho khối info-block*/
+        .info-block {
+            margin-bottom: 25px;
+        }
+
+        /*Định dạng cho khối row*/
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        dt, dd {
+            flex: 1;
+            text-align: left;
+            margin: 0;
+        }
+
+        dt {
+            font-weight: bold;
+        }
+
+        dd {
+            text-align: right;
+        }
+
+        @@media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            dd {
+                text-align: center;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            dt, dd {
+                flex: none;
+            }
+        }
+
+        /*Định dạng chuyển màu khi nhấn nút Xác nhận xóa */
+        .button_a_delete:hover {
+            background-color: red;
+            color: white;
+        }
+
+        /*Định dạng chuyển màu khi nhấn nút Trở về */
+        .button_a_back:hover {
+            background-color: grey;
+            color: white;
+        }
+
+
+        /* Định dạng cho nút bấm xóa và trở về*/
+        .button_a_back, .button_a_delete {
+            border-style: solid;
+            border-width: 1px;
+            text-align: center;
+            padding: 10px 30px;
+            font-size: 15px;
+            text-decoration: none;
+            border-radius: 35px;
+            color: black;
+            font-weight: bold;
+            width: 50%;
+            background-color: white;
+        }
+
+        /*Định dạng cho khối back*/
+        .back {
+            width: 100%;
+            display: flex;
+            justify-content: center; /* Canh giữa các nút trong div */
+            align-items: center;
+        }
+    </style>
+}
+
+<h1> <i class="fa fa-trash"></i> XÓA HỒ SƠ </h1>
+
+
+<div class="container">
+    <p style="text-align: center;">
+        <img src="https://upload.wikimedia.org/wikipedia/vi/8/85/Logo_hoc_vien_ANND.png" alt="Học viện An ninh nhân dân">
+    </p>
+
+
+    <h3>
+        Bạn có muốn xóa hồ sơ nhiệm vụ?
+    </h3>
+
+    <hr />
+
+
+    <!-- Các mục chi tiết thông tin hồ sơ -->
+    <dl class="row" style="color:purple; font-weight:bold">
+        <dt>
+            @Html.DisplayNameFor(model => model.MaCanBo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MaCanBo)
+        </dd>
+    </dl>
+
+    <dl class="row" style="color:purple; font-weight:bold">
+        <dt>
+            @Html.DisplayNameFor(model => model.SoBaoHiemXaHoi)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SoBaoHiemXaHoi)
+        </dd>
+    </dl>
+
+    <!-- Thông tin bổ sung của hồ sơ, gồm cơ quan chủ trì, người chủ trì, thời gian và kinh phí -->
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.DienThoai)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DienThoai)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayChuyenTrangThai)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NgayChuyenTrangThai)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.SoQuyetDinhHuuNghiViec)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SoQuyetDinhHuuNghiViec)
+        </dd>
+    </dl>
+
+    <dl class="row" style="color:purple; font-weight:bold">
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayQuyetDinhHuuNghiViec)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NgayQuyetDinhHuuNghiViec)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.HinhThucChuyenDen)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HinhThucChuyenDen)
+        </dd>
+    </dl>
+
+    <!-- Đánh giá và sản phẩm của nhiệm vụ -->
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayKetThucTamNghi)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NgayKetThucTamNghi)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.CoQuanCongTac)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CoQuanCongTac)
+        </dd>
+    </dl>
+
+    <dl class="row" style="color:purple; font-weight:bold">
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayTuyenDung)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NgayTuyenDung)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.ChungChiSuPhamGiangVien)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ChungChiSuPhamGiangVien)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.LaCongChuc)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LaCongChuc)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.LaVienChuc)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LaVienChuc)
+        </dd>
+    </dl>
+
+    <dl class="row" style="color:purple; font-weight:bold">
+        <dt>
+            @Html.DisplayNameFor(model => model.CoDayMonMacLeNin)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CoDayMonMacLeNin)
+        </dd>
+    </dl>
+
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.CoDayMonSuPham)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CoDayMonSuPham)
+        </dd>
+    </dl>
+
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.SoGiayPhepLaoDong)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SoGiayPhepLaoDong)
+        </dd>
+    </dl>
+
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.ThamNienCongTac)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ThamNienCongTac)
+        </dd>
+    </dl>
+
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.TenDoanhNghiep)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TenDoanhNghiep)
+        </dd>
+    </dl>
+
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.LaVienChuc)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LaVienChuc)
+        </dd>
+    </dl>
+
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.NamKinhNghiemGiangDay)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NamKinhNghiemGiangDay)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.GiangVienDapUngTt03)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GiangVienDapUngTt03)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdChucDanhGiangVienNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdChucDanhGiangVienNavigation.ChucDanhGiangVien)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdChucDanhNgheNghiepNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdChucDanhNgheNghiepNavigation.ChucDanhNgheNghiep)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdChucDanhNghienCuuKhoaHocNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdChucDanhNghienCuuKhoaHocNavigation.ChucDanhNghienCuuKhoaHoc)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdChucVuCongTacNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdChucVuCongTacNavigation.ChucVu)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdHuyenNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdHuyenNavigation.TenHuyen)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdNgachNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdNgachNavigation.Ngach)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdNguoiNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdNguoiNavigation.IdNguoi)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdTinhNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdTinhNavigation.TenTinh)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdTrangThaiLamViecNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdTrangThaiLamViecNavigation.TrangThaiCanBo)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdXaNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdXaNavigation.TenXa)
+        </dd>
+    </dl>
+
+
+
+
+
+    <form asp-action="Delete">
+        <div class="back">
+            <input type="hidden" asp-for="IdCanBo" />
+            <input type="submit" value="Xác nhận xóa" class="button_a_delete" />
+        </div> <br />
+
+        <div class="back">
+            <a class="button_a_back" asp-action="Index"><i class="fa fa-home"></i>Trở về</a>
+        </div><br />
+        <br />
+    </form>
+
+</div>
+<br />
+<br />

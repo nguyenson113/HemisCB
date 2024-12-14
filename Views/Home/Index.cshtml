@@ -2,7 +2,159 @@
     ViewData["Title"] = "Home Page";
 }
 
+<style>
+    body {
+        background-color: #f4f4f4; /* Màu nền nhẹ nhàng */
+        font-family: Arial, sans-serif; /* Font chữ đẹp */
+    }
+
+    .editdiv {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px; /* Khoảng cách giữa các div */
+        justify-content: center;
+        padding: 20px; /* Khoảng đệm cho toàn bộ khu vực */
+    }
+
+        .editdiv a {
+            text-decoration: none; /* Không gạch chân */
+            color: white; /* Màu chữ */
+            display: block; /* Đảm bảo toàn bộ div có thể nhấp vào */
+            height: 100%; /* Chiếm toàn bộ chiều cao của div */
+            transition: color 0.3s; /* Hiệu ứng chuyển màu chữ */
+        }
+
+    div.ner {
+        margin: 20px;
+        border-radius: 10px;
+        float: left;
+        width: 20vw;
+        background-color: deepskyblue;
+        justify-content: space-around;
+        transition: transform 0.3s, box-shadow 0.3s; /* Hiệu ứng chuyển động */
+        border: 1px solid #ccc; /* Đường viền giữa các thẻ */
+    }
+
+        div.ner:hover {
+            box-shadow: 1px 1px 6px rgb(143, 131, 131);
+            transform: translate(0px, -6px);
+        }
+
+        div.ner img {
+            border-radius: 10px;
+            width: 100%;
+            height: auto;
+        }
+
+    div.textunimg {
+        padding: 15px;
+        text-align: center;
+    }
+
+    h1 {
+        color: #333; /* Màu chữ tiêu đề */
+    }
+</style>
+
+
+
+<h1 style="display: flex; justify-content: center;">Thông tin cán bộ</h1>
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h2>Nhóm 1_B9D55 </h2>
+</div>
+
+<div class="editdiv">
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="CSDL người">
+        <div class="textunimg"><a href="/Nguoi/Index">CSDL người</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca2.jpg" alt="Cán bộ">
+        <div class="textunimg"><a href="/CanBo/Index">Cán bộ</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca3.jpg" alt="Hướng dẫn sinh viên">
+        <div class="textunimg"><a href="/CanBoHuongDanThanhCongSinhVien">Cán bộ hướng dẫn sinh viên</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca4.jpg" alt="Quá trình công tác">
+        <div class="textunimg"><a href="/QuaTrinhCongTacCuaCanBo">Quá trình công tác của cán bộ</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca5.jpg" alt="Quá trình đào tạo">
+        <div class="textunimg"><a href="/QuaTrinhDaoTaoCuaCanBo">Quá trình đào tạo của cán bộ</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca6.jpg" alt="Trình độ tiếng dân tộc">
+        <div class="textunimg"><a href="/TrinhDoTiengDanToc">Trình độ tiếng dân tộc</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="Chức danh khoa học">
+        <div class="textunimg"><a href="/ChucDanhKhoaHocCuaCanBo">Chức danh khoa học của cán bộ</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="Đánh giá xếp loại">
+        <div class="textunimg"><a href="/DanhGiaXepLoaiCanBo">Đánh giá xếp loại cán bộ</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="Danh hiệu thi đua">
+        <div class="textunimg"><a href="/DanhHieuThiDuaGiaiThuongKhenThuongCanBo">Danh hiệu thi đua và khen thưởng</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="Diễn biến lương">
+        <div class="textunimg"><a href="/DienBienLuong">Diễn biến lương</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="Đối tượng chính sách">
+        <div class="textunimg"><a href="/DoiTuongChinhSachCanBo">Đối tượng chính sách cán bộ</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="Đơn vị công tác">
+        <div class="textunimg"><a href="/DonViCongTacCuaCanBo">Đơn vị công tác của cán bộ</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="Đơn vị thỉnh giảng">
+        <div class="textunimg"><a href="/DonViThinhGiangCuaCanBo">Đơn vị thỉnh giảng của cán bộ</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="Giảng viên ngoại ngữ">
+        <div class="textunimg"><a href="/GiangVienNn">Giảng viên ngoại ngữ</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="Giáo viên quốc phòng">
+        <div class="textunimg"><a href="/GiaoVienQpan">Giáo viên quốc phòng an ninh</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="Hợp đồng">
+        <div class="textunimg"><a href="/HopDong">Hợp đồng</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="Hợp đồng thỉnh giảng">
+        <div class="textunimg"><a href="/HopDongThinhGiang">Hợp đồng thỉnh giảng</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="Khóa bồi dưỡng">
+        <div class="textunimg"><a href="/KhoaBoiDuongTapHuanThamGiaCuaCanBo">Khóa bồi dưỡng, tập huấn của cán bộ</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="Kỷ luật cán bộ">
+        <div class="textunimg"><a href="/KyLuatCanBo">Kỷ luật cán bộ</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="Lĩnh vực nghiên cứu">
+        <div class="textunimg"><a href="/LinhVucNghienCuuCuaCanBo">Lĩnh vực nghiên cứu của cán bộ</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="Ngành dùng tên giảng dạy">
+        <div class="textunimg"><a href="/NganhDungTenGiangDay">Ngành dùng tên giảng dạy</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="Ngành giảng dạy">
+        <div class="textunimg"><a href="/NganhGiangDayCuaCanBo">Ngành giảng dạy của cán bộ</a></div>
+    </div>
+    <div class="ner">
+        <img src="/images/ca1.jpg" alt="Phụ cấp">
+        <div class="textunimg"><a href="/PhuCap">Phụ cấp</a></div>
+    </div>
 </div>

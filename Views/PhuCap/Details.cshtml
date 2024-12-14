@@ -1,0 +1,433 @@
+﻿@model HemisCB.Models.TbPhuCap
+
+@{
+    ViewData["Title"] = "Chi Tiết Phụ Cấp"; // Tiêu đề của trang
+}
+
+<style>
+    /* Định dạng cho body */
+    body {
+        background-color: #f8f9fa; /* Màu nền cho body */
+        background-image: url('/images/ca7.jpg'); /* Hình nền */
+        background-size: cover; /* Hình nền phủ kín */
+        background-attachment: fixed; /* Hình nền cố định khi cuộn */
+    }
+    /* Vùng header với nền trắng và chiều rộng bằng chiều rộng của bảng */
+    .header-container {
+        background-color: white;
+        padding: 20px;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        width: 1000px;
+    }
+    /* Định dạng cho chữ đậm */
+    .font-weight-bold {
+        font-weight: 600;
+    }
+
+    /* Định dạng cho thẻ dt (định nghĩa) */
+    dt {
+        background-color: #e9ecef; /* Màu nền cho dt */
+        padding: 6px; /* Giảm padding */
+        border-radius: 5px; /* Bo góc cho dt */
+        margin-bottom: 3px; /* Giảm khoảng cách dưới */
+    }
+
+    /* Định dạng cho thẻ dd (giá trị) */
+    dd {
+        padding: 2px 0; /* Giảm padding */
+        border-bottom: 1px solid #dee2e6; /* Đường kẻ dưới mỗi mục */
+    }
+
+    /* Định dạng cho container chính */
+    .container {
+        margin-top: 20px; /* Giảm khoảng cách trên cho container */
+    }
+
+    /* Định dạng cho các khối có đổ bóng */
+    .shadow-sm {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Giảm độ đổ bóng */
+    }
+
+    /* Định dạng cho màu nền của các khối */
+    .bg-light {
+        background-color: #ffffff; /* Màu nền cho container */
+    }
+
+    /* Định dạng cho tiêu đề h1 */
+    h1 {
+        margin-top: 10px; /* Giảm khoảng cách trên cho tiêu đề */
+        color: #343a40; /* Màu chữ tiêu đề */
+    }
+
+    /* Định dạng cho đường kẻ */
+    hr {
+        margin: 10px 0; /* Giảm khoảng cách cho đường kẻ */
+    }
+
+    /* Định dạng cho hàng trong lưới */
+    .row {
+        margin-bottom: 10px; /* Giảm khoảng cách giữa các hàng */
+    }
+
+    /* Định dạng cho các khối bo góc */
+    .rounded {
+        border-radius: 5px; /* Bo góc cho các khối */
+    }
+
+    /* Định dạng cho tiêu đề của từng khối */
+    .header {
+        background-color: #007bff; /* Màu nền cho tiêu đề */
+        color: white; /* Màu chữ tiêu đề */
+        padding: 6px; /* Giảm padding */
+        border-radius: 5px 5px 0 0; /* Bo góc trên cho tiêu đề */
+    }
+
+    /* Định dạng cho phần nút */
+    .text-center {
+        margin-top: 15px; /* Khoảng cách trên cho nút */
+    }
+</style>
+
+<h1 class="text-center mt-4 header-container">THÔNG TIN </h1> <!-- Tiêu đề chính của trang -->
+
+<div class="container mt-3">
+    <!-- Container chính chứa thông tin -->
+    <div class="row justify-content-center">
+        <!-- Hàng đầu tiên chứa thông tin cán bộ -->
+        <div class="col-md-6 shadow-sm p-2 bg-light rounded">
+            <!-- Khối thông tin cán bộ -->
+            <div class="header">
+                <h4 class="text-center">Thông Tin Cán Bộ</h4> <!-- Tiêu đề khối thông tin cán bộ -->
+            </div>
+            <hr />
+            <dl class="row">
+                <!-- Danh sách định nghĩa cho thông tin cán bộ -->
+                <dt>Cán bộ</dt>
+                <dd>@Html.DisplayFor(model => model.IdCanBo)</dd>
+                <dt>Phụ cấp</dt>
+                <dd>@Html.DisplayFor(model => model.IdPhuCap)</dd>
+            </dl>
+        </div>
+
+        <div class="col-md-6 shadow-sm p-2 bg-light rounded">
+            <!-- Khối thông tin phụ cấp -->
+            <div class="header">
+                <h4 class="text-center">Thông Tin Phụ Cấp</h4> <!-- Tiêu đề khối thông tin phụ cấp -->
+            </div>
+            <hr />
+            <dl class="row">
+                <!-- Danh sách định nghĩa cho thông tin phụ cấp -->
+                <dt>Phụ cấp thu hút nghề</dt>
+                <dd>@Html.DisplayFor(model => model.PhuCapThuHutNghe)</dd>
+                <dt>Phụ cấp thâm niên  (%)</dt>
+                <dd>@Html.DisplayFor(model => model.PhuCapThamNien)</dd>
+                <dt>Phụ cấp ưu đãi nghề  (%)</dt>
+                <dd>@Html.DisplayFor(model => model.PhuCapUuDaiNghe)</dd>
+                <dt>Phụ cấp chức vụ  (%)</dt>
+                <dd>@Html.DisplayFor(model => model.PhuCapChucVu)</dd>
+                <dt>Phụ cấp độc hại</dt>
+                <dd>@Html.DisplayFor(model => model.PhuCapDocHai)</dd>
+                <dt>Phụ cấp khác</dt>
+                <dd>@Html.DisplayFor(model => model.PhuCapKhac)</dd>
+                <dt>Phần trăm vượt khung (%)</dt>
+                <dd>@Html.DisplayFor(model => model.PhanTramVuotKhung)</dd>
+                <dt>Ngày tháng năm hưởng lương</dt>
+                <dd>@Html.DisplayFor(model => model.NgayThangNamHuongLuong)</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <!-- Hàng thứ hai chứa thông tin lương và hệ số lương -->
+        <div class="col-md-6 shadow-sm p-2 bg-light rounded">
+            <!-- Khối thông tin lương -->
+            <div class="header">
+                <h4 class="text-center">Thông Tin Lương</h4> <!-- Tiêu đề khối thông tin lương -->
+            </div>
+            <hr />
+            <dl class="row">
+                <!-- Danh sách định nghĩa cho thông tin lương -->
+                <dt>Bậc lương</dt>
+                <dd>@Html.DisplayFor(model => model.IdBacLuongNavigation.BacLuong)</dd>
+            </dl>
+        </div>
+
+        <div class="col-md-6 shadow-sm p-2 bg-light rounded">
+            <!-- Khối thông tin hệ số lương -->
+            <div class="header">
+                <h4 class="text-center">Thông Tin Hệ Số Lương</h4> <!-- Tiêu đề khối thông tin hệ số lương -->
+            </div>
+            <hr />
+            <dl class="row">
+                <!-- Danh sách định nghĩa cho thông tin hệ số lương -->
+                <dt class="col-sm-4 font-weight-bold">Cán bộ</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.IdCanBoNavigation.IdCanBo)</dd>
+                <dt class="col-sm-4 font-weight-bold">Hệ số lương</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.IdHeSoLuongNavigation.HeSoLuong)</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="text-center mt-3">
+        <!-- Phần chứa các nút điều hướng -->
+        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.IdPhuCap">Sửa</a> <!-- Nút sửa -->
+        <a class="btn btn-secondary" asp-action="Index">Quay lại danh sách</a> <!-- Nút quay lại danh sách -->
+    </div>
+</div>
+@{
+    // Thiết lập tiêu đề trang
+    ViewData["Title"] = "Thông tin chi tiết";
+}
+
+@section Heads {
+    <!-- Khai báo meta và liên kết các tệp CSS, JavaScript -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Thư viện Font Awesome cho các icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+
+    <!-- Font chữ Pridi từ Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pridi:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS tuỳ chỉnh -->
+    <style>
+        /* Định dạng chung cho body */
+        body {
+            font-family: "Pridi", serif; /* Sử dụng font Pridi từ Google Fonts */
+            font-weight: 500; /* Độ dày của chữ ở mức trung bình */
+            font-style: normal; /* Kiểu chữ thông thường */
+            background-color: rgb(212, 190, 228); /* Màu nền trang là màu tím nhạt */
+        }
+
+        /* Định dạng cho khối container chính */
+        .container {
+            justify-content: center; /* Căn giữa nội dung */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            padding: 20px; /* Thêm khoảng cách bên trong */
+            font-weight: bold; /* In đậm toàn bộ văn bản */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6); /* Đổ bóng nhẹ cho khối container */
+            border-radius: 25px; /* Bo góc container */
+            background-color: white; /* Màu nền của khối container là màu trắng */
+        }
+
+        /* Định dạng cho tiêu đề h1 */
+        h1 {
+            text-align: center; /* Căn giữa tiêu đề */
+            color: purple; /* Màu chữ tiêu đề là tím đậm */
+            font-family: "Pridi", serif; /* Sử dụng font Pridi */
+            font-weight: 700; /* Độ dày chữ lớn nhất */
+            margin-bottom: 30px; /* Khoảng cách phía dưới tiêu đề */
+        }
+
+        /* Định dạng cho tiêu đề h3 */
+        h3 {
+            text-align: center; /* Căn giữa nội dung h3 */
+            font-family: "Pridi", serif; /* Font chữ Pridi */
+            font-weight: 700; /* In đậm chữ h3 */
+        }
+
+        /* Định dạng cho ảnh logo */
+        img {
+            max-width: 150px; /* Kích thước tối đa của ảnh là 150px */
+            display: block; /* Đặt ảnh thành block */
+            margin: auto; /* Căn giữa ảnh */
+        }
+
+        /* Định dạng cho khối row, sử dụng để trình bày thông tin */
+        .row {
+            display: flex; /* Sắp xếp các phần tử theo chiều ngang */
+            justify-content: space-between; /* Căn đều các mục */
+            margin-bottom: 15px; /* Khoảng cách phía dưới giữa các dòng */
+            background-color: white; /* Màu nền */
+        }
+
+        /* Định dạng cho các mục dt và dd trong danh sách định nghĩa */
+        dt, dd {
+            flex: 1; /* Căn chia đều không gian */
+            text-align: left; /* Canh trái */
+            margin: 0;
+        }
+
+        dt {
+            font-weight: bold; /* In đậm cho tiêu đề */
+        }
+
+        dd {
+            text-align: right; /* Canh phải cho phần giải thích */
+        }
+
+        /* Định dạng cho khối responsive khi độ rộng màn hình nhỏ hơn 768px */
+        @@media (max-width: 768px) {
+            .row {
+                flex-direction: column; /* Chuyển thành sắp xếp theo chiều dọc */
+                text-align: center; /* Căn giữa */
+            }
+
+            dd {
+                text-align: center; /* Canh giữa cho phần giải thích */
+            }
+
+            .btn {
+                width: 100%; /* Nút chiếm 100% chiều rộng */
+            }
+
+            .container {
+                padding: 10px; /* Giảm khoảng cách padding */
+            }
+
+            dt, dd {
+                flex: none; /* Loại bỏ căn chia đều không gian */
+            }
+        }
+
+        /* Định dạng hiệu ứng hover cho các nút */
+        .button_a_back:hover {
+            background-color: grey; /* Màu xám khi rê chuột vào */
+            color: white; /* Chữ màu trắng khi rê chuột */
+        }
+
+        .button_a_edit:hover {
+            background-color: orange; /* Màu cam cho nút cập nhật khi rê chuột */
+            color: white;
+        }
+
+        .button_a_del:hover {
+            background-color: red; /* Màu đỏ cho nút xoá khi rê chuột */
+            color: white;
+        }
+
+        /* Định dạng chung cho các nút */
+        .button_a_back, .button_a_edit, .button_a_del {
+            border-style: solid; /* Đường viền dạng nét liền */
+            border-width: 1px; /* Độ dày viền 1px */
+            text-align: center; /* Căn giữa văn bản trong nút */
+            padding: 10px 30px; /* Khoảng cách trong nút */
+            font-size: 15px; /* Kích cỡ chữ */
+            text-decoration: none; /* Bỏ gạch chân */
+            border-radius: 35px; /* Bo góc cho nút */
+            color: black; /* Màu chữ đen */
+            font-weight: bold; /* In đậm chữ */
+            width: 50%; /* Chiều rộng nút bằng 50% */
+        }
+
+        /* Định dạng cho khối chứa các nút */
+        .back {
+            width: 100%; /* Chiếm toàn bộ chiều rộng */
+            display: flex; /* Sắp xếp các nút theo chiều ngang */
+            justify-content: center; /* Căn giữa các nút trong div */
+            align-items: center; /* Căn giữa các nút theo chiều dọc */
+        }
+    </style>
+}
+
+<body>
+
+    <!-- Tiêu đề chính của trang -->
+    <h1> <i class="fa fa-info-circle"></i> CHI TIẾT HỒ SƠ </h1>
+
+    <!-- Khối chứa thông tin hồ sơ -->
+    <div class="container">
+
+        <!-- Logo của học viện -->
+        <p style="text-align: center;">
+            <img src="https://upload.wikimedia.org/wikipedia/vi/8/85/Logo_hoc_vien_ANND.png" alt="Học viện An ninh nhân dân">
+        </p>
+
+        <!-- Tiêu đề hồ sơ với mã nhiệm vụ -->
+        <h3>
+            Thông tin hồ sơ</p>
+        </h3>
+
+        <hr />
+
+        <!-- Các mục chi tiết thông tin hồ sơ -->
+        <dl class="row" style="color:purple; font-weight:bold">
+            <dt>Cán bộ:</dt>
+            <dd> @Html.DisplayFor(model => model.IdCanBoNavigation)</dd>
+        </dl>
+
+        <dl class="row" style="color:purple; font-weight:bold">
+            <dt>Phụ cấp:</dt>
+            <dd>@Html.DisplayFor(model => model.IdPhuCap)</dd>
+        </dl>
+
+        <!-- Thông tin bổ sung của hồ sơ, gồm cơ quan chủ trì, người chủ trì, thời gian và kinh phí -->
+        <dl class="row">
+            <dt>Phụ cấp thu hút nghề: </dt>
+            <dd>@Html.DisplayFor(model => model.PhuCapThuHutNghe)</dd>
+        </dl>
+
+        <dl class="row">
+            <dt>Phụ cấp thâm niên: </dt>
+            <dd>@Html.DisplayFor(model => model.PhuCapThamNien)</dd>
+        </dl>
+
+        <dl class="row">
+            <dt>Phụ cấp ưu đãi nghề:</dt>
+            <dd>@Html.DisplayFor(model => model.PhuCapUuDaiNghe)</dd>
+        </dl>
+
+        <dl class="row">
+            <dt>Phụ cấp chức vụ:</dt>
+            <dd>@Html.DisplayFor(model => model.PhuCapChucVu)</dd>
+        </dl>
+
+        <dl class="row" style="color:purple; font-weight:bold">
+            <dt>Phụ cấp độc hại:</dt>
+            <dd>@Html.DisplayFor(model => model.PhuCapDocHai)</dd>
+        </dl>
+
+        <dl class="row">
+            <dt>Phụ cấp khác:</dt>
+            <dd>@Html.DisplayFor(model => model.PhuCapKhac)</dd>
+        </dl>
+
+        <!-- Đánh giá và sản phẩm của nhiệm vụ -->
+        <dl class="row">
+            <dt>Phần trăm vượt khung:</dt>
+            <dd>@Html.DisplayFor(model => model.PhanTramVuotKhung)</dd>
+        </dl>
+
+        <dl class="row">
+            <dt>Ngày tháng năm hưởng lương:</dt>
+            <dd>@Html.DisplayFor(model => model.NgayThangNamHuongLuong)</dd>
+        </dl>
+
+        <dl class="row" style="color:purple; font-weight:bold">
+            <dt>Bậc lương:</dt>
+            <dd>@Html.DisplayFor(model => model.IdBacLuongNavigation.BacLuong)</dd>
+        </dl>
+
+        <dl class="row">
+            <dt>Hệ số lương:</dt>
+            <dd>@Html.DisplayFor(model => model.IdHeSoLuongNavigation.HeSoLuong)</dd>
+        </dl>
+
+      
+        <div class="back">
+            <a class="button_a_edit" asp-action="Edit" asp-route-id="@Model?.IdPhuCap"> <i class="fa fa-pencil"> </i>Cập nhật</a>
+        </div><br />
+
+        <div class="back">
+            <a class="button_a_del" asp-action="Delete" asp-route-id="@Model?.IdPhuCap"><i class="fa fa-trash"></i>XÓA</a>
+        </div><br />
+
+        <div class="back">
+            <a class="button_a_back" asp-action="Index"><i class="fa fa-home"></i>Trở về</a>
+        </div>
+        
+
+
+    </div>
+    <br />
+
+</body>
+
+

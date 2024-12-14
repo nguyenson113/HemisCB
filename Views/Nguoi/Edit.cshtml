@@ -1,0 +1,162 @@
+﻿@model HemisCB.Models.TbNguoi
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+@section Heads {
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        a, a:visited, a:hover, a:active {
+            color: inherit;
+            text-decoration: none;
+        }
+        .form-group{
+            width: 48%;
+        }
+        h2 {
+            text-align: center;
+        }
+    </style>
+}
+
+<div class="row justify-content-center p-lg-5">
+    <div class="col-lg-9">
+        <form asp-action="Edit" id="form">
+            <div class="d-flex p-4 flex-wrap justify-content-center shadow-lg gap-2 rounded">
+                <div class="container">
+                    <h2>Chỉnh sửa thông tin</h2>
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="IdNguoi" hidden class="form-control" />
+                <div class="form-group">
+                    <label asp-for="Ho" class="control-label"></label>
+                    <input asp-for="Ho" class="form-control" />
+                    <span asp-validation-for="Ho" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Ten" class="control-label"></label>
+                    <input asp-for="Ten" class="form-control" />
+                    <span asp-validation-for="Ten" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdQuocTich" class="control-label"></label>
+                    <select asp-for="IdQuocTich" hidden="hidden" class="form-control" asp-items="ViewBag.IdQuocTich"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SoCccd" class="control-label"></label>
+                    <input asp-for="SoCccd" class="form-control" />
+                    <span asp-validation-for="SoCccd" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NgayCapCccd" class="control-label"></label>
+                    <input asp-for="NgayCapCccd" class="form-control" />
+                    <span asp-validation-for="NgayCapCccd" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NoiCapCccd" class="control-label"></label>
+                    <input asp-for="NoiCapCccd" class="form-control" />
+                    <span asp-validation-for="NoiCapCccd" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NgaySinh" class="control-label"></label>
+                    <input asp-for="NgaySinh" class="form-control" />
+                    <span asp-validation-for="NgaySinh" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdGioiTinh" class="control-label"></label>
+                    <select asp-for="IdGioiTinh" class="form-control" asp-items="ViewBag.IdGioiTinh"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdDanToc" class="control-label"></label>
+                    <select asp-for="IdDanToc" class="form-control" asp-items="ViewBag.IdDanToc"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdTonGiao" class="control-label"></label>
+                    <select asp-for="IdTonGiao" class="form-control" asp-items="ViewBag.IdTonGiao"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NgayVaoDoan" class="control-label"></label>
+                    <input asp-for="NgayVaoDoan" class="form-control" />
+                    <span asp-validation-for="NgayVaoDoan" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NgayVaoDang" class="control-label"></label>
+                    <input asp-for="NgayVaoDang" class="form-control" />
+                    <span asp-validation-for="NgayVaoDang" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NgayVaoDangChinhThuc" class="control-label"></label>
+                    <input asp-for="NgayVaoDangChinhThuc" class="form-control" />
+                    <span asp-validation-for="NgayVaoDangChinhThuc" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NgayNhapNgu" class="control-label"></label>
+                    <input asp-for="NgayNhapNgu" class="form-control" />
+                    <span asp-validation-for="NgayNhapNgu" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NgayXuatNgu" class="control-label"></label>
+                    <input asp-for="NgayXuatNgu" class="form-control" />
+                    <span asp-validation-for="NgayXuatNgu" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdThuongBinhHang" class="control-label"></label>
+                    <select asp-for="IdThuongBinhHang" class="form-control" asp-items="ViewBag.IdThuongBinhHang"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdGiaDinhChinhSach" class="control-label"></label>
+                    <select asp-for="IdGiaDinhChinhSach" class="form-control" asp-items="ViewBag.IdGiaDinhChinhSach"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdChucDanhKhoaHoc" class="control-label"></label>
+                    <select asp-for="IdChucDanhKhoaHoc" class="form-control" asp-items="ViewBag.IdChucDanhKhoaHoc"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdTrinhDoDaoTao" class="control-label"></label>
+                    <select asp-for="IdTrinhDoDaoTao" class="form-control" asp-items="ViewBag.IdTrinhDoDaoTao"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdChuyenMonDaoTao" class="control-label"></label>
+                    <select asp-for="IdChuyenMonDaoTao" class="form-control" asp-items="ViewBag.IdChuyenMonDaoTao"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdNgoaiNgu" class="control-label"></label>
+                    <select asp-for="IdNgoaiNgu" class="form-control" asp-items="ViewBag.IdNgoaiNgu"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdKhungNangLucNgoaiNguc" class="control-label"></label>
+                    <select asp-for="IdKhungNangLucNgoaiNguc" class="form-control" asp-items="ViewBag.IdKhungNangLucNgoaiNguc"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdTrinhDoLyLuanChinhTri" class="control-label"></label>
+                    <select asp-for="IdTrinhDoLyLuanChinhTri" class="form-control" asp-items="ViewBag.IdTrinhDoLyLuanChinhTri"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdTrinhDoQuanLyNhaNuoc" class="control-label"></label>
+                    <select asp-for="IdTrinhDoQuanLyNhaNuoc" class="form-control" asp-items="ViewBag.IdTrinhDoQuanLyNhaNuoc"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdTrinhDoTinHoc" class="control-label"></label>
+                    <select asp-for="IdTrinhDoTinHoc" class="form-control" asp-items="ViewBag.IdTrinhDoTinHoc"></select>
+                </div>
+                <div class="form-group d-flex justify-content-center" style="width: 90%">
+                    <button class="btn btn-primary" onclick="window.location.href = '@Url.Action("Index")'">Quay lại</button>
+                    <input type="submit" value="Xác nhận" class="btn btn-primary ms-3" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://cdn.jsdelivr.net/gh/kirito99152/search_select@main/search_select.js"></script>
+    @*Tạo tìm kiếm cho select list dùng js library*@
+    <script>
+        var search = new search_select("form");
+        search.run();
+    </script>
+}

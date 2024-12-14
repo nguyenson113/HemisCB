@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 using System.Net.Http.Headers;
-namespace C500Hemis.API
+namespace HemisCB.API
 {
     public class ApiServices
     {
