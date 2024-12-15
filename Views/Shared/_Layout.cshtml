@@ -17,6 +17,9 @@
     <link rel="stylesheet" crossorigin href="./assets/compiled/css/app.css">
     <link rel="stylesheet" crossorigin href="./assets/compiled/css/app-dark.css">
     <link rel="stylesheet" crossorigin href="./assets/compiled/css/iconly.css">
+    @await RenderSectionAsync("Heads", required: false)
+    @await RenderSectionAsync("Styles", required: false)
+    @await RenderSectionAsync("Body", required: false)
 </head>
 
 <body>
@@ -63,210 +66,7 @@
                 </div>
                 <div class="sidebar-menu">
                     <ul class="menu">
-                        <li class="sidebar-title">Menu</li>
-
-                        <li class="sidebar-item active ">
-                            <a href="index.html" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i>
-                                <span>Dashboard</span>
-                            </a>
-
-
-                        </li>
-
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-stack"></i>
-                                <span>Components</span>
-                            </a>
-
-                            <ul class="submenu ">
-
-                                <li class="submenu-item  ">
-                                    <a href="/TbDeAnDuAnChuongTrinhs/Index" class="submenu-link">Accordion</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-alert.html" class="submenu-link">Alert</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-badge.html" class="submenu-link">Badge</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-breadcrumb.html" class="submenu-link">Breadcrumb</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-button.html" class="submenu-link">Button</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-card.html" class="submenu-link">Card</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-carousel.html" class="submenu-link">Carousel</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-collapse.html" class="submenu-link">Collapse</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-dropdown.html" class="submenu-link">Dropdown</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-list-group.html" class="submenu-link">List Group</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-modal.html" class="submenu-link">Modal</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-navs.html" class="submenu-link">Navs</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-pagination.html" class="submenu-link">Pagination</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-placeholder.html" class="submenu-link">Placeholder</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-progress.html" class="submenu-link">Progress</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-spinner.html" class="submenu-link">Spinner</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-toasts.html" class="submenu-link">Toasts</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-tooltip.html" class="submenu-link">Tooltip</a>
-
-                                </li>
-
-                            </ul>
-
-
-                        </li>
-
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-collection-fill"></i>
-                                <span>Extra Components</span>
-                            </a>
-
-                            <ul class="submenu ">
-
-                                <li class="submenu-item  ">
-                                    <a href="extra-component-avatar.html" class="submenu-link">Avatar</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="extra-component-comment.html" class="submenu-link">Comment</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="extra-component-divider.html" class="submenu-link">Divider</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="extra-component-date-picker.html" class="submenu-link">Date Picker</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="extra-component-flag.html" class="submenu-link">Flag</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="extra-component-sweetalert.html" class="submenu-link">Sweet Alert</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="extra-component-toastify.html" class="submenu-link">Toastify</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="extra-component-rating.html" class="submenu-link">Rating</a>
-
-                                </li>
-
-                            </ul>
-
-
-                        </li>
-
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-grid-1x2-fill"></i>
-                                <span>Layouts</span>
-                            </a>
-
-                            <ul class="submenu ">
-
-                                <li class="submenu-item  ">
-                                    <a href="layout-default.html" class="submenu-link">Default Layout</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="layout-vertical-1-column.html" class="submenu-link">1 Column</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="layout-vertical-navbar.html" class="submenu-link">Vertical Navbar</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="layout-rtl.html" class="submenu-link">RTL Layout</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="layout-horizontal.html" class="submenu-link">Horizontal Menu</a>
-
-                                </li>
-
-                            </ul>
-
-
-                        </li>
+                        
 
                         <li class="sidebar-title">Forms &amp; Tables</li>
 
@@ -373,32 +173,131 @@
 
                         </li>
 
-                        <li class="sidebar-item  ">
-                            <a href="table.html" class='sidebar-link'>
-                                <i class="bi bi-grid-1x2-fill"></i>
-                                <span>Table</span>
-                            </a>
-
-
-                        </li>
-
+             
                         <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-file-earmark-spreadsheet-fill"></i>
-                                <span>Datatables</span>
+                                <span>Table</span>
                             </a>
 
                             <ul class="submenu ">
 
                                 <li class="submenu-item  ">
-                                    <a href="table-datatable.html" class="submenu-link">Datatable</a>
+                                    <a href="/Nguoi/Index" class="submenu-link">CSDL Người</a>
 
                                 </li>
 
                                 <li class="submenu-item  ">
-                                    <a href="table-datatable-jquery.html" class="submenu-link">Datatable (jQuery)</a>
+                                    <a href="/CanBo/Index" class="submenu-link">Cán bộ </a>
 
                                 </li>
+
+                                 <li class="submenu-item  ">
+                                    <a href="/CanBoHuongDanThanhCongSinhVien" class="submenu-link">Cán bộ hướng dẫn thành công sinh viên </a>
+
+                                </li>
+
+                                <li class="submenu-item  ">
+                                    <a href="/QuaTrinhCongTacCuaCanBo" class="submenu-link">Quá trình công tác</a>
+
+                                </li>
+
+                                 <li class="submenu-item  ">
+                                    <a href="/QuaTrinhDaoTaoCuaCanBo" class="submenu-link">Quá trình đào tạo</a>
+
+                                </li>
+
+                                <li class="submenu-item  ">
+                                    <a href="/TrinhDoTiengDanToc" class="submenu-link">Trình độ tiếng dân tộc</a>
+
+                                </li>
+
+                                 <li class="submenu-item  ">
+                                    <a href="/ChucDanhKhoaHocCuaCanBo" class="submenu-link">Chức danh khoa học</a>
+
+                                </li>
+
+                                <li class="submenu-item  ">
+                                    <a href="/DanhGiaXepLoaiCanBo" class="submenu-link">Đánh giá xếp loại </a>
+
+                                </li>
+
+                                 <li class="submenu-item  ">
+                                    <a href="/DanhHieuThiDuaGiaiThuongKhenThuongCanBo" class="submenu-link">Danh hiệu thi đua giải thưởng/khen thưởng </a>
+
+                                </li>
+
+                                 <li class="submenu-item  ">
+                                    <a href="/DienBienLuong" class="submenu-link">Diễn biến lương</a>
+
+                                </li>
+
+                                 <li class="submenu-item  ">
+                                    <a href="/DoiTuongChinhSachCanBo" class="submenu-link">Đối tượng chính sách</a>
+
+                                </li>
+
+                                <li class="submenu-item  ">
+                                    <a href="/DonViCongTacCuaCanBo" class="submenu-link">Đơn vị công tác </a>
+
+                                </li>
+
+                                 <li class="submenu-item  ">
+                                    <a href="/DonViThinhGiangCuaCanBo" class="submenu-link">Đơn vị thỉnh giảng </a>
+
+                                </li>
+
+                                <li class="submenu-item  ">
+                                    <a href="/GiangVienNn" class="submenu-link">Giảng viên ngoại ngữ</a>
+
+                                </li>
+
+                                 <li class="submenu-item  ">
+                                    <a href="/GiaoVienQpan" class="submenu-link">Giáo viên Quốc phòng An ninh </a>
+
+                                </li>
+
+                                <li class="submenu-item  ">
+                                    <a href="/HopDong" class="submenu-link">Hợp đồng </a>
+
+                                </li>
+
+                                 <li class="submenu-item  ">
+                                    <a href="/HopDongThinhGiang" class="submenu-link">Hợp đồng thỉnh giảng </a>
+
+                                </li>
+
+                                 <li class="submenu-item  ">
+                                    <a href="/KhoaBoiDuongTapHuanThamGiaCuaCanBo" class="submenu-link">Khóa bồi dưỡng, tập huấn</a>
+
+                                </li>
+
+                                <li class="submenu-item  ">
+                                    <a href="/KyLuatCanBo" class="submenu-link">Kỷ luật cán bộ</a>
+
+                                </li>
+
+                                <li class="submenu-item  ">
+                                    <a href="/LinhVucNghienCuuCuaCanBo" class="submenu-link">Lĩnh vực nghiên cứu</a>
+
+                                </li>
+
+                                 <li class="submenu-item  ">
+                                    <a href="/NganhDungTenGiangDay" class="submenu-link">Ngành dùng tên giảng dạy</a>
+
+                                </li>
+
+                                 <li class="submenu-item  ">
+                                    <a href="/NganhGiangDayCuaCanBo" class="submenu-link">Ngành giảng dạy</a>
+
+                                </li>
+
+                                <li class="submenu-item  ">
+                                    <a href="/PhuCap" class="submenu-link">Phụ cấp </a>
+
+                                </li>
+
+                          
 
                             </ul>
 
