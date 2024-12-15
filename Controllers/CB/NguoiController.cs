@@ -12,111 +12,137 @@ using System.Text;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
+using HemisCB.API;
+using HemisCB.Models.DM;
 
 namespace HemisCB.Controllers.CB
 {
     public class NguoiController : Controller
     {
-        private readonly CBContext _context;
+        private readonly ApiServices ApiServices_;
 
         //Nhận HemisContext truyền từ service
-        public NguoiController(CBContext context)
+        public NguoiController(ApiServices services)
         {
-            _context = context;
+            ApiServices_ = services;
+        }
+
+        //============================TẠO DANH SÁCH LẤY DỮ LIÊU TỪ APIHemis=================================
+        private async Task<List<TbNguoi>> TbNguois()
+        {
+
+            //Tạo danh sách CanBo 
+            List<TbNguoi> tbNguois = await ApiServices_.GetAll<TbNguoi>("/api/Nguoi");
+
+            //Tạo danh sách lấy dữ liệu các biến từ APIHemis 
+            List<DmChucDanhKhoaHoc> dmChucDanhKhoaHocs = await ApiServices_.GetAll<DmChucDanhKhoaHoc>("/api/dm/ChucDanhKhoaHoc");
+            List<DmNganhDaoTao> dmNganhDaoTaos = await ApiServices_.GetAll<DmNganhDaoTao>("/api/dm/NganhDaoTao");
+            List<DmTonGiao> dmTonGiaos = await ApiServices_.GetAll<DmTonGiao>("/api/dm/TonGiao");
+            List<DmDanToc> dmDanTocs = await ApiServices_.GetAll<DmDanToc>("/api/dm/DanToc");
+
+            List<DmHoGiaDinhChinhSach> dmHoGiaDinhChinhSachs = await ApiServices_.GetAll<DmHoGiaDinhChinhSach>("/api/dm/HoGiaDinhChinhSach");
+            List<DmGioiTinh> dmGioiTinhs = await ApiServices_.GetAll<DmGioiTinh>("/api/dm/GioiTinh");
+            List<DmKhungNangLucNgoaiNgu> dmKhungNangLucNgoaiNgus = await ApiServices_.GetAll<DmKhungNangLucNgoaiNgu>("/api/dm/KhungNangLucNgoaiNgu");
+            List<DmNgoaiNgu> dmNgoaiNgus = await ApiServices_.GetAll<DmNgoaiNgu>("/api/dm/NgoaiNgu");
+
+            List<DmQuocTich> dmQuocTichs = await ApiServices_.GetAll<DmQuocTich>("/api/dm/QuocTich");
+            List<DmHangThuongBinh> dmHangThuongBinhs = await ApiServices_.GetAll<DmHangThuongBinh>("/api/dm/HangThuongBinh");
+            List<DmTrinhDoDaoTao> dmTrinhDoDaoTaos = await ApiServices_.GetAll<DmTrinhDoDaoTao>("/api/dm/TrinhDoDaoTao");
+            List<DmTrinhDoLyLuanChinhTri> dmTrinhDoLyLuanChinhTris = await ApiServices_.GetAll<DmTrinhDoLyLuanChinhTri>("/api/dm/TrinhDoLyLuanChinhTri");
+
+            List<DmTrinhDoQuanLyNhaNuoc> dmTrinhDoQuanLyNhaNuocs = await ApiServices_.GetAll<DmTrinhDoQuanLyNhaNuoc>("/api/dm/TrinhDoQuanLyNhaNuoc");
+            List<DmTrinhDoTinHoc> dmTrinhDoTinHocs = await ApiServices_.GetAll<DmTrinhDoTinHoc>("/api/dm/TrinhDoTinHoc");
+           
+
+            tbNguois.ForEach(item => {
+                item.IdChucDanhKhoaHocNavigation = dmChucDanhKhoaHocs.FirstOrDefault(x => x.IdChucDanhKhoaHoc == item.IdChucDanhKhoaHoc);
+                item.IdChuyenMonDaoTaoNavigation = dmNganhDaoTaos.FirstOrDefault(x => x.IdNganhDaoTao == item.IdChuyenMonDaoTao);
+                item.IdTonGiaoNavigation = dmTonGiaos.FirstOrDefault(x => x.IdTonGiao == item.IdTonGiao);
+                item.IdDanTocNavigation = dmDanTocs.FirstOrDefault(x => x.IdDanToc == item.IdDanToc);
+
+                item.IdGiaDinhChinhSachNavigation = dmHoGiaDinhChinhSachs.FirstOrDefault(x => x.IdHoGiaDinhChinhSach == item.IdGiaDinhChinhSach);
+                item.IdGioiTinhNavigation = dmGioiTinhs.FirstOrDefault(x => x.IdGioiTinh == item.IdGioiTinh);
+                item.IdKhungNangLucNgoaiNgucNavigation = dmKhungNangLucNgoaiNgus.FirstOrDefault(x => x.IdKhungNangLucNgoaiNgu == item.IdKhungNangLucNgoaiNguc);
+                item.IdNgoaiNguNavigation = dmNgoaiNgus.FirstOrDefault(x => x.IdNgoaiNgu == item.IdNgoaiNgu);
+
+                item.IdQuocTichNavigation = dmQuocTichs.FirstOrDefault(x => x.IdQuocTich == item.IdQuocTich);
+                item.IdThuongBinhHangNavigation = dmHangThuongBinhs.FirstOrDefault(x => x.IdHangThuongBinh == item.IdThuongBinhHang);
+                item.IdTrinhDoDaoTaoNavigation = dmTrinhDoDaoTaos.FirstOrDefault(x => x.IdTrinhDoDaoTao == item.IdTrinhDoDaoTao);
+                item.IdTrinhDoLyLuanChinhTriNavigation = dmTrinhDoLyLuanChinhTris.FirstOrDefault(x => x.IdTrinhDoLyLuanChinhTri == item.IdTrinhDoLyLuanChinhTri);
+
+                item.IdTrinhDoQuanLyNhaNuocNavigation = dmTrinhDoQuanLyNhaNuocs.FirstOrDefault(x => x.IdTrinhDoQuanLyNhaNuoc == item.IdTrinhDoQuanLyNhaNuoc);
+                item.IdTrinhDoTinHocNavigation = dmTrinhDoTinHocs.FirstOrDefault(x => x.IdTrinhDoTinHoc == item.IdTrinhDoTinHoc);
+            
+               
+            });
+            return tbNguois;
         }
 
         //GET: /Nguoi | /Nguoi/Index
         // Thu thập các dữ liệu cần thiết của table TbNguoi để trả về hiển thị trên trang index
         public async Task<IActionResult> Index()
         {
-            //Bắt lổi
             try
             {
-                List<TbNguoi> content = await
-                    _context.TbNguois
-                    .Include(t => t.IdChucDanhKhoaHocNavigation)
-                    .Include(t => t.IdChuyenMonDaoTaoNavigation)
-                    .Include(t => t.IdTonGiaoNavigation)
-                    .Include(t => t.IdDanTocNavigation)
-                    .Include(t => t.IdGiaDinhChinhSachNavigation)
-                    .Include(t => t.IdGioiTinhNavigation)
-                    .Include(t => t.IdKhungNangLucNgoaiNgucNavigation)
-                    .Include(t => t.IdNgoaiNguNavigation)
-                    .Include(t => t.IdQuocTichNavigation)
-                    .Include(t => t.IdThuongBinhHangNavigation)
-                    .Include(t => t.IdTrinhDoDaoTaoNavigation)
-                    .Include(t => t.IdTrinhDoLyLuanChinhTriNavigation)
-                    .Include(t => t.IdTrinhDoQuanLyNhaNuocNavigation)
-                    .Include(t => t.IdTrinhDoTinHocNavigation)
-                    .ToListAsync();
-                return View(content);
+                List<TbNguoi> getall = await TbNguois();
+                // Lấy data từ các table khác có liên quan (khóa ngoài) để hiển thị trên Index
+                return View(getall);
+                // Bắt lỗi các trường hợp ngoại lệ
             }
             catch (Exception ex)
             {
-                export_message(ex.Message + "\n" + (ex.InnerException == null ? "" : ex.InnerException.ToString()));
                 return BadRequest();
             }
         }
+
 
         //GET: /Nguoi/Details
         // Thu thập thông tin chi tiết của người với Id cụ thể để trả về hiện thị ở Details
         public async Task<IActionResult> Details(int? id)
         {
-            //Bắt lổi
-            try
+            // Kiểm tra nếu id là null
+            if (id == null)
             {
-                if (id == null)
-                {
-                    return NotFound();
-                }
-                //Tìm người cần trả về
-                //Include là tìm các model cần thiết cho model TbNguoi
-                //theo relationship được cài đặt trong HemisContext.cs qua FOREIGN KEY Constraint trong database 
-                var tbNguoi = await _context.TbNguois
-                    .Include(t => t.IdChucDanhKhoaHocNavigation)
-                    .Include(t => t.IdChuyenMonDaoTaoNavigation)
-                    .Include(t => t.IdTonGiaoNavigation)
-                    .Include(t => t.IdDanTocNavigation)
-                    .Include(t => t.IdGiaDinhChinhSachNavigation)
-                    .Include(t => t.IdGioiTinhNavigation)
-                    .Include(t => t.IdKhungNangLucNgoaiNgucNavigation)
-                    .Include(t => t.IdNgoaiNguNavigation)
-                    .Include(t => t.IdQuocTichNavigation)
-                    .Include(t => t.IdThuongBinhHangNavigation)
-                    .Include(t => t.IdTrinhDoDaoTaoNavigation)
-                    .Include(t => t.IdTrinhDoLyLuanChinhTriNavigation)
-                    .Include(t => t.IdTrinhDoQuanLyNhaNuocNavigation)
-                    .Include(t => t.IdTrinhDoTinHocNavigation)
-                    .FirstOrDefaultAsync(m => m.IdNguoi == id);
-                if (tbNguoi == null)
-                {
-                    return NotFound();
-                }
-                //Nếu tồn tại trả về View Details
-                return View(tbNguoi);
+                return NotFound();
             }
-            catch (Exception ex)
+
+            // Tìm quá trình công tác theo id
+            var tbNguois = await TbNguois();
+            var tbNguoi = tbNguois.FirstOrDefault(m => m.IdNguoi == id);
+
+            // Kiểm tra nếu không tìm thấy
+            if (tbNguoi == null)
             {
-                export_message(ex.Message + "\n" + (ex.InnerException == null ? "" : ex.InnerException.ToString()));
-                return BadRequest();
+                return NotFound();
             }
+
+            // Trả về view với thông tin chi tiết
+            return View(tbNguoi);
         }
 
+
         // GET: Nguoi/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            //Bắt lổi
-            try
-            {
-                make_select_list();
-                return View();
-            }
-            catch (Exception ex)
-            {
-                export_message(ex.Message + "\n" + (ex.InnerException == null ? "" : ex.InnerException.ToString()));
-                return BadRequest();
-            }
+            // Tạo danh sách lựa chọn cho IdCanBo, IdChucDanhGiangVien, IdChucVu
+            ViewData["IdChucDanhKhoaHoc"] = new SelectList(await ApiServices_.GetAll<DmChucDanhKhoaHoc>("/api/dm/ChucDanhKhoaHoc"), "IdChucDanhKhoaHoc", "ChucDanhKhoaHoc");
+            ViewData["IdChuyenMonDaoTao"] = new SelectList(await ApiServices_.GetAll<DmNganhDaoTao>("/api/dm/NganhDaoTao"), "IdNganhDaoTao", "NganhDaoTao");
+            ViewData["IdTonGiao"] = new SelectList(await ApiServices_.GetAll<DmTonGiao>("/api/dm/TonGiao"), "IdTonGiao", "TonGiao");
+            ViewData["IdDanToc"] = new SelectList(await ApiServices_.GetAll<DmDanToc>("/api/dm/DanToc"), "IdDanToc", "DanToc");
+            ViewData["IdGiaDinhChinhSach"] = new SelectList(await ApiServices_.GetAll<DmHoGiaDinhChinhSach>("/api/dm/HoGiaDinhChinhSach"), "IdHoGiaDinhChinhSach", "HoGiaDinhChinhSach");
+            ViewData["IdGioiTinh"] = new SelectList(await ApiServices_.GetAll<DmGioiTinh>("/api/dm/GioiTinh"), "IdGioiTinh", "GioiTinh");
+            ViewData["IdKhungNangLucNgoaiNguc"] = new SelectList(await ApiServices_.GetAll<DmKhungNangLucNgoaiNgu>("/api/dm/KhungNangLucNgoaiNgu"), "IdKhungNangLucNgoaiNgu", "TenKhungNangLucNgoaiNgu");
+            ViewData["IdNgoaiNgu"] = new SelectList(await ApiServices_.GetAll<DmNgoaiNgu>("/api/dm/NgoaiNgu"), "IdNgoaiNgu", "NgoaiNgu");
+            ViewData["IdQuocTich"] = new SelectList(await ApiServices_.GetAll<DmQuocTich>("/api/dm/QuocTich"), "IdQuocTich", "TenNuoc");
+            ViewData["IdThuongBinhHang"] = new SelectList(await ApiServices_.GetAll<DmHangThuongBinh>("/api/dm/HangThuongBinh"), "IdHangThuongBinh", "HangThuongBinh");
+            ViewData["IdTrinhDoDaoTao"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoDaoTao>("/api/dm/TrinhDoDaoTao"), "IdTrinhDoDaoTao", "TrinhDoDaoTao");
+            ViewData["IdTrinhDoLyLuanChinhTri"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoLyLuanChinhTri>("/api/dm/TrinhDoLyLuanChinhTri"), "IdTrinhDoLyLuanChinhTri", "TenTrinhDoLyLuanChinhTri");
+            ViewData["IdTrinhDoQuanLyNhaNuoc"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoQuanLyNhaNuoc>("/api/dm/TrinhDoQuanLyNhaNuoc"), "IdTrinhDoQuanLyNhaNuoc", "TrinhDoQuanLyNhaNuoc");
+            ViewData["IdTrinhDoTinHoc"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoTinHoc>("/api/dm/TrinhDoTinHoc"), "IdTrinhDoTinHoc", "TrinhDoTinHoc");
+            return View();
         }
+
+
 
         //POST: /Nguoi/Create
         [HttpPost]//Để action Khớp với POST HTTP 
@@ -126,16 +152,27 @@ namespace HemisCB.Controllers.CB
             try
             {
                 //Kiểm tra xem đã tồn tại IdNguoi chưa nếu tồn tại thêm ModelError cho IdNguoi\
-                check_null(tbNguoi);
-                if (TbNguoiExists(tbNguoi.IdNguoi)) ModelState.AddModelError("IdNguoi", "Đã tồn tại!");
+              
+                if (await TbNguoiExists(tbNguoi.IdNguoi)) ModelState.AddModelError("IdNguoi", "ID này đã tồn tại!");
                 if (ModelState.IsValid)
                 {
-                    //Không trùng thì INSERT vào TABLE qua method ADD của HemisContext (EF)
-                    _context.Add(tbNguoi);
-                    await _context.SaveChangesAsync();
+                    await ApiServices_.Create<TbCanBo>("/api/Nguoi", tbNguoi);
                     return RedirectToAction(nameof(Index));
                 }
-                make_select_list(tbNguoi);
+                ViewData["IdChucDanhKhoaHoc"] = new SelectList(await ApiServices_.GetAll<DmChucDanhKhoaHoc>("/api/dm/ChucDanhKhoaHoc"), "IdChucDanhKhoaHoc", "ChucDanhKhoaHoc", tbNguoi.IdChucDanhKhoaHoc);
+                ViewData["IdChuyenMonDaoTao"] = new SelectList(await ApiServices_.GetAll<DmNganhDaoTao>("/api/dm/NganhDaoTao"), "IdNganhDaoTao", "NganhDaoTao", tbNguoi.IdChuyenMonDaoTao);
+                ViewData["IdTonGiao"] = new SelectList(await ApiServices_.GetAll<DmTonGiao>("/api/dm/TonGiao"), "IdTonGiao", "TonGiao", tbNguoi.IdDanToc);
+                ViewData["IdDanToc"] = new SelectList(await ApiServices_.GetAll<DmDanToc>("/api/dm/DanToc"), "IdDanToc", "DanToc", tbNguoi.IdDanToc);
+                ViewData["IdGiaDinhChinhSach"] = new SelectList(await ApiServices_.GetAll<DmHoGiaDinhChinhSach>("/api/dm/HoGiaDinhChinhSach"), "IdHoGiaDinhChinhSach", "HoGiaDinhChinhSach", tbNguoi.IdGiaDinhChinhSach);
+                ViewData["IdGioiTinh"] = new SelectList(await ApiServices_.GetAll<DmGioiTinh>("/api/dm/GioiTinh"), "IdGioiTinh", "GioiTinh", tbNguoi.IdGioiTinh);
+                ViewData["IdKhungNangLucNgoaiNguc"] = new SelectList(await ApiServices_.GetAll<DmKhungNangLucNgoaiNgu>("/api/dm/KhungNangLucNgoaiNgu"), "IdKhungNangLucNgoaiNgu", "TenKhungNangLucNgoaiNgu", tbNguoi.IdKhungNangLucNgoaiNguc);
+                ViewData["IdNgoaiNgu"] = new SelectList(await ApiServices_.GetAll<DmNgoaiNgu>("/api/dm/NgoaiNgu"), "IdNgoaiNgu", "NgoaiNgu", tbNguoi.IdNgoaiNgu);
+                ViewData["IdQuocTich"] = new SelectList(await ApiServices_.GetAll<DmQuocTich>("/api/dm/QuocTich"), "IdQuocTich", "TenNuoc", tbNguoi.IdQuocTich);
+                ViewData["IdThuongBinhHang"] = new SelectList(await ApiServices_.GetAll<DmHangThuongBinh>("/api/dm/HangThuongBinh"), "IdHangThuongBinh", "HangThuongBinh", tbNguoi.IdThuongBinhHang);
+                ViewData["IdTrinhDoDaoTao"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoDaoTao>("/api/dm/TrinhDoDaoTao"), "IdTrinhDoDaoTao", "TrinhDoDaoTao", tbNguoi.IdTrinhDoDaoTao);
+                ViewData["IdTrinhDoLyLuanChinhTri"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoLyLuanChinhTri>("/api/dm/TrinhDoLyLuanChinhTri"), "IdTrinhDoLyLuanChinhTri", "TenTrinhDoLyLuanChinhTri", tbNguoi.IdTrinhDoLyLuanChinhTri);
+                ViewData["IdTrinhDoQuanLyNhaNuoc"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoQuanLyNhaNuoc>("/api/dm/TrinhDoQuanLyNhaNuoc"), "IdTrinhDoQuanLyNhaNuoc", "TrinhDoQuanLyNhaNuoc", tbNguoi.IdTrinhDoQuanLyNhaNuoc);
+                ViewData["IdTrinhDoTinHoc"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoTinHoc>("/api/dm/TrinhDoTinHoc"), "IdTrinhDoTinHoc", "TrinhDoTinHoc", tbNguoi.IdTrinhDoTinHoc);
                 return View(tbNguoi);
             }
             catch (Exception ex)
@@ -156,13 +193,26 @@ namespace HemisCB.Controllers.CB
                     return NotFound();
                 }
                 //Tìm model người khớp với Id được cung cấp
-                var tbNguoi = await _context.TbNguois.FindAsync(id);
+                var tbNguoi = await ApiServices_.GetId<TbNguoi>("/api/Nguoi", id ?? 0);
                 if (tbNguoi == null)
                 {
                     return NotFound();
                 }
                 //Nếu tìm thấy, khởi tạo các giá trị các giá trị cần thiết và trả về view
-                make_select_list(tbNguoi);
+                ViewData["IdChucDanhKhoaHoc"] = new SelectList(await ApiServices_.GetAll<DmChucDanhKhoaHoc>("/api/dm/ChucDanhKhoaHoc"), "IdChucDanhKhoaHoc", "ChucDanhKhoaHoc", tbNguoi.IdChucDanhKhoaHoc);
+                ViewData["IdChuyenMonDaoTao"] = new SelectList(await ApiServices_.GetAll<DmNganhDaoTao>("/api/dm/NganhDaoTao"), "IdNganhDaoTao", "NganhDaoTao", tbNguoi.IdChuyenMonDaoTao);
+                ViewData["IdTonGiao"] = new SelectList(await ApiServices_.GetAll<DmTonGiao>("/api/dm/TonGiao"), "IdTonGiao", "TonGiao", tbNguoi.IdDanToc);
+                ViewData["IdDanToc"] = new SelectList(await ApiServices_.GetAll<DmDanToc>("/api/dm/DanToc"), "IdDanToc", "DanToc", tbNguoi.IdDanToc);
+                ViewData["IdGiaDinhChinhSach"] = new SelectList(await ApiServices_.GetAll<DmHoGiaDinhChinhSach>("/api/dm/HoGiaDinhChinhSach"), "IdHoGiaDinhChinhSach", "HoGiaDinhChinhSach", tbNguoi.IdGiaDinhChinhSach);
+                ViewData["IdGioiTinh"] = new SelectList(await ApiServices_.GetAll<DmGioiTinh>("/api/dm/GioiTinh"), "IdGioiTinh", "GioiTinh", tbNguoi.IdGioiTinh);
+                ViewData["IdKhungNangLucNgoaiNguc"] = new SelectList(await ApiServices_.GetAll<DmKhungNangLucNgoaiNgu>("/api/dm/KhungNangLucNgoaiNgu"), "IdKhungNangLucNgoaiNgu", "TenKhungNangLucNgoaiNgu", tbNguoi.IdKhungNangLucNgoaiNguc);
+                ViewData["IdNgoaiNgu"] = new SelectList(await ApiServices_.GetAll<DmNgoaiNgu>("/api/dm/NgoaiNgu"), "IdNgoaiNgu", "NgoaiNgu", tbNguoi.IdNgoaiNgu);
+                ViewData["IdQuocTich"] = new SelectList(await ApiServices_.GetAll<DmQuocTich>("/api/dm/QuocTich"), "IdQuocTich", "TenNuoc", tbNguoi.IdQuocTich);
+                ViewData["IdThuongBinhHang"] = new SelectList(await ApiServices_.GetAll<DmHangThuongBinh>("/api/dm/HangThuongBinh"), "IdHangThuongBinh", "HangThuongBinh", tbNguoi.IdThuongBinhHang);
+                ViewData["IdTrinhDoDaoTao"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoDaoTao>("/api/dm/TrinhDoDaoTao"), "IdTrinhDoDaoTao", "TrinhDoDaoTao", tbNguoi.IdTrinhDoDaoTao);
+                ViewData["IdTrinhDoLyLuanChinhTri"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoLyLuanChinhTri>("/api/dm/TrinhDoLyLuanChinhTri"), "IdTrinhDoLyLuanChinhTri", "TenTrinhDoLyLuanChinhTri", tbNguoi.IdTrinhDoLyLuanChinhTri);
+                ViewData["IdTrinhDoQuanLyNhaNuoc"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoQuanLyNhaNuoc>("/api/dm/TrinhDoQuanLyNhaNuoc"), "IdTrinhDoQuanLyNhaNuoc", "TrinhDoQuanLyNhaNuoc", tbNguoi.IdTrinhDoQuanLyNhaNuoc);
+                ViewData["IdTrinhDoTinHoc"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoTinHoc>("/api/dm/TrinhDoTinHoc"), "IdTrinhDoTinHoc", "TrinhDoTinHoc", tbNguoi.IdTrinhDoTinHoc);
                 return View(tbNguoi);
             }
             catch (Exception ex)
@@ -183,21 +233,20 @@ namespace HemisCB.Controllers.CB
                 {
                     return NotFound();
                 }
-                check_null(tbNguoi);
+                //check_null(tbNguoi);
                 if (ModelState.IsValid)
                 {
                     //Kiểm tra quá trình update
                     try
                     {
-                        _context.Update(tbNguoi);
-                        await _context.SaveChangesAsync();
+                        await ApiServices_.Update<TbNguoi>("/api/Nguoi", id, tbNguoi);
                     }
                     catch (DbUpdateConcurrencyException)
                     {//Nếu QUERY thực thi ở Database không thay đổi giá trị nào thì trả về DbUpdateConcurrencyException
                      //Lỗi xảy ra chủ yếu do table cần thực thi UPDATE ở database đã bị thay đổi sau khi QUERY được gửi đi
                      //và trước khi QUERY UPDATE được thực hiện
                      //Khi gửi QUERY bên cạnh điều kiện ID EF sẽ thêm điều kiện Version để so sánh version khi gửi và khi thực thi 
-                        if (!TbNguoiExists(tbNguoi.IdNguoi))//Nếu đã bị xóa thì trả về STATUS 404
+                        if (await TbNguoiExists(tbNguoi.IdNguoi) == false)
                         {
                             return NotFound();
                         }
@@ -208,7 +257,20 @@ namespace HemisCB.Controllers.CB
                     }
                     return RedirectToAction(nameof(Index));
                 }
-                make_select_list(tbNguoi);
+                ViewData["IdChucDanhKhoaHoc"] = new SelectList(await ApiServices_.GetAll<DmChucDanhKhoaHoc>("/api/dm/ChucDanhKhoaHoc"), "IdChucDanhKhoaHoc", "ChucDanhKhoaHoc", tbNguoi.IdChucDanhKhoaHoc);
+                ViewData["IdChuyenMonDaoTao"] = new SelectList(await ApiServices_.GetAll<DmNganhDaoTao>("/api/dm/NganhDaoTao"), "IdNganhDaoTao", "NganhDaoTao", tbNguoi.IdChuyenMonDaoTao);
+                ViewData["IdTonGiao"] = new SelectList(await ApiServices_.GetAll<DmTonGiao>("/api/dm/TonGiao"), "IdTonGiao", "TonGiao", tbNguoi.IdDanToc);
+                ViewData["IdDanToc"] = new SelectList(await ApiServices_.GetAll<DmDanToc>("/api/dm/DanToc"), "IdDanToc", "DanToc", tbNguoi.IdDanToc);
+                ViewData["IdGiaDinhChinhSach"] = new SelectList(await ApiServices_.GetAll<DmHoGiaDinhChinhSach>("/api/dm/HoGiaDinhChinhSach"), "IdHoGiaDinhChinhSach", "HoGiaDinhChinhSach", tbNguoi.IdGiaDinhChinhSach);
+                ViewData["IdGioiTinh"] = new SelectList(await ApiServices_.GetAll<DmGioiTinh>("/api/dm/GioiTinh"), "IdGioiTinh", "GioiTinh", tbNguoi.IdGioiTinh);
+                ViewData["IdKhungNangLucNgoaiNguc"] = new SelectList(await ApiServices_.GetAll<DmKhungNangLucNgoaiNgu>("/api/dm/KhungNangLucNgoaiNgu"), "IdKhungNangLucNgoaiNgu", "TenKhungNangLucNgoaiNgu", tbNguoi.IdKhungNangLucNgoaiNguc);
+                ViewData["IdNgoaiNgu"] = new SelectList(await ApiServices_.GetAll<DmNgoaiNgu>("/api/dm/NgoaiNgu"), "IdNgoaiNgu", "NgoaiNgu", tbNguoi.IdNgoaiNgu);
+                ViewData["IdQuocTich"] = new SelectList(await ApiServices_.GetAll<DmQuocTich>("/api/dm/QuocTich"), "IdQuocTich", "TenNuoc", tbNguoi.IdQuocTich);
+                ViewData["IdThuongBinhHang"] = new SelectList(await ApiServices_.GetAll<DmHangThuongBinh>("/api/dm/HangThuongBinh"), "IdHangThuongBinh", "HangThuongBinh", tbNguoi.IdThuongBinhHang);
+                ViewData["IdTrinhDoDaoTao"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoDaoTao>("/api/dm/TrinhDoDaoTao"), "IdTrinhDoDaoTao", "TrinhDoDaoTao", tbNguoi.IdTrinhDoDaoTao);
+                ViewData["IdTrinhDoLyLuanChinhTri"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoLyLuanChinhTri>("/api/dm/TrinhDoLyLuanChinhTri"), "IdTrinhDoLyLuanChinhTri", "TenTrinhDoLyLuanChinhTri", tbNguoi.IdTrinhDoLyLuanChinhTri);
+                ViewData["IdTrinhDoQuanLyNhaNuoc"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoQuanLyNhaNuoc>("/api/dm/TrinhDoQuanLyNhaNuoc"), "IdTrinhDoQuanLyNhaNuoc", "TrinhDoQuanLyNhaNuoc", tbNguoi.IdTrinhDoQuanLyNhaNuoc);
+                ViewData["IdTrinhDoTinHoc"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoTinHoc>("/api/dm/TrinhDoTinHoc"), "IdTrinhDoTinHoc", "TrinhDoTinHoc", tbNguoi.IdTrinhDoTinHoc);
                 return View(tbNguoi);
             }
             catch (Exception ex)
@@ -229,22 +291,8 @@ namespace HemisCB.Controllers.CB
                     return NotFound();
                 }
 
-                var tbNguoi = await _context.TbNguois
-                    .Include(t => t.IdChucDanhKhoaHocNavigation)
-                    .Include(t => t.IdChuyenMonDaoTaoNavigation)
-                    .Include(t => t.IdTonGiaoNavigation)
-                    .Include(t => t.IdDanTocNavigation)
-                    .Include(t => t.IdGiaDinhChinhSachNavigation)
-                    .Include(t => t.IdGioiTinhNavigation)
-                    .Include(t => t.IdKhungNangLucNgoaiNgucNavigation)
-                    .Include(t => t.IdNgoaiNguNavigation)
-                    .Include(t => t.IdQuocTichNavigation)
-                    .Include(t => t.IdThuongBinhHangNavigation)
-                    .Include(t => t.IdTrinhDoDaoTaoNavigation)
-                    .Include(t => t.IdTrinhDoLyLuanChinhTriNavigation)
-                    .Include(t => t.IdTrinhDoQuanLyNhaNuocNavigation)
-                    .Include(t => t.IdTrinhDoTinHocNavigation)
-                    .FirstOrDefaultAsync(m => m.IdNguoi == id);
+                var tbNguois = await ApiServices_.GetAll<TbNguoi>("/api/Nguoi");
+                var tbNguoi = tbNguois.FirstOrDefault(m => m.IdNguoi == id);
                 if (tbNguoi == null)
                 {
                     return NotFound();
@@ -262,99 +310,49 @@ namespace HemisCB.Controllers.CB
         // POST: Nguoi/Delete/5
         [HttpPost, ActionName("Delete")]//ActionName dùng để định dạng tên action
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id) //Xác nhận xóa
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try
             {
-                var tbNguoi = await _context.TbNguois.FindAsync(id);
-                if (tbNguoi != null)
-                {
-                    _context.TbNguois.Remove(tbNguoi);
-                }
-                await _context.SaveChangesAsync();
+                await ApiServices_.Delete<TbNguoi>("/api/Nguoi", id);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                export_message(ex.Message + "\n" + (ex.InnerException == null ? "" : ex.InnerException.ToString()));
                 return BadRequest();
             }
         }
 
         //Kiểm tra xem có tồn tại id hay không nếu có return true ngược lại return false
-        private bool TbNguoiExists(int id)
+        private async Task<bool> TbNguoiExists(int id)
         {
-            return _context.TbNguois.Any(e => e.IdNguoi == id);
+            var tbNguois = await ApiServices_.GetAll<TbNguoi>("/api/Nguoi");
+            return tbNguois.Any(e => e.IdNguoi == id);
         }
-
         //Kiểm tra giá trị
 
-        private void check_null(TbNguoi tbNguoi)
-        {
-            if (tbNguoi.Ho == null) ModelState.AddModelError("Ho", "Vui lòng nhập họ!");
-            if (tbNguoi.Ten == null) ModelState.AddModelError("Ten", "Vui lòng nhập tên!");
-            if (tbNguoi.IdQuocTich == null) ModelState.AddModelError("IdQuocTich", "Không được bỏ trống!");
-            if (tbNguoi.IdDanToc == null) ModelState.AddModelError("IdDanToc", "Không được bỏ trống!");
-            if (tbNguoi.IdChucDanhKhoaHoc == null) ModelState.AddModelError("IdChucDanhKhoaHoc", "Không được bỏ trống!");
-            if (tbNguoi.IdChuyenMonDaoTao == null) ModelState.AddModelError("IdChuyenMonDaoTao", "Không được bỏ trống!");
-            if (tbNguoi.IdTonGiao == null) ModelState.AddModelError("IdTonGiao", "Không được bỏ trống!");
-            if (tbNguoi.IdGioiTinh == null) ModelState.AddModelError("IdGioiTinh", "Không được bỏ trống!");
-            if (tbNguoi.IdKhungNangLucNgoaiNguc == null) ModelState.AddModelError("IdKhungNangLucNgoaiNguc", "Không được bỏ trống!");
-            if (tbNguoi.IdNgoaiNgu == null) ModelState.AddModelError("IdNgoaiNgu", "Không được bỏ trống!");
-            if (tbNguoi.IdTrinhDoDaoTao == null) ModelState.AddModelError("IdTrinhDoDaoTao", "Không được bỏ trống!");
-            if (tbNguoi.IdTrinhDoLyLuanChinhTri == null) ModelState.AddModelError("IdTrinhDoLyLuanChinhTri", "Không được bỏ trống!");
-            if (tbNguoi.IdTrinhDoQuanLyNhaNuoc == null) ModelState.AddModelError("IdTrinhDoQuanLyNhaNuoc", "Không được bỏ trống!");
-            if (tbNguoi.IdTrinhDoTinHoc == null) ModelState.AddModelError("IdTrinhDoTinHoc", "Không được bỏ trống!");
-            if (tbNguoi.IdThuongBinhHang == null) ModelState.AddModelError("IdThuongBinhHang", "Không được bỏ trống!");
-            if (tbNguoi.IdGiaDinhChinhSach == null) ModelState.AddModelError("IdGiaDinhChinhSach", "Không được bỏ trống!");
-        }
+        //private void check_null(TbNguoi tbNguoi)
+        //{
+        //    if (tbNguoi.Ho == null) ModelState.AddModelError("Ho", "Vui lòng nhập họ!");
+        //    if (tbNguoi.Ten == null) ModelState.AddModelError("Ten", "Vui lòng nhập tên!");
+        //    if (tbNguoi.IdQuocTich == null) ModelState.AddModelError("IdQuocTich", "Không được bỏ trống!");
+        //    if (tbNguoi.IdDanToc == null) ModelState.AddModelError("IdDanToc", "Không được bỏ trống!");
+        //    if (tbNguoi.IdChucDanhKhoaHoc == null) ModelState.AddModelError("IdChucDanhKhoaHoc", "Không được bỏ trống!");
+        //    if (tbNguoi.IdChuyenMonDaoTao == null) ModelState.AddModelError("IdChuyenMonDaoTao", "Không được bỏ trống!");
+        //    if (tbNguoi.IdTonGiao == null) ModelState.AddModelError("IdTonGiao", "Không được bỏ trống!");
+        //    if (tbNguoi.IdGioiTinh == null) ModelState.AddModelError("IdGioiTinh", "Không được bỏ trống!");
+        //    if (tbNguoi.IdKhungNangLucNgoaiNguc == null) ModelState.AddModelError("IdKhungNangLucNgoaiNguc", "Không được bỏ trống!");
+        //    if (tbNguoi.IdNgoaiNgu == null) ModelState.AddModelError("IdNgoaiNgu", "Không được bỏ trống!");
+        //    if (tbNguoi.IdTrinhDoDaoTao == null) ModelState.AddModelError("IdTrinhDoDaoTao", "Không được bỏ trống!");
+        //    if (tbNguoi.IdTrinhDoLyLuanChinhTri == null) ModelState.AddModelError("IdTrinhDoLyLuanChinhTri", "Không được bỏ trống!");
+        //    if (tbNguoi.IdTrinhDoQuanLyNhaNuoc == null) ModelState.AddModelError("IdTrinhDoQuanLyNhaNuoc", "Không được bỏ trống!");
+        //    if (tbNguoi.IdTrinhDoTinHoc == null) ModelState.AddModelError("IdTrinhDoTinHoc", "Không được bỏ trống!");
+        //    if (tbNguoi.IdThuongBinhHang == null) ModelState.AddModelError("IdThuongBinhHang", "Không được bỏ trống!");
+        //    if (tbNguoi.IdGiaDinhChinhSach == null) ModelState.AddModelError("IdGiaDinhChinhSach", "Không được bỏ trống!");
+        //}
 
         //Tạo các select_list
-        private void make_select_list(TbNguoi? tbNguoi = null)
-        {
-            //Nếu là null tức là chỉ cần in ra select_list không cần định nghĩa giá trị đã chọn
-            if (tbNguoi == null)
-            {
-                //SelectList phục vụ cho việc nhập dữ liệu cho các ForeignKey
-                //Mô hình selectlist(List<model>, ValueField, TextField)
-                //ValueField, TextField đều là tên attribute của model
-                //ValueField là tên attribute cần client nhập để lấy dữ liệu
-                //TextField là tên attribute muốn hiển thị cho client
-                //Vd model DmChucDanhKhoaHoc thì ValueField là IdChucDanhKhoaHoc tương đương DmChucDanhKhoaHoc.IdChucDanhKhoaHoc
-                ViewData["IdChucDanhKhoaHoc"] = new SelectList(_context.DmChucDanhKhoaHocs, "IdChucDanhKhoaHoc", "ChucDanhKhoaHoc");
-                ViewData["IdChuyenMonDaoTao"] = new SelectList(_context.DmNganhDaoTaos, "IdNganhDaoTao", "NganhDaoTao");
-                ViewData["IdTonGiao"] = new SelectList(_context.DmTonGiaos, "IdTonGiao", "TonGiao");
-                ViewData["IdDanToc"] = new SelectList(_context.DmDanTocs, "IdDanToc", "DanToc");
-                ViewData["IdGiaDinhChinhSach"] = new SelectList(_context.DmHoGiaDinhChinhSaches, "IdHoGiaDinhChinhSach", "HoGiaDinhChinhSach");
-                ViewData["IdGioiTinh"] = new SelectList(_context.DmGioiTinhs, "IdGioiTinh", "GioiTinh");
-                ViewData["IdKhungNangLucNgoaiNguc"] = new SelectList(_context.DmKhungNangLucNgoaiNgus, "IdKhungNangLucNgoaiNgu", "TenKhungNangLucNgoaiNgu");
-                ViewData["IdNgoaiNgu"] = new SelectList(_context.DmNgoaiNgus, "IdNgoaiNgu", "NgoaiNgu");
-                ViewData["IdQuocTich"] = new SelectList(_context.DmQuocTiches, "IdQuocTich", "TenNuoc");
-                ViewData["IdThuongBinhHang"] = new SelectList(_context.DmHangThuongBinhs, "IdHangThuongBinh", "HangThuongBinh");
-                ViewData["IdTrinhDoDaoTao"] = new SelectList(_context.DmTrinhDoDaoTaos, "IdTrinhDoDaoTao", "TrinhDoDaoTao");
-                ViewData["IdTrinhDoLyLuanChinhTri"] = new SelectList(_context.DmTrinhDoLyLuanChinhTris, "IdTrinhDoLyLuanChinhTri", "TenTrinhDoLyLuanChinhTri");
-                ViewData["IdTrinhDoQuanLyNhaNuoc"] = new SelectList(_context.DmTrinhDoQuanLyNhaNuocs, "IdTrinhDoQuanLyNhaNuoc", "TrinhDoQuanLyNhaNuoc");
-                ViewData["IdTrinhDoTinHoc"] = new SelectList(_context.DmTrinhDoTinHocs, "IdTrinhDoTinHoc", "TrinhDoTinHoc");
-            }
-            else
-            {
-                //Mô hình giải thích ở phía trên chỉ khác biệt ở chổ có thêm phần value của selectlist mà đang được chọn
-                ViewData["IdChucDanhKhoaHoc"] = new SelectList(_context.DmChucDanhKhoaHocs, "IdChucDanhKhoaHoc", "ChucDanhKhoaHoc", tbNguoi.IdChucDanhKhoaHoc);
-                ViewData["IdChuyenMonDaoTao"] = new SelectList(_context.DmNganhDaoTaos, "IdNganhDaoTao", "NganhDaoTao", tbNguoi.IdChuyenMonDaoTao);
-                ViewData["IdTonGiao"] = new SelectList(_context.DmTonGiaos, "IdTonGiao", "TonGiao", tbNguoi.IdDanToc);
-                ViewData["IdDanToc"] = new SelectList(_context.DmDanTocs, "IdDanToc", "DanToc", tbNguoi.IdDanToc);
-                ViewData["IdGiaDinhChinhSach"] = new SelectList(_context.DmHoGiaDinhChinhSaches, "IdHoGiaDinhChinhSach", "HoGiaDinhChinhSach", tbNguoi.IdGiaDinhChinhSach);
-                ViewData["IdGioiTinh"] = new SelectList(_context.DmGioiTinhs, "IdGioiTinh", "GioiTinh", tbNguoi.IdGioiTinh);
-                ViewData["IdKhungNangLucNgoaiNguc"] = new SelectList(_context.DmKhungNangLucNgoaiNgus, "IdKhungNangLucNgoaiNgu", "TenKhungNangLucNgoaiNgu", tbNguoi.IdKhungNangLucNgoaiNguc);
-                ViewData["IdNgoaiNgu"] = new SelectList(_context.DmNgoaiNgus, "IdNgoaiNgu", "NgoaiNgu", tbNguoi.IdNgoaiNgu);
-                ViewData["IdQuocTich"] = new SelectList(_context.DmQuocTiches, "IdQuocTich", "TenNuoc", tbNguoi.IdQuocTich);
-                ViewData["IdThuongBinhHang"] = new SelectList(_context.DmHangThuongBinhs, "IdHangThuongBinh", "HangThuongBinh", tbNguoi.IdThuongBinhHang);
-                ViewData["IdTrinhDoDaoTao"] = new SelectList(_context.DmTrinhDoDaoTaos, "IdTrinhDoDaoTao", "TrinhDoDaoTao", tbNguoi.IdTrinhDoDaoTao);
-                ViewData["IdTrinhDoLyLuanChinhTri"] = new SelectList(_context.DmTrinhDoLyLuanChinhTris, "IdTrinhDoLyLuanChinhTri", "TenTrinhDoLyLuanChinhTri", tbNguoi.IdTrinhDoLyLuanChinhTri);
-                ViewData["IdTrinhDoQuanLyNhaNuoc"] = new SelectList(_context.DmTrinhDoQuanLyNhaNuocs, "IdTrinhDoQuanLyNhaNuoc", "TrinhDoQuanLyNhaNuoc", tbNguoi.IdTrinhDoQuanLyNhaNuoc);
-                ViewData["IdTrinhDoTinHoc"] = new SelectList(_context.DmTrinhDoTinHocs, "IdTrinhDoTinHoc", "TrinhDoTinHoc", tbNguoi.IdTrinhDoTinHoc);
-            }
-        }
+       
         //In lỗi ra file
         private void export_message(string Message)
         {

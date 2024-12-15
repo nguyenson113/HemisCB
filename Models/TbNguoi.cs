@@ -160,6 +160,10 @@ public partial class TbNguoi
     [DisplayName("Trình Độ Tin Học")]
     public virtual DmTrinhDoTinHoc? IdTrinhDoTinHocNavigation { get; set; }
 
+
+
+
+
     [DisplayName("Danh sách Cán Bộ")]
     public virtual ICollection<TbCanBo> TbCanBos { get; set; } = new List<TbCanBo>();
 

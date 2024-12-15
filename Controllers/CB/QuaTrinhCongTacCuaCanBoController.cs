@@ -196,46 +196,7 @@ namespace HemisCB.Controllers.CB
             return View(tbQuaTrinhCongTacCuaCanBo); // Trả về view với thông tin đã chỉnh sửa
         }
 
-        #region xoá
-        // GET: QuaTrinhCongTacCuaCanBo/Delete/5
-        // Phương thức hiển thị form xác nhận xóa quá trình công tác
-        public async Task<IActionResult> Delete(int? id)
-        {
-            // Kiểm tra nếu id là null
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tbQuaTrinhCongTacCuaCanBos = await ApiServices_.GetAll<TbQuaTrinhCongTacCuaCanBo>("/api/cb/QuaTrinhCongTacCuaCanBo");
-            var tbQuaTrinhCongTacCuaCanBo = tbQuaTrinhCongTacCuaCanBos.FirstOrDefault(m => m.IdQuaTrinhCongTacCuaCanBo == id);
-            if (tbQuaTrinhCongTacCuaCanBo == null)
-            {
-                return NotFound();
-            }
-
-            // Trả về view với thông tin để xác nhận xóa
-            return View(tbQuaTrinhCongTacCuaCanBo);
-        }
-
-        // POST: QuaTrinhCongTacCuaCanBo/Delete/5
-        // Phương thức xử lý việc xóa quá trình công tác
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            // Tìm quá trình công tác theo id
-            try
-            {
-                await ApiServices_.Delete<TbQuaTrinhCongTacCuaCanBo>("/api/cb/QuaTrinhCongTacCuaCanBo", id);
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
-        #endregion
+  
         // Phương thức kiểm tra xem quá trình công tác có tồn tại hay không
         private async Task<bool> TbQuaTrinhCongTacCuaCanBoExists(int id)
         {
