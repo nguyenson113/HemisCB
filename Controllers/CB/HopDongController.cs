@@ -38,6 +38,12 @@ namespace HemisCB.Controllers.CB
             return tbHopDongs;
         }
 
+        public async Task<IActionResult> Statistics()
+        {
+            List<TbHopDong> getall = await TbHopDongs();
+            return View(getall);
+        }
+
 
         // GET: HopDong
         public async Task<IActionResult> Index()
