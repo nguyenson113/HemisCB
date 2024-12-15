@@ -36,6 +36,13 @@ namespace HemisCB.Controllers.CB
             return tbPhuCaps;
         }
 
+        public async Task<IActionResult> Statistics()
+        {
+            List<TbPhuCap> getall = await TbPhuCaps();
+            return View(getall);
+        }
+
+
 
         // GET: PhuCap
         public async Task<IActionResult> Index()

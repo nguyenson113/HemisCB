@@ -22,8 +22,13 @@ namespace HemisCB.Controllers.CB
             //Đọc dữ liệu từ APIService
             ApiServices_ = services;
         }
-       
-       
+
+        public async Task<IActionResult> Statistics()
+        {
+            List<TbQuaTrinhCongTacCuaCanBo> getall = await TbQuaTrinhCongTacCuaCanBos();
+            return View(getall);
+        }
+
 
 
         //============================TẠO DANH SÁCH LẤY API========================

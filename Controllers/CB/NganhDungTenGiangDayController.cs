@@ -33,6 +33,12 @@ namespace HemisCB.Controllers.CB
             return tbNganhDungTenGiangDays;
         }
 
+        public async Task<IActionResult> Statistics()
+        {
+            List<TbNganhDungTenGiangDay> getall = await TbNganhDungTenGiangDays();
+            return View(getall);
+        }
+
 
         // GET: NganhDungTenGiangDay
         public async Task<IActionResult> Index()

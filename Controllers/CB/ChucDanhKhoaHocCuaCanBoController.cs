@@ -84,6 +84,13 @@ namespace HemisCB.Controllers.CB
 
         }
 
+        public async Task<IActionResult> Statistics()
+        {
+            List<TbChucDanhKhoaHocCuaCanBo> getall = await TbChucDanhKhoaHocCuaCanBos();
+            return View(getall);
+        }
+
+
         // GET: ChucDanhKhoaHocCuaCanBo/Create
         public async Task<IActionResult> Create()
         {

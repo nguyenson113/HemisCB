@@ -78,6 +78,12 @@ namespace HemisCB.Controllers.CB
             return tbNguois;
         }
 
+        public async Task<IActionResult> Statistics()
+        {
+            List<TbNguoi> getall = await TbNguois();
+            return View(getall);
+        }
+
         //GET: /Nguoi | /Nguoi/Index
         // Thu thập các dữ liệu cần thiết của table TbNguoi để trả về hiển thị trên trang index
         public async Task<IActionResult> Index()

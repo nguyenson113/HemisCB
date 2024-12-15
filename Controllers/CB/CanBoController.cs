@@ -57,6 +57,13 @@ namespace HemisCB.Controllers.CB
             return tbCanBos;
         }
 
+        public async Task<IActionResult> Statistics()
+        {
+            List<TbCanBo> getall = await TbCanBos();
+            return View(getall);
+        }
+
+
         // GET: CanBo
         public async Task<IActionResult> Index()
         {

@@ -39,6 +39,11 @@ namespace HemisCB.Controllers.CB
             return tbDonViCongTacCuaCanBos;
         }
 
+        public async Task<IActionResult> Statistics()
+        {
+            List<TbDonViCongTacCuaCanBo> getall = await TbDonViCongTacCuaCanBos();
+            return View(getall);
+        }
 
         // GET: DonViCongTacCuaCanBo
         public async Task<IActionResult> Index()

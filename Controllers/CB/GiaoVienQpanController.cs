@@ -37,6 +37,13 @@ namespace HemisCB.Controllers.CB
             return tbGiaoVienQpans;
         }
 
+        public async Task<IActionResult> Statistics()
+        {
+            List<TbGiaoVienQpan> getall = await TbGiaoVienQpans();
+            return View(getall);
+        }
+
+
 
         // GET: GiaoVienQpan
         public async Task<IActionResult> Index()

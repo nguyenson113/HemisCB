@@ -38,6 +38,12 @@ namespace HemisCB.Controllers.CB
            
             
         }
+        public async Task<IActionResult> Statistics()
+        {
+            List<TbCanBoHuongDanThanhCongSinhVien> getall = await TbCanBoHuongDanThanhCongSinhViens();
+            return View(getall);
+        }
+
 
         //================================================================================ INDEX ==============================================================================
         // GET: CanBoHuongDanThanhCongSinhVien

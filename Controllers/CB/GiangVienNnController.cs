@@ -33,6 +33,11 @@ namespace HemisCB.Controllers.CB
             return tbGiangVienNns;
         }
 
+        public async Task<IActionResult> Statistics()
+        {
+            List<TbGiangVienNn> getall = await TbGiangVienNns();
+            return View(getall);
+        }
 
 
         // GET: TbGiangVienNns
