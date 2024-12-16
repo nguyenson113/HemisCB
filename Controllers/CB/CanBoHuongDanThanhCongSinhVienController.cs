@@ -9,6 +9,7 @@ using HemisCB.Models;
 using HemisCB.API;
 using HemisCB.Models.DM;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Newtonsoft.Json;
 
 namespace HemisCB.Controllers.CB
 {
@@ -275,5 +276,22 @@ namespace HemisCB.Controllers.CB
             var tbCanBoHuongDanThanhCongSinhViens = await ApiServices_.GetAll<TbCanBoHuongDanThanhCongSinhVien>("/api/cb/CanBoHuongDanThanhCongSinhVien");
             return tbCanBoHuongDanThanhCongSinhViens.Any(e => e.IdCanBoHuongDanThanhCongSinhVien == id);
         }
+
+        //Import Excel 
+        public IActionResult Excel(string json)
+        {
+            try
+            {
+                List<List<string>> data = JsonConvert.DeserializeObject<List<List<string>>>(json);
+                Console.WriteLine(JsonConvert.SerializeObject(data));
+                return Accepted(Json(new { msg = JsonConvert.SerializeObject(data) }));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(Json(new { msg = "Lỗi nè mấy má !!!!!!!!" }));
+            }
+
+        }
+
     }
 }

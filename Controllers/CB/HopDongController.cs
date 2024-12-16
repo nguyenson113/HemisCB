@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HemisCB.Models;
 using HemisCB.API;
 using HemisCB.Models.DM;
+using Newtonsoft.Json;
 
 namespace HemisCB.Controllers.CB
 {
@@ -210,10 +211,27 @@ namespace HemisCB.Controllers.CB
                 return BadRequest();
             }
         }
+
+
         private async Task<bool> TbHopDongExists(int id)
         {
             var tbHopDongs = await ApiServices_.GetAll<TbHopDong>("/api/cb/HopDong");
             return tbHopDongs.Any(e => e.IdHopDong == id);
+        }
+
+        public IActionResult Excel(string json)
+        {
+            try
+            {
+                List<List<string>> data = JsonConvert.DeserializeObject<List<List<string>>>(json);
+                Console.WriteLine(JsonConvert.SerializeObject(data));
+                return Accepted(Json(new { msg = JsonConvert.SerializeObject(data) }));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(Json(new { msg = "Lỗi nè mấy má !!!!!!!!" }));
+            }
+
         }
     }
 }

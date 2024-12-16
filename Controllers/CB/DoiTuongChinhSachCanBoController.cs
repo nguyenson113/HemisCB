@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HemisCB.Models;
 using HemisCB.API;
 using HemisCB.Models.DM;
+using Newtonsoft.Json;
 
 namespace HemisCB.Controllers.CB
 {
@@ -200,6 +201,23 @@ namespace HemisCB.Controllers.CB
         {
             var tbDoiTuongChinhSachCanBos = await ApiServices_.GetAll<TbDoiTuongChinhSachCanBo>("/api/cb/DoiTuongChinhSachCanBo");
             return tbDoiTuongChinhSachCanBos.Any(e => e.IdDoiTuongChinhSachCanBo == id);
+        }
+
+
+        //Import Excel 
+        public IActionResult Excel(string json)
+        {
+            try
+            {
+                List<List<string>> data = JsonConvert.DeserializeObject<List<List<string>>>(json);
+                Console.WriteLine(JsonConvert.SerializeObject(data));
+                return Accepted(Json(new { msg = JsonConvert.SerializeObject(data) }));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(Json(new { msg = "Lỗi nè mấy má !!!!!!!!" }));
+            }
+
         }
     }
 }

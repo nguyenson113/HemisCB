@@ -243,6 +243,13 @@
 
 @section Scripts {
 
+    <script src="~/js/import_excel.js"></script>
+    <script src="~/js/xlsx.full.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-colvis-3.1.2/b-html5-3.1.2/b-print-3.1.2/datatables.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-colvis-3.1.2/b-html5-3.1.2/b-print-3.1.2/datatables.min.js"></script>
@@ -285,7 +292,46 @@
                             extend: 'collection', //Để sổ ra các chức năng khác
                             text: 'Mở rộng chức năng',
                             buttons: ['print', 'excel', 'pdf', 'copy'],
+                        },
+
+                         {
+                            className: 'button_a_function',
+                            text: 'Import Excel',
+                            action: function (e, dt, node, config) {
+                                import_excel((json) => {
+                                    let data = JSON.parse(json);
+                                    let list = data['Sheet1'];
+                                    let _ExcelNoSheet = [];
+                                    for (let i = 0; i < list.length; ++i) {
+                                        let arr = [];
+                                        for (const [key, value] of Object.entries(list[i])) {
+                                            arr.push(value.toString());
+                                        }
+                                        _ExcelNoSheet.push(arr);
+                                    }
+                                    let _json = JSON.stringify(_ExcelNoSheet, null, 4);
+                                    console.log(_json);
+                                    $.ajax({
+                                        method: "post",
+                                        url: "/HopDong/Excel",
+                                        data: {
+                                            "json": _json,
+                                        },
+                                        success: function (response) {
+                                            // Code to execute if the request succeeds
+                                            console.log('Success:', response.value['msg']);
+                                        },
+                                        error: function (xhr, status, error) {
+                                            // Code to execute if the request fails
+                                            alert('Error:' + xhr.responseJSON.value['msg']);
+                                        }
+                                    });
+                                });
+                            }
                         }
+
+
+
                     ]
                 }
             }
