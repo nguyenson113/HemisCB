@@ -1,0 +1,173 @@
+﻿@model IEnumerable<HemisCB.Models.TbHoiThaoHoiNghi>
+
+@using Newtonsoft.Json
+@{
+    ViewData["Title"] = "Statistics";
+    string labelJson = "", dataJson = "";
+    Dictionary<string, int> Times_Thu = new Dictionary<string, int>();
+    foreach (var item in Model)
+    {
+        string nguon = "";
+        if (item.IdNguonKinhPhiHoiThao.HasValue)
+        {
+            nguon = item.IdNguonKinhPhiHoiThaoNavigation.NguonKinhPhi;
+        }
+        if (Times_Thu.ContainsKey(nguon)) ++Times_Thu[nguon];
+        else Times_Thu[nguon] = 1;
+    }
+    List<string> label = new List<string>();
+    List<int> data = new List<int>();
+    foreach (var it in Times_Thu)
+    {
+        label.Add(it.Key);
+        data.Add(it.Value);
+    }
+    labelJson = JsonConvert.SerializeObject(label);
+    dataJson = JsonConvert.SerializeObject(data);
+}
+<head>
+    <meta charset="utf-8">
+    <title>Visualize Data Beautifully Using JS Charts</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+<body>
+
+    <div class="popup">
+        <div class="popup" style="margin-bottom:100px">
+            <canvas id="myChart1"></canvas>
+        </div>
+    </div>
+    <script>
+        // Dữ liệu từ C#
+        const labels = @Html.Raw(labelJson); //
+        const data = @Html.Raw(dataJson);    //
+
+        // Lấy phần tử canvas
+        const ctx = document.getElementById('myChart1').getContext('2d');
+
+        // Cấu hình biểu đồ
+        const config = {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                        backgroundColor: ['rgba(33, 150, 243, 0.8)', 'rgba(56, 142, 60, 0.8)', 'rgba(253, 216, 53, 0.8)', 'rgba(255, 87, 34, 0.8)', 'rgba(103, 58, 183, 0.8)', 'rgba(0, 188, 212, 0.8)', 'rgba(255, 64, 129, 0.8)', 'rgba(158, 158, 158, 0.8)', 'rgba(245, 34, 45, 0.8)', 'rgba(0, 150, 136, 0.8)', 'rgba(121, 85, 72, 0.8)', 'rgba(253, 216, 53, 0.8)', 'rgba(21, 101, 192, 0.8)', 'rgba(0, 105, 92, 0.8)', 'rgba(96, 125, 139, 0.8)'
+                        ], borderWidth: 1
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'CƠ CẤU HỘI THẢO HỘI NGHỊ THEO NGUỒN NGÂN SÁCH',
+                    fontSize: 25
+                },
+                maintainAspectRatio: false,// Để thu phóng tự do
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Biểu đồ phân loại theo ca'
+                    }
+                }
+            }
+        };
+
+        // Vẽ biểu đồ
+        new Chart(ctx, config);
+
+    </script>
+    <div class="popup" style="margin-bottom:100px; width: 100%">
+        <div class="popup">
+            <canvas id="myChart2"></canvas>
+        </div>
+    </div>
+
+    <script>
+        let myChart = document.getElementById('myChart2').getContext('2d');
+        // Global Options
+        Chart.defaults.global.defaultFontFamily = 'Lato';
+        Chart.defaults.global.defaultFontSize = 18;
+        Chart.defaults.global.defaultFontColor = '#777';
+
+        let massPopChart = new Chart(myChart, {
+            type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            data: {
+                labels: @Html.Raw(labelJson),
+                datasets: [{
+                    label: 'Số hội thảo, hội nghị',
+                    data: @Html.Raw(dataJson),
+                        backgroundColor: (function () {
+                            const dataArray = @Html.Raw(dataJson); // Chèn dữ liệu JavaScript từ Razor
+                            return new Array(dataArray.length).fill('rgb(30,41,107)'); // Tạo mảng màu xanh với chiều dài tương ứng
+                        })(),
+                    borderWidth: 1,
+                    borderColor: '#777',
+                    hoverBorderWidth: 3,
+                    hoverBorderColor: '#000',
+                    barThickness: 10,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            autoSkip: false, // Hiển thị đầy đủ các nhãn
+                            fontSize: 16, // Giảm kích thước font chữ
+                            callback: function (value) {
+                                // Chia nhãn thành các dòng dựa trên độ dài
+                                let words = value.split(' '); // Tách nhãn thành mảng từ
+                                let lines = [];
+                                let line = '';
+                                words.forEach(word => {
+                                    if ((line + word).length > 25) { // Đặt giới hạn mỗi dòng là 15 ký tự
+                                        lines.push(line.trim());
+                                        line = '';
+                                    }
+                                    line += word + ' ';
+                                });
+                                if (line) lines.push(line.trim()); // Thêm dòng còn lại
+                                return lines; // Trả về mảng dòng
+                            }
+                        }
+                    }],
+                },
+                title: {
+                    display: true,
+                    text: 'THỐNG KÊ HỘI THẢO HỘI NGHỊ THEO NGUỒN NGÂN SÁCH',
+                    fontSize: 25
+                },
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 0,
+                        bottom: 0,
+                        top: 0
+                    }
+                },
+                tooltips: {
+                    enabled: true
+                }
+            }
+        });
+    </script>
+
+</body>

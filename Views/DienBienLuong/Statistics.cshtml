@@ -1,0 +1,355 @@
+﻿@model IEnumerable<HemisCB.Models.TbDienBienLuong>
+@using Newtonsoft.Json
+@{
+    ViewData["Title"] = "Thống kê";
+    string labelJson = "", dataJson = "";
+    Dictionary<string, int> Times_Thu = new Dictionary<string, int>();
+    foreach (var item in Model)
+    {
+        //Biểu đồ 1
+        string hinhthuc = "";
+        if (item.IdTrinhDoDaoTao.HasValue)
+        {
+            //Lấy dữ liệu từ biến để vẽ biểu đồ 1
+            hinhthuc = item.IdTrinhDoDaoTaoNavigation.TrinhDoDaoTao;
+        }
+        if (Times_Thu.ContainsKey(hinhthuc)) ++Times_Thu[hinhthuc];
+        else Times_Thu[hinhthuc] = 1;
+    }
+    List<string> label = new List<string>();
+    List<int> data = new List<int>();
+    foreach (var it in Times_Thu)
+    {
+        label.Add(it.Key);
+        data.Add(it.Value);
+    }
+    labelJson = JsonConvert.SerializeObject(label);
+    dataJson = JsonConvert.SerializeObject(data);
+
+    string labelJson1 = "", dataJson1 = "";
+    Dictionary<string, int> Times_Thu1 = new Dictionary<string, int>();
+    foreach (var item in Model)
+    {
+        //Biểu đồ 2
+        string nuoc = "";
+        if (item.IdHeSoLuong.HasValue)
+        {
+            //Lấy dữ liệu từ biến để vẽ biểu đồ 2
+            nuoc = item.IdHeSoLuongNavigation.HeSoLuong;
+        }
+        if (Times_Thu1.ContainsKey(nuoc)) ++Times_Thu1[nuoc];
+        else Times_Thu1[nuoc] = 1;
+    }
+    List<string> label1 = new List<string>();
+    List<int> data1 = new List<int>();
+    foreach (var it in Times_Thu1)
+    {
+        label1.Add(it.Key);
+        data1.Add(it.Value);
+    }
+    labelJson1 = JsonConvert.SerializeObject(label1);
+    dataJson1 = JsonConvert.SerializeObject(data1);
+
+    string labelJson2 = "", dataJson2 = "";
+    Dictionary<string, int> Times_Thu2 = new Dictionary<string, int>();
+
+}
+<head>
+    <meta charset="utf-8">
+    <title>Visualize Data Beautifully Using JS Charts</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        .popup {
+            margin-bottom: 100px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="popup">
+        <div class="popup" style="margin-bottom:100px">
+            <canvas id="myChart1"></canvas>
+        </div>
+    </div>
+    <script>
+        // Dữ liệu từ C#
+        const labels = @Html.Raw(labelJson); //
+        const data = @Html.Raw(dataJson);    //
+
+        // Lấy phần tử canvas
+        const ctx = document.getElementById('myChart1').getContext('2d');
+
+        // Cấu hình biểu đồ
+        const config = {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: ['rgba(33, 150, 243, 0.8)', 'rgba(56, 142, 60, 0.8)', 'rgba(253, 216, 53, 0.8)', 'rgba(255, 87, 34, 0.8)', 'rgba(103, 58, 183, 0.8)', 'rgba(0, 188, 212, 0.8)', 'rgba(255, 64, 129, 0.8)', 'rgba(158, 158, 158, 0.8)', 'rgba(245, 34, 45, 0.8)', 'rgba(0, 150, 136, 0.8)', 'rgba(121, 85, 72, 0.8)', 'rgba(253, 216, 53, 0.8)', 'rgba(21, 101, 192, 0.8)', 'rgba(0, 105, 92, 0.8)', 'rgba(96, 125, 139, 0.8)'
+                    ], borderWidth: 1
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'CƠ CẤU TRÌNH ĐỘ ĐÀO TẠO ',
+                    fontSize: 25
+                },
+                maintainAspectRatio: false,// Để thu phóng tự do
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Biểu đồ phân loại theo ca'
+                    }
+                }
+            }
+        };
+
+        // Vẽ biểu đồ
+        new Chart(ctx, config);
+
+    </script>
+    <div class="popup" style="margin-bottom:100px; width: 100%">
+        <div class="popup">
+            <canvas id="myChart2"></canvas>
+        </div>
+    </div>
+    <div class="popup">
+        <div class="popup" style="margin-bottom:100px">
+            <canvas id="myChart3"></canvas>
+        </div>
+    </div>
+    <div class="popup" style="margin-bottom:100px; width: 100%">
+        <div class="popup">
+            <canvas id="myChart4"></canvas>
+        </div>
+    </div>
+
+    <script>
+        let myChart2 = document.getElementById('myChart2').getContext('2d');
+        // Global Options
+        Chart.defaults.global.defaultFontFamily = 'Lato';
+        Chart.defaults.global.defaultFontSize = 18;
+        Chart.defaults.global.defaultFontColor = '#777';
+
+        let massPopChart2 = new Chart(myChart2, {
+            type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            data: {
+                labels: @Html.Raw(labelJson),
+                datasets: [{
+                    label: 'Trình độ đào tạo của cán bộ  ',
+                    data: @Html.Raw(dataJson),
+                    backgroundColor: (function () {
+                        const dataArray = @Html.Raw(dataJson); // Chèn dữ liệu JavaScript từ Razor
+                        return new Array(dataArray.length).fill('rgb(30,41,107)'); // Tạo mảng màu xanh với chiều dài tương ứng
+                    })(),
+                    borderWidth: 1,
+                    borderColor: '#777',
+                    hoverBorderWidth: 3,
+                    hoverBorderColor: '#000',
+                    barThickness: 10,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            autoSkip: false, // Hiển thị đầy đủ các nhãn
+                            fontSize: 16, // Giảm kích thước font chữ
+                            callback: function (value) {
+                                // Chia nhãn thành các dòng dựa trên độ dài
+                                let words = value.split(' '); // Tách nhãn thành mảng từ
+                                let lines = [];
+                                let line = '';
+                                words.forEach(word => {
+                                    if ((line + word).length > 25) { // Đặt giới hạn mỗi dòng là 15 ký tự
+                                        lines.push(line.trim());
+                                        line = '';
+                                    }
+                                    line += word + ' ';
+                                });
+                                if (line) lines.push(line.trim()); // Thêm dòng còn lại
+                                return lines; // Trả về mảng dòng
+                            }
+                        }
+                    }],
+                },
+                title: {
+                    display: true,
+                    text: 'THỐNG KÊ TRÌNH ĐỘ ĐÀO TẠO  ',
+                    fontSize: 25
+                },
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 0,
+                        bottom: 0,
+                        top: 0
+                    }
+                },
+                tooltips: {
+                    enabled: true
+                }
+            }
+        });
+    </script>
+    <script>
+        // Dữ liệu từ C#
+        const labels1 = @Html.Raw(labelJson1); //
+        const data1 = @Html.Raw(dataJson1);    //
+
+        // Lấy phần tử canvas
+        const ctx1 = document.getElementById('myChart3').getContext('2d');
+
+        // Cấu hình biểu đồ
+        const config1 = {
+            type: 'pie',
+            data: {
+                labels: labels1,
+                datasets: [{
+                    data: data1,
+                    backgroundColor: ['rgba(33, 150, 243, 0.8)', 'rgba(56, 142, 60, 0.8)', 'rgba(253, 216, 53, 0.8)', 'rgba(255, 87, 34, 0.8)', 'rgba(103, 58, 183, 0.8)', 'rgba(0, 188, 212, 0.8)', 'rgba(255, 64, 129, 0.8)', 'rgba(158, 158, 158, 0.8)', 'rgba(245, 34, 45, 0.8)', 'rgba(0, 150, 136, 0.8)', 'rgba(121, 85, 72, 0.8)', 'rgba(253, 216, 53, 0.8)', 'rgba(21, 101, 192, 0.8)', 'rgba(0, 105, 92, 0.8)', 'rgba(96, 125, 139, 0.8)'
+                    ], borderWidth: 1
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'CƠ CẤU HỆ SỐ LƯƠNG',
+                    fontSize: 25
+                },
+                maintainAspectRatio: false,// Để thu phóng tự do
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Biểu đồ phân loại theo ca'
+                    }
+                }
+            }
+        };
+
+        // Vẽ biểu đồ
+        new Chart(ctx1, config1);
+
+    </script>
+
+
+    <script>
+        let myChart4 = document.getElementById('myChart4').getContext('2d');
+        // Global Options
+        Chart.defaults.global.defaultFontFamily = 'Lato';
+        Chart.defaults.global.defaultFontSize = 18;
+        Chart.defaults.global.defaultFontColor = '#777';
+
+        let massPopChart4 = new Chart(myChart4, {
+            type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            data: {
+                labels: @Html.Raw(labelJson1),
+                datasets: [{
+                    label: 'Hệ số lương ',
+                    data: @Html.Raw(dataJson1),
+                    backgroundColor: (function () {
+                        const dataArray = @Html.Raw(dataJson1); // Chèn dữ liệu JavaScript từ Razor
+                        return new Array(dataArray.length).fill('rgb(30,41,107)'); // Tạo mảng màu xanh với chiều dài tương ứng
+                    })(),
+                    borderWidth: 1,
+                    borderColor: '#777',
+                    hoverBorderWidth: 3,
+                    hoverBorderColor: '#000',
+                    barThickness: 10,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            autoSkip: false, // Hiển thị đầy đủ các nhãn
+                            fontSize: 16, // Giảm kích thước font chữ
+                            callback: function (value) {
+                                // Chia nhãn thành các dòng dựa trên độ dài
+                                let words = value.split(' '); // Tách nhãn thành mảng từ
+                                let lines = [];
+                                let line = '';
+                                words.forEach(word => {
+                                    if ((line + word).length > 25) { // Đặt giới hạn mỗi dòng là 15 ký tự
+                                        lines.push(line.trim());
+                                        line = '';
+                                    }
+                                    line += word + ' ';
+                                });
+                                if (line) lines.push(line.trim()); // Thêm dòng còn lại
+                                return lines; // Trả về mảng dòng
+                            }
+                        }
+                    }],
+                },
+                title: {
+                    display: true,
+                    text: 'THỐNG KÊ HỆ SỐ LƯƠNG',
+                    fontSize: 25
+                },
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 0,
+                        bottom: 0,
+                        top: 0
+                    }
+                },
+                tooltips: {
+                    enabled: true
+                }
+            }
+        });
+    </script>
+
+
+
+
+
+</body>
