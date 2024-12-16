@@ -1,16 +1,16 @@
-﻿@model IEnumerable<HemisCB.Models.TbHoiThaoHoiNghi>
+﻿@model IEnumerable<HemisCB.Models.TbPhuCap>
 
 @using Newtonsoft.Json
 @{
-    ViewData["Title"] = "Statistics";
+    ViewData["Title"] = "Thống kê - Phụ cấp ";
     string labelJson = "", dataJson = "";
     Dictionary<string, int> Times_Thu = new Dictionary<string, int>();
     foreach (var item in Model)
     {
         string nguon = "";
-        if (item.IdNguonKinhPhiHoiThao.HasValue)
+        if (item.IdHeSoLuong.HasValue)
         {
-            nguon = item.IdNguonKinhPhiHoiThaoNavigation.NguonKinhPhi;
+            nguon = item.IdHeSoLuongNavigation.HeSoLuong;
         }
         if (Times_Thu.ContainsKey(nguon)) ++Times_Thu[nguon];
         else Times_Thu[nguon] = 1;
@@ -61,7 +61,7 @@
             options: {
                 title: {
                     display: true,
-                    text: 'CƠ CẤU HỘI THẢO HỘI NGHỊ THEO NGUỒN NGÂN SÁCH',
+                    text: 'CƠ CẤU HỆ SỐ LƯƠNG ',
                     fontSize: 25
                 },
                 maintainAspectRatio: false,// Để thu phóng tự do
@@ -100,7 +100,7 @@
             data: {
                 labels: @Html.Raw(labelJson),
                 datasets: [{
-                    label: 'Số hội thảo, hội nghị',
+                    label: 'Hệ số lương ',
                     data: @Html.Raw(dataJson),
                         backgroundColor: (function () {
                             const dataArray = @Html.Raw(dataJson); // Chèn dữ liệu JavaScript từ Razor
@@ -145,7 +145,7 @@
                 },
                 title: {
                     display: true,
-                    text: 'THỐNG KÊ HỘI THẢO HỘI NGHỊ THEO NGUỒN NGÂN SÁCH',
+                    text: 'THỐNG KÊ HỆ SỐ LƯƠNG',
                     fontSize: 25
                 },
                 legend: {

@@ -9,7 +9,7 @@ using HemisCB.Models;
 using HemisCB.API;
 using HemisCB.Models.DM;
 
-namespace HemisCB.Controllers.CB
+namespace HemisCB.Controllers
 {
     public class GiangVienNnController : Controller
     {
@@ -26,7 +26,8 @@ namespace HemisCB.Controllers.CB
             List<TbGiangVienNn> tbGiangVienNns = await ApiServices_.GetAll<TbGiangVienNn>("/api/cb/GiangVienNn");
             List<TbCanBo> tbcanbos = await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo");
             List<DmNoiDungHoatDongTaiVietNam> dmnoiDungHoatDongTaiVietNams = await ApiServices_.GetAll<DmNoiDungHoatDongTaiVietNam>("/api/dm/NoiDungHoatDongTaiVietNam");
-            tbGiangVienNns.ForEach(item => {
+            tbGiangVienNns.ForEach(item =>
+            {
                 item.IdCanBoNavigation = tbcanbos.FirstOrDefault(x => x.IdCanBo == item.IdCanBo);
                 item.IdNoiDungHoatDongTaiVietNamNavigation = dmnoiDungHoatDongTaiVietNams.FirstOrDefault(x => x.IdNoiDungHoatDongTaiVietNam == item.IdNoiDungHoatDongTaiVietNam);
             });
@@ -86,7 +87,7 @@ namespace HemisCB.Controllers.CB
         }
 
         // GET: TbGiangVienNns/Create
-      
+
         public async Task<IActionResult> Create()
         {
             try

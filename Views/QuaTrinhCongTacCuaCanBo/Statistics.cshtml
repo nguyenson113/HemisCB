@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<HemisCB.Models.TbQuaTrinhCongTacCuaCanBo>
 @using Newtonsoft.Json
 @{
-    ViewData["Title"] = "Thống kê";
+    ViewData["Title"] = "Thống kê - Quá trình công tác ";
     string labelJson = "", dataJson = "";
     Dictionary<string, int> Times_Thu = new Dictionary<string, int>();
     foreach (var item in Model)
