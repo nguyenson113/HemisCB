@@ -12,13 +12,25 @@
     <link rel="stylesheet" href="/assets/compiled/css/app.css">
     @* <link rel="stylesheet" href="/assets/compiled/css/app-dark.css"> *@
     <style>
-        * {
-        @* font-family: "Times New Roman", Times, serif; *@
+        .hemiscb {
+            font-family: 'Poppins', sans-serif;
+            font-size: 30px; /* Chỉnh kích thước nhỏ hơn */
+            font-weight: bold;
+            color: #3498db;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px; /* Giãn cách vừa phải */
+            background: linear-gradient(to right, #8e44ad, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 5px;
         }
 
-        * {
-            font-family: "Be Vietnam Pro", sans-serif;
-        }
+            .hemiscb:hover {
+                color: #e74c3c;
+                text-shadow: 2px 2px 6px rgba(231, 76, 60, 0.5);
+                transform: scale(1.05); /* Tăng kích thước nhẹ khi hover */
+                transition: all 0.3s ease-in-out;
+            }
     </style>
 </head>
 
@@ -29,9 +41,8 @@
             <div class="sidebar-wrapper active">
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div class="logo">
-                            <a href="index.html"><img src="/assets/compiled/svg/logo.svg" alt="Logo" srcset=""></a>
-                        </div>
+                        <div class="hemiscb">HemisCB</div>
+                      
                         @* <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
                         role="img" class="iconify iconify--system-uicons" width="20" height="20"
