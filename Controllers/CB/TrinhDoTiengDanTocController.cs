@@ -204,7 +204,7 @@ namespace HemisCB.Controllers.CB
             {
                 return NotFound();
             }
-            var tbTrinhDoTiengDanTocs = await ApiServices_.GetAll<TbTrinhDoTiengDanToc>("/api/cb/TrinhDoTiengDanToc");
+            var tbTrinhDoTiengDanTocs = await TbTrinhDoTiengDanTocs();
             var tbTrinhDoTiengDanToc = tbTrinhDoTiengDanTocs.FirstOrDefault(m => m.IdTrinhDoTiengDanToc == id);
             if (tbTrinhDoTiengDanToc == null)
             {

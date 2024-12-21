@@ -87,7 +87,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
 
-            var tbDanhHieuThiDuaGiaiThuongKhenThuongCanBos = await ApiServices_.GetAll<TbDanhHieuThiDuaGiaiThuongKhenThuongCanBo>("/api/cb/DanhHieuThiDuaGiaiThuongKhenThuongCanBo");
+            var tbDanhHieuThiDuaGiaiThuongKhenThuongCanBos = await TbDanhHieuThiDuaGiaiThuongKhenThuongCanBos();
             var tbDanhHieuThiDuaGiaiThuongKhenThuongCanBo = tbDanhHieuThiDuaGiaiThuongKhenThuongCanBos.FirstOrDefault(m => m.IdDanhHieuThiDuaGiaiThuongKhenThuongCanBo == id);
             if (tbDanhHieuThiDuaGiaiThuongKhenThuongCanBo == null)
             {

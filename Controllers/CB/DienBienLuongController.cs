@@ -198,7 +198,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
 
-            var tbDienBienLuongs = await ApiServices_.GetAll<TbDienBienLuong>("/api/cb/DienBienLuong");
+            var tbDienBienLuongs = await TbDienBienLuongs();
             var tbDienBienLuong = tbDienBienLuongs.FirstOrDefault(m => m.IdDienBienLuong == id);
             if (tbDienBienLuong == null)
             {

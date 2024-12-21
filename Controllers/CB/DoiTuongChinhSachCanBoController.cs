@@ -186,7 +186,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
 
-            var tbDoiTuongChinhSachCanBos = await ApiServices_.GetAll<TbDoiTuongChinhSachCanBo>("/api/cb/DoiTuongChinhSachCanBo");
+            var tbDoiTuongChinhSachCanBos = await TbDoiTuongChinhSachCanBos();
             var tbDoiTuongChinhSachCanBo = tbDoiTuongChinhSachCanBos.FirstOrDefault(m => m.IdDoiTuongChinhSachCanBo == id);
             if (tbDoiTuongChinhSachCanBo == null)
             {

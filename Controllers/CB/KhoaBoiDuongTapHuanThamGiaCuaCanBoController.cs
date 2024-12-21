@@ -227,7 +227,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
 
-            var tbKhoaBoiDuongTapHuanThamGiaCuaCanBos = await ApiServices_.GetAll<TbKhoaBoiDuongTapHuanThamGiaCuaCanBo>("/api/cb/KhoaBoiDuongTapHuanThamGiaCuaCanBo");
+            var tbKhoaBoiDuongTapHuanThamGiaCuaCanBos = await TbKhoaBoiDuongTapHuanThamGiaCuaCanBos();
             var tbKhoaBoiDuongTapHuanThamGiaCuaCanBo = tbKhoaBoiDuongTapHuanThamGiaCuaCanBos.FirstOrDefault(m => m.IdKhoaBoiDuongTapHuanThamGiaCuaCanBo == id);
             if (tbKhoaBoiDuongTapHuanThamGiaCuaCanBo == null)
             {

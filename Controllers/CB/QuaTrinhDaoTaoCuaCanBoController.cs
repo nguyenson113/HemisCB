@@ -215,7 +215,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
 
-            var tbQuaTrinhDaoTaoCuaCanBos = await ApiServices_.GetAll<TbQuaTrinhDaoTaoCuaCanBo>("/api/cb/QuaTrinhDaoTaoCuaCanBo");
+            var tbQuaTrinhDaoTaoCuaCanBos = await TbQuaTrinhDaoTaoCuaCanBos();
             var tbQuaTrinhDaoTaoCuaCanBo = tbQuaTrinhDaoTaoCuaCanBos.FirstOrDefault(m => m.IdQuaTrinhDaoTaoCuaCanBo == id);
             if (tbQuaTrinhDaoTaoCuaCanBo == null)
             {

@@ -172,37 +172,27 @@
         <table class="table" id="ntable" style="background-color:rgba(200,226,177,0.85);">
             <thead>
                 <tr style="background-color: olivedrab">
-                    <th>
+                    <th style="text-align:center" nowrap>
                         MÃ PHÒNG BAN ĐƠN VỊ
                     </th>
-                    <th>
+                    <th style="text-align:center" nowrap>
                         SỐ QUYẾT ĐỊNH
                     </th>
-                    <th>
-                        NGÀY QUYẾT ĐỊNH
-                    </th>
-                    <th>
-                        LÀ ĐƠN VỊ CHÍNH 
-                    </th>
-                    <th>
+                  
+                  
+                    <th style="text-align:center" nowrap>
                         LÀ ĐƠN VỊ GIẢNG DẠY 
                     </th>
-                    <th>
-                        THỜI GIAN CÓ HIỆU LỰC
+                    
+                  
+                    <th style="text-align:center" nowrap>
+                        CÁN BỘ
                     </th>
-                    <th>
-                        THỜI GIAN HẾT HIỆU LỰC
-                    </th>
-                    <th>
-                        ID CÁN BỘ
-                    </th>
-                    <th>
+                    <th style="text-align:center" nowrap>
                         CHỨC VỤ
                     </th>
-                    <th>
-                        HÌNH THỨC BỔ NHIỆM
-                    </th>
-                    <th>CHỨC NĂNG </th>
+                   
+                    <th style="text-align:center" nowrap>CHỨC NĂNG </th>
                 </tr>
             </thead>
             <tbody>
@@ -223,22 +213,7 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.SoQuyetDinh)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NgayQuyetDinh)
-                        </td>
-                        <td>
-                            @if (item.LaDonViChinh.HasValue)
-                            {
-                                @if (item.LaDonViChinh.Value)
-                                {
-                                    <span class="badge bg-success" style="text-align:center">Là đơn vị giảng dạy</span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-secondary" style="text-align:center">Không phải là đơn vị giảng dạy</span>
-                                }
-                            }
-                        </td>
+                      
                         <td>
                             @if (item.LaDonViGiangDay.HasValue)
                             {
@@ -252,21 +227,15 @@
                                 }
                             }
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThoiGianCoHieuLuc)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThoiGianHetHieuLuc)
-                        </td>
+                       
+                       
                         <td>
                             @Html.DisplayFor(modelItem => item.IdCanBoNavigation.IdNguoiNavigation.name)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.IdChucVuNavigation.IdChucVu)
+                            @Html.DisplayFor(modelItem => item.IdChucVuNavigation.ChucVu)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdHinhThucBoNhiemNavigation.IdHinhThucBoNhiem)
-                        </td>
+                  
                         <td>
                             <div class="edit_del">
 

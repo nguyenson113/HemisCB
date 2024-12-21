@@ -192,7 +192,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
 
-            var tbNganhDungTenGiangDays = await ApiServices_.GetAll<TbNganhDungTenGiangDay>("/api/cb/NganhDungTenGiangDay");
+            var tbNganhDungTenGiangDays = await TbNganhDungTenGiangDays();
             var tbNganhDungTenGiangDay = tbNganhDungTenGiangDays.FirstOrDefault(m => m.IdNganhDungTenGiangDay == id);
             if (tbNganhDungTenGiangDay == null)
             {

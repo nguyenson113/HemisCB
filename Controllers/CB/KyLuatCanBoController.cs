@@ -216,7 +216,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
 
-            var tbKyLuatCanBos = await ApiServices_.GetAll<TbKyLuatCanBo>("/api/cb/KyLuatCanBo");
+            var tbKyLuatCanBos = await TbKyLuatCanBos();
             var tbKyLuatCanBo = tbKyLuatCanBos.FirstOrDefault(m => m.IdKyLuatCanBo == id);
             if (tbKyLuatCanBo == null)
             {

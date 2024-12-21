@@ -196,7 +196,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
 
-            var tbHopDongs = await ApiServices_.GetAll<TbHopDong>("/api/cb/HopDong");
+            var tbHopDongs = await TbHopDongs();
             var tbHopDong = tbHopDongs.FirstOrDefault(m => m.IdHopDong == id);
             if (tbHopDong == null)
             {

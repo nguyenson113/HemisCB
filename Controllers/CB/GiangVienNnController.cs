@@ -199,7 +199,7 @@ namespace HemisCB.Controllers.CB
             {
                 return NotFound();
             }
-            var tbGiangVienNns = await ApiServices_.GetAll<TbGiangVienNn>("/api/cb/GiangVienNn");
+            var tbGiangVienNns = await TbGiangVienNns();
             var tbGiangVienNn = tbGiangVienNns.FirstOrDefault(m => m.IdGvnn == id);
             if (tbGiangVienNn == null)
             {

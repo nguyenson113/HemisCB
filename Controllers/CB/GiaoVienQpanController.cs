@@ -206,7 +206,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
 
-            var tbGiaoVienQpans = await ApiServices_.GetAll<TbGiaoVienQpan>("/api/cb/GiaoVienQPAN");
+            var tbGiaoVienQpans = await TbGiaoVienQpans();
             var tbGiaoVienQpan = tbGiaoVienQpans.FirstOrDefault(m => m.IdGiaoVienQpan == id);
             if (tbGiaoVienQpan == null)
             {

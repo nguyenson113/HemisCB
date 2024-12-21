@@ -204,7 +204,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
 
-            var tbPhuCaps = await ApiServices_.GetAll<TbPhuCap>("/api/CSGD/PhuCap");
+            var tbPhuCaps = await TbPhuCaps();
             var tbPhuCap = tbPhuCaps.FirstOrDefault(m => m.IdPhuCap == id);
             if (tbPhuCap == null)
             {

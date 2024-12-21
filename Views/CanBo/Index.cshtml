@@ -77,7 +77,7 @@
             }
 
         /*Định dạng khối nổi lên khi di chuyển chuột vào*/
-        .value: {
+        .value:hover {
             background-color: rgba(200,226,177,0.85); /*Chỉnh màu cho nền khi nổi lên trùng với màu nền */
             transform: scale(1.1); /*Chỉnh trường thông tin nổi lên trước và to hơn so với khi chưa chạm vào*/
             transition: transform 1s ease; /*Thời gian chuyển cảnh là 1s */
@@ -172,10 +172,7 @@
         <table class="table" id="ntable" style="background-color:rgba(200,226,177,0.85);">
             <thead>
                 <tr style="background-color: olivedrab">
-                    <th style="text-align:center" nowrap>
-                        MÃ CÁN BỘ
-                    </th>
-                
+                  
                    
                    
                     
@@ -223,9 +220,7 @@
                     // Kết hợp với hiệu ứng hover khi di chuột
                     <tr class="value" style="text-align: center; cursor: pointer;"
                         onclick="window.location.href='@Url.Action("Details", new { id = item.IdCanBo })'">
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MaCanBo)
-                        </td>
+                       
               
                       
                         

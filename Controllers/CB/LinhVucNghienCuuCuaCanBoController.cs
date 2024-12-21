@@ -211,7 +211,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
 
-            var tbLinhVucNghienCuuCuaCanBos = await ApiServices_.GetAll<TbLinhVucNghienCuuCuaCanBo>("/api/cb/LinhVucNghienCuuCuaCanBo");
+            var tbLinhVucNghienCuuCuaCanBos = await TbLinhVucNghienCuuCuaCanBos();
             var tbLinhVucNghienCuuCuaCanBo = tbLinhVucNghienCuuCuaCanBos.FirstOrDefault(m => m.IdLinhVucNghienCuuCuaCanBo == id);
             if (tbLinhVucNghienCuuCuaCanBo == null)
             {

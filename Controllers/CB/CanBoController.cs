@@ -230,7 +230,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
 
-            var tbCanBos = await ApiServices_.GetAll<TbQuaTrinhDaoTaoCuaCanBo>("/api/cb/CanBo");
+            var tbCanBos = await TbCanBos();
             var tbCanBo = tbCanBos.FirstOrDefault(m => m.IdCanBo == id);
             if (tbCanBo == null)
             {

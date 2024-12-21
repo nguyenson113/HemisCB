@@ -197,7 +197,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
 
-            var tbHopDongThinhGiangs = await ApiServices_.GetAll<TbHopDongThinhGiang>("/api/cb/HopDongThinhGiang");
+            var tbHopDongThinhGiangs = await TbHopDongThinhGiangs();
             var tbHopDongThinhGiang = tbHopDongThinhGiangs.FirstOrDefault(m => m.IdHopDongThinhGiang == id);
             if (tbHopDongThinhGiang == null)
             {
