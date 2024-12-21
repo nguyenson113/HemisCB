@@ -83,7 +83,7 @@ public partial class TbNguoi
     public int? IdThuongBinhHang { get; set; }
 
     //ForeignKey trỏ vào table [DM].[dmHoGiaDinhChinhSach]
-    [DisplayName("Gia Đình Chính Sách ")]
+    [DisplayName("Gia đình chính sách  ")]
     public int? IdGiaDinhChinhSach { get; set; }
 
     //ForeignKey trỏ vào table [DM].[dmChucDanhKhoaHoc]
@@ -118,46 +118,46 @@ public partial class TbNguoi
     [DisplayName("Trình độ tin học ")]
     public int? IdTrinhDoTinHoc { get; set; }
 
-    [DisplayName("Chức Danh KH")]
+    [DisplayName("Chức danh khoa học ")]
     public virtual DmChucDanhKhoaHoc? IdChucDanhKhoaHocNavigation { get; set; }
 
-    [DisplayName("Chuyên Môn ĐT")]
+    [DisplayName("Chuyên môn đào tạo ")]
     public virtual DmNganhDaoTao? IdChuyenMonDaoTaoNavigation { get; set; }
 
-    [DisplayName("Tôn Giáo")]
+    [DisplayName("Tôn giáo ")]
     public virtual DmTonGiao? IdTonGiaoNavigation { get; set; }
 
-    [DisplayName("Dân Tộc")]
+    [DisplayName("Dân tộc")]
     public virtual DmDanToc? IdDanTocNavigation { get; set; }
 
-    [DisplayName("Gia Đình Chính Sách")]
+    [DisplayName("Gia đình chính sách ")]
     public virtual DmHoGiaDinhChinhSach? IdGiaDinhChinhSachNavigation { get; set; }
 
-    [DisplayName("Giới Tính")]
+    [DisplayName("Giới tính")]
     public virtual DmGioiTinh? IdGioiTinhNavigation { get; set; }
 
-    [DisplayName("Khung Năng Lực NN")]
+    [DisplayName("Khung năng lực ngoại ngữ ")]
     public virtual DmKhungNangLucNgoaiNgu? IdKhungNangLucNgoaiNgucNavigation { get; set; }
 
-    [DisplayName("Ngoại Ngữ")]
+    [DisplayName("Ngoại ngữ ")]
     public virtual DmNgoaiNgu? IdNgoaiNguNavigation { get; set; }
 
-    [DisplayName("Quốc Tịch")]
+    [DisplayName("Quốc tịch ")]
     public virtual DmQuocTich? IdQuocTichNavigation { get; set; }
 
-    [DisplayName("Hạng Thương Binh")]
+    [DisplayName("Hạng thương binh ")]
     public virtual DmHangThuongBinh? IdThuongBinhHangNavigation { get; set; }
 
-    [DisplayName("Trình Độ ĐT")]
+    [DisplayName("Trình độ đào tạo ")]
     public virtual DmTrinhDoDaoTao? IdTrinhDoDaoTaoNavigation { get; set; }
 
-    [DisplayName("Trình Độ LLCT")]
+    [DisplayName("Trình độ lí luận chính trị ")]
     public virtual DmTrinhDoLyLuanChinhTri? IdTrinhDoLyLuanChinhTriNavigation { get; set; }
 
-    [DisplayName("Trình Độ QLNC")]
+    [DisplayName("Trình độ quản lí nhà nước ")]
     public virtual DmTrinhDoQuanLyNhaNuoc? IdTrinhDoQuanLyNhaNuocNavigation { get; set; }
 
-    [DisplayName("Trình Độ Tin Học")]
+    [DisplayName("Trình độ tin học ")]
     public virtual DmTrinhDoTinHoc? IdTrinhDoTinHocNavigation { get; set; }
 
 

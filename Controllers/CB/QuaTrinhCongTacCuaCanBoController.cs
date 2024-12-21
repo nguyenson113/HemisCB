@@ -39,14 +39,27 @@ namespace HemisCB.Controllers.CB
             List<DmChucDanhGiangVien> dmchucDanhGiangViens = await ApiServices_.GetAll<DmChucDanhGiangVien>("/api/dm/ChucDanhGiangVien");
             List<DmChucVu> dmchucVus = await ApiServices_.GetAll<DmChucVu>("/api/dm/ChucVu");
             List<TbCanBo> tbcanbos = await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo");
+            List<TbNguoi> tbNguois = await ApiServices_.GetAll<TbNguoi>("/api/Nguoi");
             tbQuaTrinhCongTacCuaCanBos.ForEach(item => {
                 item.IdChucDanhGiangVienNavigation = dmchucDanhGiangViens.FirstOrDefault(x => x.IdChucDanhGiangVien == item.IdChucDanhGiangVien);
                 item.IdChucVuNavigation = dmchucVus.FirstOrDefault(x => x.IdChucVu == item.IdChucVu);
                 item.IdCanBoNavigation = tbcanbos.FirstOrDefault(x => x.IdCanBo == item.IdCanBo);
+                item.IdCanBoNavigation.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdCanBoNavigation.IdNguoi);
             });
             return tbQuaTrinhCongTacCuaCanBos;
         }
 
+        private async Task<List<TbCanBo>> TbCanBos()
+        {
+            List<TbCanBo> tbcanbos = await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo");
+            List<TbNguoi> tbNguois = await ApiServices_.GetAll<TbNguoi>("/api/Nguoi");
+            tbcanbos.ForEach(item => {
+                item.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdNguoi);
+
+            });
+
+            return tbcanbos;
+        }
 
         public async Task<IActionResult> Index()
         {
@@ -98,7 +111,7 @@ namespace HemisCB.Controllers.CB
             // Tạo danh sách lựa chọn cho IdCanBo, IdChucDanhGiangVien, IdChucVu
             ViewData["IdChucDanhGiangVien"] = new SelectList(await ApiServices_.GetAll<DmChucDanhGiangVien>("/api/dm/ChucDanhGiangVien"), "IdChucDanhGiangVien", "ChucDanhGiangVien");
             ViewData["IdChucVu"] = new SelectList(await ApiServices_.GetAll<DmChucVu>("/api/dm/ChucVu"), "IdChucVu", "ChucVu");
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo");
+            ViewData["IdCanBo"] = new SelectList(await TbCanBos(), "IdCanBo", "IdNguoiNavigation.name");
             return View();
         }
 
@@ -130,7 +143,7 @@ namespace HemisCB.Controllers.CB
             // Nếu không hợp lệ, tạo lại danh sách lựa chọn
             ViewData["IdChucDanhGiangVien"] = new SelectList(await ApiServices_.GetAll<DmChucDanhGiangVien>("/api/dm/ChucDanhGiangVien"), "IdChucDanhGiangVien", "ChucDanhGiangVien", tbQuaTrinhCongTacCuaCanBo.IdChucDanhGiangVien);
             ViewData["IdChucVu"] = new SelectList(await ApiServices_.GetAll<DmChucVu>("/api/dm/ChucVu"), "IdChucVu", "ChucVu", tbQuaTrinhCongTacCuaCanBo.IdChucVu);
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbQuaTrinhCongTacCuaCanBo.IdCanBo);
+            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdNguoiNavigation.name", tbQuaTrinhCongTacCuaCanBo.IdCanBo);
            
           
             return View(tbQuaTrinhCongTacCuaCanBo); // Trả về view với thông tin đã nhập
@@ -156,7 +169,7 @@ namespace HemisCB.Controllers.CB
             }
 
             // Tạo danh sách lựa chọn cho IdCanBo, IdChucDanhGiangVien, IdChucVu
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbQuaTrinhCongTacCuaCanBo.IdCanBo);
+            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdNguoiNavigation.name", tbQuaTrinhCongTacCuaCanBo.IdCanBo);
             ViewData["IdChucDanhGiangVien"] = new SelectList(await ApiServices_.GetAll<DmChucDanhGiangVien>("/api/dm/ChucDanhGiangVien"), "IdChucDanhGiangVien", "ChucDanhGiangVien", tbQuaTrinhCongTacCuaCanBo.IdChucDanhGiangVien);
             ViewData["IdChucVu"] = new SelectList(await ApiServices_.GetAll<DmChucVu>("/api/dm/ChucVu"), "IdChucVu", "ChucVu", tbQuaTrinhCongTacCuaCanBo.IdChucVu);
             return View(tbQuaTrinhCongTacCuaCanBo); // Trả về view với thông tin để chỉnh sửa
@@ -196,7 +209,7 @@ namespace HemisCB.Controllers.CB
                 return RedirectToAction(nameof(Index)); // Chuyển hướng về danh sách
             }
             // Nếu không hợp lệ, tạo lại danh sách lựa chọn
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbQuaTrinhCongTacCuaCanBo.IdCanBo);
+            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdNguoiNavigation.name", tbQuaTrinhCongTacCuaCanBo.IdCanBo);
             ViewData["IdChucDanhGiangVien"] = new SelectList(await ApiServices_.GetAll<DmChucDanhGiangVien>("/api/dm/ChucDanhGiangVien"), "IdChucDanhGiangVien", "ChucDanhGiangVien", tbQuaTrinhCongTacCuaCanBo.IdChucDanhGiangVien);
             ViewData["IdChucVu"] = new SelectList(await ApiServices_.GetAll<DmChucVu>("/api/dm/ChucVu"), "IdChucVu", "ChucVu", tbQuaTrinhCongTacCuaCanBo.IdChucVu);
             return View(tbQuaTrinhCongTacCuaCanBo); // Trả về view với thông tin đã chỉnh sửa

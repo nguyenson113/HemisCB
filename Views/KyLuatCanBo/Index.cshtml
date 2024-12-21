@@ -205,7 +205,7 @@
                     <tr class="value" style="text-align: center; cursor: pointer;"
                         onclick="window.location.href='@Url.Action("Details", new { id = item.IdKyLuatCanBo })'">
                         <td>
-                            @Html.DisplayFor(modelItem => item.IdCanBo)
+                            @Html.DisplayFor(modelItem => item.IdCanBoNavigation.IdNguoiNavigation.name)
                         </td>
 
                    

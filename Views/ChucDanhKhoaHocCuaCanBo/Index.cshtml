@@ -68,7 +68,7 @@
             /*Định dạng chung cho table và tiêu đề của table*/
             table th {
                 background-color: rgba(200,226,177,0.85); /*Màu nền*/
-                color: black; /*Màu chữ*/
+                color: white; /*Màu chữ*/
                 font-size: 16px; /*Cỡ chữ */
                 font-family: "Pridi", serif; /*Phông chữ*/
                 font-weight: 600; /*Độ dày chữ*/
@@ -171,22 +171,20 @@
         <table class="table" id="ntable" style="background-color:rgba(200,226,177,0.85);">
             <thead>
                 <tr style="background-color: olivedrab">
-                    <th>
+                    <th style="text-align:center" nowrap>
                         SỐ QUYẾT ĐỊNH
                     </th>
-                    <th>
+                    <th style="text-align:center" nowrap>
                         NGÀY QUYẾT ĐỊNH
                     </th>
-                    <th>
+                    <th style="text-align:center" nowrap>
                         CÁN BỘ
                     </th>
                     <th>
                         CHỨC DANH KHOA HỌC CỦA CÁN BỘ
                     </th>
-                    <th>
-                        THẨM QUYỀN QUYẾT ĐỊNH
-                    </th>
-                    <th>CHỨC NĂNG</th>
+                   
+                    <th style="text-align:center" nowrap>CHỨC NĂNG</th>
                 </tr>
             </thead>
             <tbody>
@@ -208,14 +206,12 @@
                             @Html.DisplayFor(modelItem => item.NgayQuyetDinh)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.IdCanBoNavigation.IdCanBo)
+                            @Html.DisplayFor(modelItem => item.IdCanBoNavigation.IdNguoiNavigation.name)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.IdChucDanhKhoaHocNavigation.ChucDanhKhoaHoc)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdThamQuyenQuyetDinhNavigation.LoaiQuyetDinh)
-                        </td>
+                     
                         <td>
                             <div class="edit_del">
 

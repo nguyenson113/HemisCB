@@ -199,7 +199,7 @@
                     <tr class="value" style="text-align: center; cursor: pointer;"
                         onclick="window.location.href='@Url.Action("Details", new { id = item.IdGvnn })'">
                         <td style="text-align:center;">
-                            @Html.DisplayFor(modelItem => item.IdCanBo)
+                            @Html.DisplayFor(modelItem => item.IdCanBoNavigation.IdNguoiNavigation.name)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.CoQuanChuQuanOnuocNgoai)

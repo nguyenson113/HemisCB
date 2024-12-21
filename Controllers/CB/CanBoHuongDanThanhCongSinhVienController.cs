@@ -29,15 +29,27 @@ namespace HemisCB.Controllers.CB
                 List<TbCanBoHuongDanThanhCongSinhVien> tbCanBoHuongDanThanhCongSinhViens = await ApiServices_.GetAll<TbCanBoHuongDanThanhCongSinhVien>("/api/cb/CanBoHuongDanThanhCongSinhVien");
                 //Lấy dữ liệu liên qua trong TbCanBo từ APIHemis /api/cb/CanBo 
                 List<TbCanBo> tbcanbos = await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo");
-                tbCanBoHuongDanThanhCongSinhViens.ForEach(item =>
+                List<TbNguoi> tbNguois = await ApiServices_.GetAll<TbNguoi>("/api/Nguoi");
+            tbCanBoHuongDanThanhCongSinhViens.ForEach(item =>
                 {
                     //Lấy dữ liệu cho IdCanBoNavigation 
                     item.IdCanBoNavigation = tbcanbos.FirstOrDefault(x => x.IdCanBo == item.IdCanBo);
+                    item.IdCanBoNavigation.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdCanBoNavigation.IdNguoi);
                 });
                 //Trả kết quả 
                 return tbCanBoHuongDanThanhCongSinhViens;
-           
-            
+        }
+
+        private async Task<List<TbCanBo>> TbCanBos()
+        {
+            List<TbCanBo> tbcanbos = await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo");
+            List<TbNguoi> tbNguois = await ApiServices_.GetAll<TbNguoi>("/api/Nguoi");
+            tbcanbos.ForEach(item => {
+                item.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdNguoi);
+
+            });
+
+            return tbcanbos;
         }
         public async Task<IActionResult> Statistics()
         {
@@ -110,7 +122,7 @@ namespace HemisCB.Controllers.CB
             try
             {
                 //Tạo SelectList của IdCanBo 
-                ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo");
+                ViewData["IdCanBo"] = new SelectList(await TbCanBos(), "IdCanBo", "IdNguoiNavigation.name");
                 return View();
             }
             //Bắt lỗi nếu có và lưu lỗi vào BatLoi
@@ -141,7 +153,7 @@ namespace HemisCB.Controllers.CB
                     return RedirectToAction(nameof(Index));
                 }
                 //Hiển thị SelectList của IdCanBo, chọn và lưu dữ liệu vào biến IdCanBo 
-                ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbCanBoHuongDanThanhCongSinhVien.IdCanBo);
+                ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdNguoiNavigation.name", tbCanBoHuongDanThanhCongSinhVien.IdCanBo);
                 return View(tbCanBoHuongDanThanhCongSinhVien);
             }catch(Exception BatLoi)   //Bắt lỗi nếu có và lưu lỗi vào BatLoi
             {
@@ -170,7 +182,7 @@ namespace HemisCB.Controllers.CB
                     return NotFound();
                 }
                 //Hiển thị SelectList của IdCanBo, chọn và lưu dữ liệu vào biến IdCanBo 
-                ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbCanBoHuongDanThanhCongSinhVien.IdCanBo);
+                ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdNguoiNavigation.name", tbCanBoHuongDanThanhCongSinhVien.IdCanBo);
                 return View(tbCanBoHuongDanThanhCongSinhVien);
             }
             catch (Exception BatLoi)//Bắt lỗi nếu có và lưu lỗi vào BatLoi
@@ -217,7 +229,7 @@ namespace HemisCB.Controllers.CB
                 return RedirectToAction(nameof(Index));
             }
             //Hiển thị SelectList của IdCanBo, chọn và lưu dữ liệu vào biến IdCanBo 
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbCanBoHuongDanThanhCongSinhVien.IdCanBo);
+            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdNguoiNavigation.name", tbCanBoHuongDanThanhCongSinhVien.IdCanBo);
             return View(tbCanBoHuongDanThanhCongSinhVien);
         }
 

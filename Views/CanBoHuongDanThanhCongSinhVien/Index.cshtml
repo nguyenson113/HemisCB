@@ -66,6 +66,10 @@
                 font-style: normal; /*Kiểu chữ */
             }
 
+         th {
+             text-align: center;
+         }
+
             /*Định dạng chung cho table và tiêu đề của table*/
             table th {
                 background-color: rgba(200,226,177,0.85); /*Màu nền*/
@@ -171,22 +175,20 @@
     <body>
         <table class="table" id="ntable" style="background-color:rgba(200,226,177,0.85);" >
             <thead>
-            <th>
+            <th style="text-align:center" nowrap>
                 MÃ SINH VIÊN
             </th>
-            <th>
+            <th style="text-align:center" nowrap>
                 TRÁCH NHIỆM HƯỚNG DẪN
             </th>
-            <th>
+            <th style="text-align:center" nowrap>
                 THỜI GIAN BẮT ĐẦU
             </th>
-            <th>
-                THỜI GIAN KẾT THÚC
-            </th>
-            <th>
+            
+            <th style="text-align:center" nowrap>
                 CÁN BỘ
             </th>
-            <th>CHỨC NĂNG </th>
+            <th style="text-align:center" nowrap>CHỨC NĂNG </th>
             </thead>
             <tbody>
                 @foreach (var item in Model)
@@ -209,9 +211,7 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.ThoiGianBatDau)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThoiGianKetThuc)
-                        </td>
+                        
                         <td>
                             @Html.DisplayFor(modelItem => item.IdCanBo)
                         </td>

@@ -27,12 +27,27 @@ namespace HemisCB.Controllers.CB
             List<TbNganhDungTenGiangDay> tbNganhDungTenGiangDays = await ApiServices_.GetAll<TbNganhDungTenGiangDay>("/api/cb/NganhDungTenGiangDay");
             List<TbCanBo> tbcanbos = await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo");
             List<DmNganhDaoTao> dmnganhDaoTaos = await ApiServices_.GetAll<DmNganhDaoTao>("/api/dm/NganhDaoTao");
+            List<TbNguoi> tbNguois = await ApiServices_.GetAll<TbNguoi>("/api/Nguoi");
             tbNganhDungTenGiangDays.ForEach(item => {
                 item.IdCanBoNavigation = tbcanbos.FirstOrDefault(x => x.IdCanBo == item.IdCanBo);
                 item.IdNganhDaoTaoNavigation = dmnganhDaoTaos.FirstOrDefault(x => x.IdNganhDaoTao == item.IdNganhDaoTao);
+                item.IdCanBoNavigation.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdCanBoNavigation.IdNguoi);
             });
             return tbNganhDungTenGiangDays;
         }
+
+        private async Task<List<TbCanBo>> TbCanBos()
+        {
+            List<TbCanBo> tbcanbos = await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo");
+            List<TbNguoi> tbNguois = await ApiServices_.GetAll<TbNguoi>("/api/Nguoi");
+            tbcanbos.ForEach(item => {
+                item.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdNguoi);
+
+            });
+
+            return tbcanbos;
+        }
+
 
         public async Task<IActionResult> Statistics()
         {
@@ -91,7 +106,7 @@ namespace HemisCB.Controllers.CB
             // Tạo danh sách lựa chọn cho IdCanBo, IdChucDanhGiangVien, IdChucVu
           
             ViewData["IdNganhDaoTao"] = new SelectList(await ApiServices_.GetAll<DmNganhDaoTao>("/api/dm/NganhDaoTao"), "IdNganhDaoTao", "NganhDaoTao");
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo");
+            ViewData["IdCanBo"] = new SelectList(await TbCanBos(), "IdCanBo", "IdNguoiNavigation.name");
             return View();
         }
 
@@ -110,7 +125,7 @@ namespace HemisCB.Controllers.CB
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdNganhDaoTao"] = new SelectList(await ApiServices_.GetAll<DmNganhDaoTao>("/api/dm/NganhDaoTao"), "IdNganhDaoTao", "NganhDaoTao", tbNganhDungTenGiangDay.IdNganhDaoTao);
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbNganhDungTenGiangDay.IdCanBo);
+            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdNguoiNavigation.name", tbNganhDungTenGiangDay.IdCanBo);
 
             return View(tbNganhDungTenGiangDay);
         }
@@ -128,7 +143,7 @@ namespace HemisCB.Controllers.CB
             {
                 return NotFound();
             }
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<DmNganhDaoTao>("/api/dm/NganhDaoTao"), "IdCanBo", "IdCanBo", tbNganhDungTenGiangDay.IdCanBo);
+            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<DmNganhDaoTao>("/api/dm/NganhDaoTao"), "IdCanBo", "IdNguoiNavigation.name", tbNganhDungTenGiangDay.IdCanBo);
             ViewData["IdNganhDaoTao"] = new SelectList(await ApiServices_.GetAll<DmNganhDaoTao>("/api/dm/NganhDaoTao"), "IdNganhDaoTao", "NganhDaoTao", tbNganhDungTenGiangDay.IdNganhDaoTao);
             return View(tbNganhDungTenGiangDay);
         }
@@ -164,7 +179,7 @@ namespace HemisCB.Controllers.CB
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<DmNganhDaoTao>("/api/dm/NganhDaoTao"), "IdCanBo", "IdCanBo", tbNganhDungTenGiangDay.IdCanBo);
+            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<DmNganhDaoTao>("/api/dm/NganhDaoTao"), "IdCanBo", "IdNguoiNavigation.name", tbNganhDungTenGiangDay.IdCanBo);
             ViewData["IdNganhDaoTao"] = new SelectList(await ApiServices_.GetAll<DmNganhDaoTao>("/api/dm/NganhDaoTao"), "IdNganhDaoTao", "NganhDaoTao", tbNganhDungTenGiangDay.IdNganhDaoTao);
             return View(tbNganhDungTenGiangDay);
         }

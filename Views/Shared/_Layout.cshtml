@@ -13,11 +13,19 @@
     <link rel="stylesheet" crossorigin href="./assets/compiled/css/iconly.css">
     
     @await RenderSectionAsync("Heads", required: false)
+    @await RenderSectionAsync("Styles", required: false)
     <link rel="stylesheet" href="/assets/compiled/css/app.css">
     @* <link rel="stylesheet" href="/assets/compiled/css/app-dark.css"> *@
     <style>
+     
+        * {
+            font-family: "Be Vietnam Pro", sans-serif;
+        }
+    </style>
+
+    <style>
         .hemiscb {
-            font-family: 'Poppins', sans-serif;
+           
             font-size: 30px; /* Chỉnh kích thước nhỏ hơn */
             font-weight: bold;
             color: #3498db;
@@ -45,7 +53,7 @@
             <div class="sidebar-wrapper active">
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div class="hemiscb">HemisCB</div>
+                        <div class="hemiscb"><a href="/Home/Index">HemisCB</a></div>
                       
                         @* <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
@@ -101,7 +109,7 @@
                         </div>
 
                         <div class="sidebar-toggler  x">
-                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                            <a href="/Account" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
                         </div>
 
                     </div>
@@ -109,7 +117,7 @@
                 <div class="sidebar-menu">
                     <ul class="menu">
 
-                        <li class="sidebar-item  has-sub" action_name="Account_article">
+                        <li class="sidebar-item  has-sub" >
                             <a href="#" class="sidebar-link">
                                 <i class="bi bi-person-circle"></i>
                                 <span>Tài khoản</span>
@@ -117,17 +125,17 @@
 
                             <ul class="submenu  submenu-closed" style="--submenu-height: 86px;" action_name="Account_article">
 
-                                <li class="submenu-item  " action_name="Account_Profile">
-                                    <a href="/Account/Profile" class="submenu-link">Đăng nhập </a>
-
+                                <li class="submenu-item" action_name="PhanAnh_Login">
+                                    <a href="/Account/Login" class="submenu-link"> Đăng nhập </a>
+                                    
                                 </li>
 
-                                <li class="submenu-item  " action_name="Account_Security">
-                                    <a href="/Account/Security" class="submenu-link">Đăng ký </a>
+                                <li class="submenu-item  " action_name="PhanAnh_Security">
+                                    <a href="/Account/Register" class="submenu-link"> Đăng ký </a>
 
                                 </li>
-                                <li class="submenu-item  " action_name="Account_Logout">
-                                    <a href="/Login/Logout" class="submenu-link">Thoát </a>
+                                <li class="submenu-item/Logout" action_name="PhanAnh_Logout">
+                                    <a href="/Account" class="submenu-link"> Thoát </a>
 
                                 </li>
                             </ul>

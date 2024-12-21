@@ -171,16 +171,16 @@
         <table class="table" id="ntable" style="background-color:rgba(200,226,177,0.85);">
             <thead>
                 <tr style="background-color: olivedrab">
-                    <th>CƠ SỞ ĐÀO TẠO</th>
-                    <th>THỜI GIAN BẮT ĐẦU </th>
-                    <th>THỜI GIAN KẾT THÚC</th>
-                    <th>NĂM TỐT NGHIỆP</th>
-                    <th>ID CÁN BỘ </th>
-                    <th>LOẠI HÌNH ĐÀO TẠO</th>
-                    <th>NGÀNH ĐÀO TẠO</th>
-                    <th>QUỐC GIA ĐÀO TẠO</th>
-                    <th>TRÌNH ĐỘ ĐÀO TẠO </th>
-                    <th>CHỨC NĂNG </th>
+                    <th style="text-align:center" nowrap>CƠ SỞ ĐÀO TẠO</th>
+                    <th style="text-align:center" nowrap>THỜI GIAN BẮT ĐẦU </th>
+                   
+               
+                    <th style="text-align:center" nowrap> CÁN BỘ </th>
+                    
+                    <th style ="text-align:center" nowrap>NGÀNH ĐÀO TẠO</th>
+               
+                    <th style="text-align:center" nowrap>TRÌNH ĐỘ ĐÀO TẠO </th>
+                    <th style="text-align:center" nowrap>CHỨC NĂNG </th>
                 </tr>
             </thead>
             <tbody>
@@ -197,12 +197,12 @@
                         onclick="window.location.href='@Url.Action("Details", new { id = item.IdQuaTrinhDaoTaoCuaCanBo })'">
                         <td>@Html.DisplayFor(modelItem => item.CoSoDaoTao)</td>
                         <td>@Html.DisplayFor(modelItem => item.ThoiGianBatDau)</td>
-                        <td>@Html.DisplayFor(modelItem => item.ThoiGianKetThuc)</td>
-                        <td>@Html.DisplayFor(modelItem => item.NamTotNghiep)</td>
-                        <td>@Html.DisplayFor(modelItem => item.IdCanBoNavigation.IdCanBo)</td>
-                        <td>@Html.DisplayFor(modelItem => item.IdLoaiHinhDaoTaoNavigation.LoaiHinhDaoTao)</td>
+
+                     
+                        <td>@Html.DisplayFor(modelItem => item.IdCanBoNavigation.IdNguoiNavigation.name)</td>
+                       
                         <td>@Html.DisplayFor(modelItem => item.IdNganhDaoTaoNavigation.NganhDaoTao)</td>
-                        <td>@Html.DisplayFor(modelItem => item.IdQuocGiaDaoTaoNavigation.TenNuoc)</td>
+                       
                         <td>@Html.DisplayFor(modelItem => item.IdTrinhDoDaoTaoNavigation.TrinhDoDaoTao)</td>
                         <td>
                             <div class="edit_del">

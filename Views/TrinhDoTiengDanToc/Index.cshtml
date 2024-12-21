@@ -170,7 +170,7 @@
         <table class="table" id="ntable" style="background-color:rgba(200,226,177,0.85);">
             <thead>
                 <tr style="background-color: olivedrab">
-                    <th class="text-center">ID CÁN BỘ </th>
+                    <th class="text-center"> CÁN BỘ </th>
                     <th class="text-center">KHUNG NĂNG LỰC NGOẠI NGỮ </th>
                     <th class="text-center">TIẾNG DÂN TỘC </th>
                     <th class="text-center">CHỨC NĂNG </th>
@@ -188,7 +188,7 @@
                     // Kết hợp với hiệu ứng hover khi di chuột
                     <tr class="value" style="text-align: center; cursor: pointer;"
                         onclick="window.location.href='@Url.Action("Details", new { id = item.IdTrinhDoTiengDanToc })'">
-                        <td class="text-center">@Html.DisplayFor(modelItem => item.IdCanBoNavigation.IdCanBo)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.IdCanBoNavigation.IdNguoiNavigation.name)</td>
                         <td class="text-center">@Html.DisplayFor(modelItem => item.IdKhungNangLucNgoaiNguNavigation.TenKhungNangLucNgoaiNgu)</td>
                         <td class="text-center">@Html.DisplayFor(modelItem => item.IdTiengDanTocNavigation.TiengDanToc)</td>
                         <td>

@@ -172,100 +172,43 @@
         <table class="table" id="ntable" style="background-color:rgba(200,226,177,0.85);">
             <thead>
                 <tr style="background-color: olivedrab">
-                    <th>
+                    <th style="text-align:center" nowrap>
                         MÃ CÁN BỘ
                     </th>
-                    <th>
-                        SỐ BẢO HIỂM XÃ HỘI
-                    </th>
-                    <th>
-                        EMAIL
-                    </th>
-                    <th>
-                        ĐIỆN THOẠI
-                    </th>
-                    <th>
-                        NGÀY CHUYỂN TRẠNG THÁI
-                    </th>
-                    <th>
-                        SỐ QUYẾT ĐỊNH VỀ HƯU
-                    </th>
-                    <th>
-                        NGÀY QUYẾT ĐỊNH VỀ HƯU
-                    </th>
-                    <th>
-                        HÌNH THỨC CHUYỂN ĐẾN
-                    </th>
-                    <th>
-                        NGÀY KẾT THÚC TẠM NGHỈ
-                    </th>
-                    <th>
+                
+                   
+                   
+                    
+                    
+                   
+                    <th style="text-align:center" nowrap>
                         CƠ QUAN CÔNG TÁC
                     </th>
-                    <th>
-                        NGÀY TUYỂN DỤNG
-                    </th>
-                    <th>
-                        CHỨNG CHỈ SƯ PHẠM CỦA GIẢNG VIÊN
-                    </th>
-                    <th>
+                   
+                   
+                    <th style="text-align:center" nowrap>
                         LÀ CÔNG CHỨC
                     </th>
-                    <th>
-                        LÀ VIÊN CHỨC
-                    </th>
-                    <th>
-                        CÓ DẠY MÔN MÁC-LÊNIN
-                    </th>
-                    <th>
-                        CÓ DẠY MÔN SƯ PHẠM
-                    </th>
-                    <th>
-                        SỐ GIẤY PHÉP LAO ĐỘNG
-                    </th>
-                    <th>
-                        THÂM NIÊN CÔNG TÁC
-                    </th>
-                    <th>
-                        TÊN DOANH NGHIỆP
-                    </th>
-                    <th>
-                        NĂM KINH NGHIỆM GIẢNG DẠY
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.GiangVienDapUngTt03)
-                    </th>
-                    <th>
-                        CHỨC DANH GIẢNG VIÊN
-                    </th>
-                    <th>
-                        CHỨC DANH NGHỀ NGHIỆP
-                    </th>
-                    <th>
-                        CHỨC DANH NGHIÊN CỨU KHOA HỌC
-                    </th>
-                    <th>
+                   
+                  
+             
+                   
+                   
+                    
+                    <th style="text-align:center" nowrap>
                         CHỨC VỤ CÔNG TÁC
                     </th>
-                    <th>
-                        HUYỆN
-                    </th>
-                    <th>
-                        NGẠCH
-                    </th>
-                    <th>
+                    
+                   
+                    <th style="text-align:center" nowrap>
                         ID NGƯỜI
                     </th>
-                    <th>
-                        TỈNH
-                    </th>
-                    <th>
+                    
+                    <th style="text-align:center" nowrap>
                         TRẠNG THÁI LÀM VIỆC
                     </th>
-                    <th>
-                        XÃ
-                    </th>
-                    <th>CHỨC NĂNG</th>
+                    
+                    <th style="text-align:center" nowrap>CHỨC NĂNG</th>
                 </tr>
             </thead>
             <tbody>
@@ -283,49 +226,15 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.MaCanBo)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SoBaoHiemXaHoi)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DienThoai)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NgayChuyenTrangThai)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SoQuyetDinhHuuNghiViec)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NgayQuyetDinhHuuNghiViec)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.HinhThucChuyenDen)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NgayKetThucTamNghi)
-                        </td>
+              
+                      
+                        
+                        
                         <td>
                             @Html.DisplayFor(modelItem => item.CoQuanCongTac)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NgayTuyenDung)
-                        </td>
-                        <td>
-                            @if (item.ChungChiSuPhamGiangVien.HasValue)
-                            {
-                                @if (item.ChungChiSuPhamGiangVien.Value)
-                                {
-                                    <span class="badge bg-success" style="text-align:center">Có chứng chỉ </span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-secondary" style="text-align:center">Không có chứng chỉ </span>
-                                }
-                            }
-                        </td>
+                  
+                        
                         <td>
                             @if (item.LaCongChuc.HasValue)
                             {
@@ -339,100 +248,25 @@
                                 }
                             }
                         </td>
-                        <td>
-                            @if (item.LaVienChuc.HasValue)
-                            {
-                                @if (item.LaVienChuc.Value)
-                                {
-                                    <span class="badge bg-success" style="text-align:center">Là viên chức </span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-secondary" style="text-align:center">Không phải là viên chức </span>
-                                }
-                            }
-                        </td>
-                        <td>
-                            @if (item.CoDayMonMacLeNin.HasValue)
-                            {
-                                @if (item.CoDayMonMacLeNin.Value)
-                                {
-                                    <span class="badge bg-success" style="text-align:center">Có dạy môn Mác-Lênin </span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-secondary" style="text-align:center">Không dạy môn Mác-Lênin</span>
-                                }
-                            }
-                        </td>
-                        <td>
-                            @if (item.CoDayMonSuPham.HasValue)
-                            {
-                                @if (item.CoDayMonSuPham.Value)
-                                {
-                                    <span class="badge bg-success" style="text-align:center">Có dạy môn sư phạm</span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-secondary" style="text-align:center">Không dạy môn sư phạm</span>
-                                }
-                            }
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SoGiayPhepLaoDong)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThamNienCongTac)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TenDoanhNghiep)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NamKinhNghiemGiangDay)
-                        </td>
-                        <td>
-                            @if (item.GiangVienDapUngTt03.HasValue)
-                            {
-                                @if (item.GiangVienDapUngTt03.Value)
-                                {
-                                    <span class="badge bg-success" style="text-align:center">Đáp ứng </span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-secondary" style="text-align:center">Không đáp ứng </span>
-                                }
-                            }
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdChucDanhGiangVienNavigation.ChucDanhGiangVien)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdChucDanhNgheNghiepNavigation.ChucDanhNgheNghiep)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdChucDanhNghienCuuKhoaHocNavigation.ChucDanhNghienCuuKhoaHoc)
-                        </td>
+                       
+                 
+                       
+                       
+                      
+                    
                         <td>
                             @Html.DisplayFor(modelItem => item.IdChucVuCongTacNavigation.ChucVu)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdHuyenNavigation.TenHuyen)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdNgachNavigation.Ngach)
-                        </td>
+                       
+                      
                         <td>
                             @Html.DisplayFor(modelItem => item.IdNguoiNavigation.IdNguoi)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdTinhNavigation.TenTinh)
-                        </td>
+                        
                         <td>
                             @Html.DisplayFor(modelItem => item.IdTrangThaiLamViecNavigation.TrangThaiCanBo)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdXaNavigation.TenXa)
-                        </td>
+                       
                         <td>
                             <div class="edit_del">
 

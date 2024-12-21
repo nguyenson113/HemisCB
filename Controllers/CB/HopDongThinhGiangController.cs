@@ -26,11 +26,24 @@ namespace HemisCB.Controllers.CB
             List<TbHopDongThinhGiang> tbHopDongThinhGiangs = await ApiServices_.GetAll<TbHopDongThinhGiang>("/api/cb/HopDongThinhGiang");
             List<TbCanBo> tbcanbos = await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo");
             List<DmTrangThaiHopDong> dmtrangThaiHopDongs = await ApiServices_.GetAll<DmTrangThaiHopDong>("/api/dm/TrangThaiHopDong");
+            List<TbNguoi> tbNguois = await ApiServices_.GetAll<TbNguoi>("/api/Nguoi");
             tbHopDongThinhGiangs.ForEach(item => {
                 item.IdCanBoNavigation = tbcanbos.FirstOrDefault(x => x.IdCanBo == item.IdCanBo);
                 item.IdTrangThaiHopDongNavigation = dmtrangThaiHopDongs.FirstOrDefault(x => x.IdTrangThaiHopDong == item.IdTrangThaiHopDong);
+                item.IdCanBoNavigation.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdCanBoNavigation.IdNguoi);
             });
             return tbHopDongThinhGiangs;
+        }
+        private async Task<List<TbCanBo>> TbCanBos()
+        {
+            List<TbCanBo> tbcanbos = await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo");
+            List<TbNguoi> tbNguois = await ApiServices_.GetAll<TbNguoi>("/api/Nguoi");
+            tbcanbos.ForEach(item => {
+                item.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdNguoi);
+
+            });
+
+            return tbcanbos;
         }
 
         public async Task<IActionResult> Statistics()

@@ -38,34 +38,34 @@
                @*  @Html.DisplayNameFor(model => model.name) *@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdGioiTinhNavigation)
+               GIỚI TÍNH 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NgaySinh)
+                NGÀY SINH 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdQuocTichNavigation)
+              QUỐC TỊCH 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdDanTocNavigation)
+               DÂN TỘC 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdTonGiaoNavigation)
+               TÔN GIÁO 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdChucDanhKhoaHocNavigation)
+                CHỨC DANH KHOA HỌC 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SoCccd)
+               SỐ CCCD 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NgayCapCccd)
+                NGÀY CẤP CCCD 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NoiCapCccd)
+                NƠI CẤP CCCD 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NgayVaoDoan)
+                NGÀY VÀO ĐOÀN 
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NgayVaoDang)
@@ -272,43 +272,7 @@
                                 columns: function(idx, data, node) {
                                     if (node.classList.contains("_nonorder")) return false;
                                     return true;
-                                },
-
-                         {
-                            className: 'btn btn-primary',
-                            text: 'Import Excel',
-                            action: function (e, dt, node, config) {
-                                import_excel((json) => {
-                                    let data = JSON.parse(json);
-                                    let list = data['Sheet1'];
-                                    let _ExcelNoSheet = [];
-                                    for (let i = 0; i < list.length; ++i) {
-                                        let arr = [];
-                                        for (const [key, value] of Object.entries(list[i])) {
-                                            arr.push(value.toString());
-                                        }
-                                        _ExcelNoSheet.push(arr);
-                                    }
-                                    let _json = JSON.stringify(_ExcelNoSheet, null, 4);
-                                    console.log(_json);
-                                    $.ajax({
-                                        method: "post",
-                                        url: "/Nguoi/Excel",
-                                        data: {
-                                            "json": _json,
-                                        },
-                                        success: function (response) {
-                                            // Code to execute if the request succeeds
-                                            console.log('Success:', response.value['msg']);
-                                        },
-                                        error: function (xhr, status, error) {
-                                            // Code to execute if the request fails
-                                            alert('Error:' + xhr.responseJSON.value['msg']);
-                                        }
-                                    });
-                                });
-                            }
-                        }
+                                }
 
                             }
                         }

@@ -198,7 +198,7 @@
                     // Kết hợp với hiệu ứng hover khi di chuột
                     <tr class="value" style="text-align: center; cursor: pointer;"
                         onclick="window.location.href='@Url.Action("Details", new { id = item.IdPhuCap })'">
-                        <td>@Html.DisplayFor(modelItem => item.IdCanBo)</td>
+                        <td>@Html.DisplayFor(modelItem => item.IdCanBoNavigation.IdNguoiNavigation.name)</td>
                         <td>@Html.DisplayFor(modelItem => item.IdPhuCap)</td>
                         <td>@Html.DisplayFor(modelItem => item.PhuCapThuHutNghe)</td>
                         <td>@Html.DisplayFor(modelItem => item.PhuCapThamNien)</td>

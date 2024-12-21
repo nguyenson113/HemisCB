@@ -169,14 +169,14 @@
         <table class="table" id="ntable" style="background-color:rgba(200,226,177,0.85);">
             <thead>
                 <tr style="background-color: olivedrab">
-                    <th>TỪ THÁNG NĂM </th>
-                    <th>ĐẾN THÁNG NĂM </th>
-                    <th>ĐƠN VỊ CÔNG TÁC</th>
-                    <th>ID Cán bộ</th>
-                    <th>CHỨC DANH GIẢNG VIÊN</th>
-                    <th>CHỨC VỤ </th>
-                    <th>ID QUÁ TRÌNH CÔNG TÁC</th>
-                    <th>CHỨC NĂNG</th>
+                    <th style="text-align:center" nowrap>TỪ THÁNG NĂM </th>
+                  
+                    <th style="text-align:center" nowrap>ĐƠN VỊ CÔNG TÁC</th>
+                    <th style="text-align:center" nowrap>ID Cán bộ</th>
+                    <th style="text-align:center" nowrap>CHỨC DANH GIẢNG VIÊN</th>
+                    <th style="text-align:center" nowrap>CHỨC VỤ </th>
+
+                    <th style="text-align:center" nowrap>CHỨC NĂNG</th>
                 </tr>
             </thead>
             <tbody>
@@ -192,12 +192,12 @@
                     <tr class="value" style="text-align: center; cursor: pointer;"
                         onclick="window.location.href='@Url.Action("Details", new { id = item.IdQuaTrinhCongTacCuaCanBo })'">
                         <td>@Html.DisplayFor(modelItem => item.TuThangNam)</td>
-                        <td>@Html.DisplayFor(modelItem => item.DenThangNam)</td>
+                    
                         <td>@Html.DisplayFor(modelItem => item.DonViCongTac)</td>
-                        <td>@Html.DisplayFor(modelItem => item.IdCanBoNavigation.IdCanBo)</td>
+                        <td>@Html.DisplayFor(modelItem => item.IdCanBoNavigation.IdNguoiNavigation.name)</td>
                         <td>@Html.DisplayFor(modelItem => item.IdChucDanhGiangVienNavigation.ChucDanhGiangVien)</td>
                         <td>@Html.DisplayFor(modelItem => item.IdChucVuNavigation.ChucVu)</td>
-                        <td>@Html.DisplayFor(modelItem => item.IdQuaTrinhCongTacCuaCanBo)</td>
+                        
                         <td>
                             <div class="edit_del">
 
