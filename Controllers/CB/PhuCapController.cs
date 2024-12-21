@@ -153,7 +153,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
             ViewData["IdBacLuong"] = new SelectList(await ApiServices_.GetAll<DmBacLuong>("/api/dm/BacLuong"), "IdBacLuong", "BacLuong", tbPhuCap.IdBacLuong);
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdNguoiNavigation.name", tbPhuCap.IdCanBo);
+            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbPhuCap.IdCanBo);
             ViewData["IdHeSoLuong"] = new SelectList(await ApiServices_.GetAll<DmHeSoLuong>("/api/dm/HeSoLuong"), "IdHeSoLuong", "HeSoLuong", tbPhuCap.IdHeSoLuong);
             return View(tbPhuCap);
         }
@@ -191,7 +191,7 @@ namespace HemisCB.Controllers.CB
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdBacLuong"] = new SelectList(await ApiServices_.GetAll<DmBacLuong>("/api/dm/BacLuong"), "IdBacLuong", "BacLuong", tbPhuCap.IdBacLuong);
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdNguoiNavigation.name", tbPhuCap.IdCanBo);
+            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbPhuCap.IdCanBo);
             ViewData["IdHeSoLuong"] = new SelectList(await ApiServices_.GetAll<DmHeSoLuong>("/api/dm/HeSoLuong"), "IdHeSoLuong", "HeSoLuong", tbPhuCap.IdHeSoLuong);
             return View(tbPhuCap);
         }

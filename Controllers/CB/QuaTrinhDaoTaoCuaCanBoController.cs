@@ -160,7 +160,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
 
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdNguoiNavigation.name", tbQuaTrinhDaoTaoCuaCanBo.IdCanBo);
+            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbQuaTrinhDaoTaoCuaCanBo.IdCanBo);
             ViewData["IdLoaiHinhDaoTao"] = new SelectList(await ApiServices_.GetAll<DmLoaiHinhDaoTao>("/api/dm/LoaiHinhDaoTao"), "IdLoaiHinhDaoTao", "LoaiHinhDaoTao", tbQuaTrinhDaoTaoCuaCanBo.IdLoaiHinhDaoTao);
             ViewData["IdNganhDaoTao"] = new SelectList(await ApiServices_.GetAll<DmNganhDaoTao>("/api/dm/NganhDaoTao"), "IdNganhDaoTao", "NganhDaoTao", tbQuaTrinhDaoTaoCuaCanBo.IdNganhDaoTao);
             ViewData["IdQuocGiaDaoTao"] = new SelectList(await ApiServices_.GetAll<DmQuocTich>("/api/dm/QuocTich"), "IdQuocTich", "TenNuoc", tbQuaTrinhDaoTaoCuaCanBo.IdQuocGiaDaoTao);
@@ -199,7 +199,7 @@ namespace HemisCB.Controllers.CB
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdNguoiNavigation.name", tbQuaTrinhDaoTaoCuaCanBo.IdCanBo);
+            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbQuaTrinhDaoTaoCuaCanBo.IdCanBo);
             ViewData["IdLoaiHinhDaoTao"] = new SelectList(await ApiServices_.GetAll<DmLoaiHinhDaoTao>("/api/dm/LoaiHinhDaoTao"), "IdLoaiHinhDaoTao", "LoaiHinhDaoTao", tbQuaTrinhDaoTaoCuaCanBo.IdLoaiHinhDaoTao);
             ViewData["IdNganhDaoTao"] = new SelectList(await ApiServices_.GetAll<DmNganhDaoTao>("/api/dm/NganhDaoTao"), "IdNganhDaoTao", "NganhDaoTao", tbQuaTrinhDaoTaoCuaCanBo.IdNganhDaoTao);
             ViewData["IdQuocGiaDaoTao"] = new SelectList(await ApiServices_.GetAll<DmQuocTich>("/api/dm/QuocTich"), "IdQuocTich", "TenNuoc", tbQuaTrinhDaoTaoCuaCanBo.IdQuocGiaDaoTao);
