@@ -6,114 +6,117 @@
 }
 
 @section Heads {
-    <!-- Khai báo meta và liên kết các tệp CSS, JavaScript -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width:device-width, initial-scale=1" />
 
-    <!-- Thư viện Font Awesome cho các icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
 
-    <!-- Font chữ Pridi từ Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pridi:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- CSS tuỳ chỉnh -->
     <style>
-        /* Định dạng chung cho body */
         body {
-            font-family: "Pridi", serif; /* Sử dụng font Pridi từ Google Fonts */
-            font-weight: 500; /* Độ dày của chữ ở mức trung bình */
-            font-style: normal; /* Kiểu chữ thông thường */
-            background-color: rgb(212, 190, 228); /* Màu nền trang là màu tím nhạt */
+            font-family: "Pridi", serif; /*Phông chữ */
+            font-style: normal; /*Kiểu chữ*/
+            background-color: rgba(255, 0, 0,0.5); /*Màu nền*/
         }
 
-        /* Định dạng cho khối container chính */
+        /*ĐỊnh dạng chung cho khối container*/
         .container {
-            justify-content: center; /* Căn giữa nội dung */
-            align-items: center; /* Căn giữa theo chiều dọc */
-            padding: 20px; /* Thêm khoảng cách bên trong */
-            font-weight: bold; /* In đậm toàn bộ văn bản */
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6); /* Đổ bóng nhẹ cho khối container */
-            border-radius: 25px; /* Bo góc container */
-            background-color: white; /* Màu nền của khối container là màu trắng */
+            background-color: WHITE; /*Màu nền */
+            justify-content: center; /*Căn chỉnh ở giưã theo chiều ngang */
+            align-items: center; /*Căn chỉnh nằm giữa theo chiều dọc*/
+            padding: 20px; /*Tạo khoảng trông xung quanh phần tử*/
+            font-weight: 500; /*In đậm chữ */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6); /*Chỉnh đổ bóng hiệu ứng cho lớp row */
+            border-radius: 25px; /*Bo viền cho lớp row */
         }
 
-        /* Định dạng cho tiêu đề h1 */
+        /*Định dạng cho tiêu đề h1 */
         h1 {
-            text-align: center; /* Căn giữa tiêu đề */
-            color: purple; /* Màu chữ tiêu đề là tím đậm */
-            font-family: "Pridi", serif; /* Sử dụng font Pridi */
-            font-weight: 700; /* Độ dày chữ lớn nhất */
-            margin-bottom: 30px; /* Khoảng cách phía dưới tiêu đề */
+            text-align: center; /*Căn giữa cho nội dung*/
+            font-family: "Pridi", serif; /*Phông chữ */
+            font-weight: 700; /*Độ dày của chữ */
+            font-style: normal; /*Kiểu chữ*/
+            color: red; /*Màu chữ*/
         }
 
-        /* Định dạng cho tiêu đề h3 */
+        /*Định dạng cho tiêu đề h3 */
         h3 {
-            text-align: center; /* Căn giữa nội dung h3 */
-            font-family: "Pridi", serif; /* Font chữ Pridi */
-            font-weight: 700; /* In đậm chữ h3 */
+            text-align: center; /*Căn giữa cho nội dung*/
+            font-family: "Pridi", serif; /*Phông chữ */
+            font-weight: 700; /*Độ dày của chữ */
+            font-style: normal; /*Kiểu chữ*/
         }
 
-        /* Định dạng cho ảnh logo */
+        /*Định dạng cho ảnh logo*/
         img {
-            max-width: 150px; /* Kích thước tối đa của ảnh là 150px */
-            display: block; /* Đặt ảnh thành block */
-            margin: auto; /* Căn giữa ảnh */
+            max-width: 150px;
+            display: block;
+            margin: 0 auto;
         }
 
-        /* Định dạng cho khối row, sử dụng để trình bày thông tin */
+        /*Định dạng cho khối info-block*/
+        .info-block {
+            margin-bottom: 25px;
+        }
+
+        /*Định dạng cho khối row*/
         .row {
-            display: flex; /* Sắp xếp các phần tử theo chiều ngang */
-            justify-content: space-between; /* Căn đều các mục */
-            margin-bottom: 15px; /* Khoảng cách phía dưới giữa các dòng */
-            background-color: white; /* Màu nền */
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
         }
 
-        /* Định dạng cho các mục dt và dd trong danh sách định nghĩa */
         dt, dd {
-            flex: 1; /* Căn chia đều không gian */
-            text-align: left; /* Canh trái */
+            flex: 1;
+            text-align: left;
             margin: 0;
         }
 
         dt {
-            font-weight: bold; /* In đậm cho tiêu đề */
+            font-weight: bold;
         }
 
         dd {
-            text-align: right; /* Canh phải cho phần giải thích */
+            text-align: right;
         }
 
-        /* Định dạng cho khối responsive khi độ rộng màn hình nhỏ hơn 768px */
         @@media (max-width: 768px) {
             .row {
-                flex-direction: column; /* Chuyển thành sắp xếp theo chiều dọc */
-                text-align: center; /* Căn giữa */
+                flex-direction: column;
+                text-align: center;
             }
 
             dd {
-                text-align: center; /* Canh giữa cho phần giải thích */
+                text-align: center;
             }
 
             .btn {
-                width: 100%; /* Nút chiếm 100% chiều rộng */
+                width: 100%;
             }
 
             .container {
-                padding: 10px; /* Giảm khoảng cách padding */
+                padding: 10px;
             }
 
             dt, dd {
-                flex: none; /* Loại bỏ căn chia đều không gian */
+                flex: none;
             }
         }
 
-        /* Định dạng hiệu ứng hover cho các nút */
+        /*Định dạng chuyển màu khi nhấn nút Xác nhận xóa */
+        .button_a_delete:hover {
+            background-color: red;
+            color: white;
+        }
+
+        /*Định dạng chuyển màu khi nhấn nút Trở về */
         .button_a_back:hover {
-            background-color: grey; /* Màu xám khi rê chuột vào */
-            color: white; /* Chữ màu trắng khi rê chuột */
+            background-color: grey;
+            color: white;
         }
 
         .button_a_edit:hover {
@@ -121,31 +124,28 @@
             color: white;
         }
 
-        .button_a_del:hover {
-            background-color: red; /* Màu đỏ cho nút xoá khi rê chuột */
-            color: white;
+
+        /* Định dạng cho nút bấm xóa và trở về*/
+        .button_a_back, .button_a_delete, .button_a_edit {
+            border-style: solid;
+            border-width: 1px;
+            text-align: center;
+            padding: 10px 30px;
+            font-size: 15px;
+            text-decoration: none;
+            border-radius: 35px;
+            color: black;
+            font-weight: bold;
+            width: 50%;
+            background-color: white;
         }
 
-        /* Định dạng chung cho các nút */
-        .button_a_back, .button_a_edit, .button_a_del {
-            border-style: solid; /* Đường viền dạng nét liền */
-            border-width: 1px; /* Độ dày viền 1px */
-            text-align: center; /* Căn giữa văn bản trong nút */
-            padding: 10px 30px; /* Khoảng cách trong nút */
-            font-size: 15px; /* Kích cỡ chữ */
-            text-decoration: none; /* Bỏ gạch chân */
-            border-radius: 35px; /* Bo góc cho nút */
-            color: black; /* Màu chữ đen */
-            font-weight: bold; /* In đậm chữ */
-            width: 50%; /* Chiều rộng nút bằng 50% */
-        }
-
-        /* Định dạng cho khối chứa các nút */
+        /*Định dạng cho khối back*/
         .back {
-            width: 100%; /* Chiếm toàn bộ chiều rộng */
-            display: flex; /* Sắp xếp các nút theo chiều ngang */
-            justify-content: center; /* Căn giữa các nút trong div */
-            align-items: center; /* Căn giữa các nút theo chiều dọc */
+            width: 100%;
+            display: flex;
+            justify-content: center; /* Canh giữa các nút trong div */
+            align-items: center;
         }
     </style>
 }
@@ -173,7 +173,7 @@
         <!-- Các mục chi tiết thông tin hồ sơ -->
         <dl class="row" style="color:purple; font-weight:bold">
             <dt>
-                @Html.DisplayNameFor(model => model.DonViThinhGiang)
+                Đơn vị thỉnh giảng:
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.DonViThinhGiang)
@@ -182,7 +182,7 @@
 
         <dl class="row" style="color:purple; font-weight:bold">
             <dt>
-                @Html.DisplayNameFor(model => model.SoHopDongThinhGiang)
+                Số hợp đồng thỉnh giảng:
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.SoHopDongThinhGiang)
@@ -192,7 +192,7 @@
         <!-- Thông tin bổ sung của hồ sơ, gồm cơ quan chủ trì, người chủ trì, thời gian và kinh phí -->
         <dl class="row">
             <dt>
-                @Html.DisplayNameFor(model => model.ThoiGianBatDau)
+                Thời gian bắt đầu:
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.ThoiGianBatDau)
@@ -201,7 +201,7 @@
 
         <dl class="row">
             <dt>
-                @Html.DisplayNameFor(model => model.ThoiGianKetThuc)
+                Thời gian kết thúc:
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.ThoiGianKetThuc)
@@ -210,7 +210,7 @@
 
         <dl class="row">
             <dt>
-                @Html.DisplayNameFor(model => model.ThamNienGiangDay)
+                Thâm niên giảng dạy:
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.ThamNienGiangDay)
@@ -219,7 +219,7 @@
 
         <dl class="row">
             <dt>
-                @Html.DisplayNameFor(model => model.IdCanBoNavigation)
+                Cán bộ:
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.IdCanBoNavigation.IdNguoiNavigation.name)
@@ -231,7 +231,7 @@
         </div><br />
 
         <div class="back">
-            <a class="button_a_del" asp-action="Delete" asp-route-id="@Model?.IdDonViThinhGiangCuaCanBo"><i class="fa fa-trash"></i>XÓA</a>
+            <a class="button_a_delete" asp-action="Delete" asp-route-id="@Model?.IdDonViThinhGiangCuaCanBo"><i class="fa fa-trash"></i>XÓA</a>
         </div><br />
 
         <div class="back">

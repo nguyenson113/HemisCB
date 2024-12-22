@@ -4,92 +4,6 @@
     ViewData["Title"] = "Xóa";
 }
 
-<h1>Xóa </h1>
-
-<h3>Bạn có chắc chắn là muốn xóa không ? </h3>
-<div>
-    <h4>Lĩnh vực của cán bộ</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LaLinhVucNghienCuuChuyenSau)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LaLinhVucNghienCuuChuyenSau)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SoNamNghienCuu)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SoNamNghienCuu)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdCanBoNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdCanBoNavigation.IdNguoiNavigation.name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdLinhVucNghienCuuNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdLinhVucNghienCuuNavigation.IdLinhVucNghienCuu)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IdLinhVucNghienCuuCuaCanBo" />
-        <input type="submit" value="Xóa" class="btn btn-danger" />
-        <a asp-action="Index">Trở về danh sách</a>
-    </form>
-</div>
-<style>
-/* Định dạng tiêu đề */
-h1, h3 {
-    text-align: center;
-    color: #dc3545;
-    margin-bottom: 20px;
-}
-
-/* Định dạng khung nội dung */
-dl {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-dt {
-    font-weight: bold;
-    color: #343a40;
-}
-
-dd {
-    margin-left: 10px;
-}
-
-/* Định dạng nút bấm */
-.btn-danger {
-    background-color: #dc3545;
-    border-color: #dc3545;
-}
-
-a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-</style>
-
-
-@{
-    ViewData["Title"] = "Xóa hồ sơ";
-}
-
-
 @section Heads {
     <meta charset="utf-8" />
     <meta name="viewport" content="width:device-width, initial-scale=1" />
@@ -248,7 +162,7 @@ a:hover {
     <!-- Các mục chi tiết thông tin hồ sơ -->
     <dl class="row" style="color:purple; font-weight:bold">
         <dt>
-            @Html.DisplayNameFor(model => model.LaLinhVucNghienCuuChuyenSau)
+            Là lĩnh vực nghiên cứu chuyên sâu:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.LaLinhVucNghienCuuChuyenSau)
@@ -257,7 +171,7 @@ a:hover {
 
     <dl class="row" style="color:purple; font-weight:bold">
         <dt>
-            @Html.DisplayNameFor(model => model.SoNamNghienCuu)
+            Số năm nghiên cứu:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.SoNamNghienCuu)
@@ -267,14 +181,14 @@ a:hover {
     <!-- Thông tin bổ sung của hồ sơ, gồm cơ quan chủ trì, người chủ trì, thời gian và kinh phí -->
     <dl class="row">
         <dt>
-           Cán bộ 
+            Cán bộ:
         </dt>
-        <dd>@Html.DisplayFor(model => model.IdCanBoNavigation)</dd>
+        <dd>@Html.DisplayFor(model => model.IdCanBoNavigation.IdNguoiNavigation.name)</dd>
     </dl>
 
     <dl class="row">
         <dt>
-Lĩnh vực nghiên cứu
+            Lĩnh vực nghiên cứu:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.IdLinhVucNghienCuuNavigation.IdLinhVucNghienCuu)
