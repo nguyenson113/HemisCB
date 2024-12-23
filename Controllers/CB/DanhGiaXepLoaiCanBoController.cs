@@ -23,16 +23,21 @@ namespace HemisCB.Controllers.CB
 
         //======================== TẠO LIST LẤY DỮ LIỆU TỪ API ============================
         private async Task<List<TbDanhGiaXepLoaiCanBo>> TbDanhGiaXepLoaiCanBos()
-        {
+        {   // Tạo bảng tbDanhGiaXepLoaiCanBos lấy dữu liệu từ APIHemis /api/cb/DanhGiaXepLoaiCanBo
             List<TbDanhGiaXepLoaiCanBo> tbDanhGiaXepLoaiCanBos = await ApiServices_.GetAll<TbDanhGiaXepLoaiCanBo>("/api/cb/DanhGiaXepLoaiCanBo");
+            // Lấy danh sách cán bộ từ API
             List<TbCanBo> tbcanbos = await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo");
+            // Lấy danh mục đánh giá công chức viên chức từ API
             List<DmDanhGiaCongChucVienChuc> dmdanhGiaCongChucVienChucs = await ApiServices_.GetAll<DmDanhGiaCongChucVienChuc>("/api/dm/DanhGiaCongChucVienChuc");
+            // Lấy danh sách người dùng từ API
             List<TbNguoi> tbNguois = await ApiServices_.GetAll<TbNguoi>("/api/Nguoi");
             tbDanhGiaXepLoaiCanBos.ForEach(item => {
+                //Lấy dữ liệu cho IdCanBoNavigation
                 item.IdCanBoNavigation = tbcanbos.FirstOrDefault(x => x.IdCanBo == item.IdCanBo);
                 item.IdDanhGiaNavigation = dmdanhGiaCongChucVienChucs.FirstOrDefault(x => x.IdDanhGiaCongChucVienChuc == item.IdDanhGia);
                 item.IdCanBoNavigation.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdCanBoNavigation.IdNguoi);
             });
+            //Trả kết quả
             return tbDanhGiaXepLoaiCanBos;
         }
         private async Task<List<TbCanBo>> TbCanBos()
@@ -51,12 +56,10 @@ namespace HemisCB.Controllers.CB
             List<TbDanhGiaXepLoaiCanBo> getall = await TbDanhGiaXepLoaiCanBos();
             return View(getall);
         }
-
+        //===============================================Index==============================================//
         // GET: DanhGiaXepLoaiCanBo
-
-
         public async Task<IActionResult> Index()
-        {
+        {   //Tạo khối try - catch để bắt lỗi   
             try
             {
                 List<TbDanhGiaXepLoaiCanBo> getall = await TbDanhGiaXepLoaiCanBos();
@@ -66,14 +69,15 @@ namespace HemisCB.Controllers.CB
             }
             catch (Exception ex)
             {
+                //Trả về HTTP Error 400 
                 return BadRequest();
             }
 
         }
-
+        //==================================================Details=====================================/
         // GET: DanhGiaXepLoaiCanBo/Details/5
         public async Task<IActionResult> Details(int? id)
-        {
+        {   //Tạo khối try - catch trong Detail để bắt lỗi nếu có và trả về kết quả HTTp Error 400
             try
             {
                 if (id == null)
@@ -95,16 +99,15 @@ namespace HemisCB.Controllers.CB
             }
             catch (Exception ex)
             {
+                //Trả về HTTP Error 400
                 return BadRequest();
             }
 
         }
-
+        //=========================================Create=============================================//
         // GET: DanhGiaXepLoaiCanBo/Create
-       
-
         public async Task<IActionResult> Create()
-        {
+        {   //Tạo khối try - catch trong Create để bắt lỗi nếu có và trả về kết quả HTTp Error 400
             try
             {
                 ViewData["IdCanBo"] = new SelectList(await TbCanBos(), "IdCanBo", "IdNguoiNavigation.name");
@@ -112,8 +115,10 @@ namespace HemisCB.Controllers.CB
                 
                 return View();
             }
+            //Bắt lỗi nếu có và lưu lỗi vào BatLoi
             catch (Exception ex)
-            {
+            { 
+                //Trả về lỗi HTTP Error 400
                 return BadRequest();
             }
 
@@ -125,34 +130,53 @@ namespace HemisCB.Controllers.CB
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdDanhGiaXepLoaiCanBo,IdCanBo,IdDanhGia,NamDanhGia,NganhDuocKhenThuong")] TbDanhGiaXepLoaiCanBo tbDanhGiaXepLoaiCanBo)
-        {
-            if (await TbDanhGiaXepLoaiCanBoExists(tbDanhGiaXepLoaiCanBo.IdDanhGiaXepLoaiCanBo)) ModelState.AddModelError("IdDanhGiaXepLoaiCanBo", "ID này đã tồn tại!");
-            if (ModelState.IsValid)
+        {   //Tạo khối try - catch  để bắt lỗi nếu có và trả về kết quả HTTp Error 400
+            try
             {
-                await ApiServices_.Create<TbDanhGiaXepLoaiCanBo>("/api/cb/DanhGiaXepLoaiCanBo", tbDanhGiaXepLoaiCanBo);
-                return RedirectToAction(nameof(Index));
+                if (await TbDanhGiaXepLoaiCanBoExists(tbDanhGiaXepLoaiCanBo.IdDanhGiaXepLoaiCanBo)) ModelState.AddModelError("IdDanhGiaXepLoaiCanBo", "ID này đã tồn tại!");
+                if (ModelState.IsValid)
+                {
+                    await ApiServices_.Create<TbDanhGiaXepLoaiCanBo>("/api/cb/DanhGiaXepLoaiCanBo", tbDanhGiaXepLoaiCanBo);
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["IdDanhGia"] = new SelectList(await ApiServices_.GetAll<DmDanhGiaCongChucVienChuc>("/api/dm/DanhGiaCongChucVienChuc"), "IdDanhGiaCongChucVienChuc", "DanhGiaCongChucVienChuc", tbDanhGiaXepLoaiCanBo.IdDanhGia);
+                ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdNguoiNavigation.name", tbDanhGiaXepLoaiCanBo.IdCanBo);
+                return View(tbDanhGiaXepLoaiCanBo);
             }
-            ViewData["IdDanhGia"] = new SelectList(await ApiServices_.GetAll<DmDanhGiaCongChucVienChuc>("/api/dm/DanhGiaCongChucVienChuc"), "IdDanhGiaCongChucVienChuc", "DanhGiaCongChucVienChuc", tbDanhGiaXepLoaiCanBo.IdDanhGia);
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdNguoiNavigation.name", tbDanhGiaXepLoaiCanBo.IdCanBo);
-            return View(tbDanhGiaXepLoaiCanBo);
+            //Bắt lỗi nếu có và lưu lỗi vào BatLoi
+            catch (Exception ex)
+            {
+                //Trả về lỗi HTTP Error 400
+                return BadRequest();
+            }
         }
-
+        //=================================================Edit===================================================//
         // GET: DanhGiaXepLoaiCanBo/Edit/5
         public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
+        {    //Tạo khối try - catch  để bắt lỗi nếu có và trả về kết quả HTTp Error 400
+            try
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var tbDanhGiaXepLoaiCanBo = await ApiServices_.GetId<TbDanhGiaXepLoaiCanBo>("/api/cb/DanhGiaXepLoaiCanBo", id ?? 0);
+                if (tbDanhGiaXepLoaiCanBo == null)
+                {
+                    return NotFound();
+                }
+                ViewData["IdDanhGia"] = new SelectList(await ApiServices_.GetAll<DmDanhGiaCongChucVienChuc>("/api/dm/DanhGiaCongChucVienChuc"), "IdDanhGiaCongChucVienChuc", "DanhGiaCongChucVienChuc", tbDanhGiaXepLoaiCanBo.IdDanhGia);
+                ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbDanhGiaXepLoaiCanBo.IdCanBo);
+                return View(tbDanhGiaXepLoaiCanBo);
+            }
+            //Bắt lỗi nếu có và lưu lỗi vào BatLoi
+            catch (Exception ex)
+            {
+                //Trả về lỗi HTTP Error 400
+                return BadRequest();
             }
 
-            var tbDanhGiaXepLoaiCanBo = await ApiServices_.GetId<TbDanhGiaXepLoaiCanBo>("/api/cb/DanhGiaXepLoaiCanBo", id ?? 0);
-            if (tbDanhGiaXepLoaiCanBo == null)
-            {
-                return NotFound();
-            }
-            ViewData["IdDanhGia"] = new SelectList(await ApiServices_.GetAll<DmDanhGiaCongChucVienChuc>("/api/dm/DanhGiaCongChucVienChuc"), "IdDanhGiaCongChucVienChuc", "DanhGiaCongChucVienChuc", tbDanhGiaXepLoaiCanBo.IdDanhGia);
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbDanhGiaXepLoaiCanBo.IdCanBo);
-            return View(tbDanhGiaXepLoaiCanBo);
         }
 
         // POST: DanhGiaXepLoaiCanBo/Edit/5
@@ -161,68 +185,90 @@ namespace HemisCB.Controllers.CB
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdDanhGiaXepLoaiCanBo,IdCanBo,IdDanhGia,NamDanhGia,NganhDuocKhenThuong")] TbDanhGiaXepLoaiCanBo tbDanhGiaXepLoaiCanBo)
-        {
-            if (id != tbDanhGiaXepLoaiCanBo.IdDanhGiaXepLoaiCanBo)
+        {   //Tạo khối try - catch  để bắt lỗi nếu có và trả về kết quả HTTp Error 400
+            try
             {
-                return NotFound();
-            }
+                if (id != tbDanhGiaXepLoaiCanBo.IdDanhGiaXepLoaiCanBo)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid)
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        await ApiServices_.Update<TbDanhGiaXepLoaiCanBo>("/api/cb/DanhGiaXepLoaiCanBo", id, tbDanhGiaXepLoaiCanBo);
+
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (await TbDanhGiaXepLoaiCanBoExists(tbDanhGiaXepLoaiCanBo.IdDanhGiaXepLoaiCanBo) == false)
+
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["IdDanhGia"] = new SelectList(await ApiServices_.GetAll<DmDanhGiaCongChucVienChuc>("/api/dm/DanhGiaCongChucVienChuc"), "IdDanhGiaCongChucVienChuc", "DanhGiaCongChucVienChuc", tbDanhGiaXepLoaiCanBo.IdDanhGia);
+                ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbDanhGiaXepLoaiCanBo.IdCanBo);
+                return View(tbDanhGiaXepLoaiCanBo);
+            }
+            //Bắt lỗi nếu có và lưu lỗi vào BatLoi
+            catch (Exception ex)
             {
-                try
-                {
-                    await ApiServices_.Update<TbDanhGiaXepLoaiCanBo>("/api/cb/DanhGiaXepLoaiCanBo", id, tbDanhGiaXepLoaiCanBo);
-
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (await TbDanhGiaXepLoaiCanBoExists(tbDanhGiaXepLoaiCanBo.IdDanhGiaXepLoaiCanBo) == false)
-
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                //Trả về lỗi HTTP Error 400
+                return BadRequest();
             }
-            ViewData["IdDanhGia"] = new SelectList(await ApiServices_.GetAll<DmDanhGiaCongChucVienChuc>("/api/dm/DanhGiaCongChucVienChuc"), "IdDanhGiaCongChucVienChuc", "DanhGiaCongChucVienChuc", tbDanhGiaXepLoaiCanBo.IdDanhGia);
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbDanhGiaXepLoaiCanBo.IdCanBo);
-            return View(tbDanhGiaXepLoaiCanBo);
         }
-
+        //======================================================delete=================================================//
         // GET: DanhGiaXepLoaiCanBo/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            //Tạo khối try - catch  để bắt lỗi nếu có và trả về kết quả HTTp Error 400
+            try
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var tbDanhGiaXepLoaiCanBos = await ApiServices_.GetAll<TbDanhGiaXepLoaiCanBo>("/api/cb/DanhGiaXepLoaiCanBo");
+                var tbDanhGiaXepLoaiCanBo = tbDanhGiaXepLoaiCanBos.FirstOrDefault(m => m.IdDanhGiaXepLoaiCanBo == id);
+                if (tbDanhGiaXepLoaiCanBo == null)
+                {
+                    return NotFound();
+                }
+
+                return View(tbDanhGiaXepLoaiCanBo);
+            }
+            //Bắt lỗi nếu có và lưu lỗi vào BatLoi
+            catch (Exception ex)
+            {
+                //Trả về lỗi HTTP Error 400
+                return BadRequest();
             }
 
-            var tbDanhGiaXepLoaiCanBos = await ApiServices_.GetAll<TbDanhGiaXepLoaiCanBo>("/api/cb/DanhGiaXepLoaiCanBo");
-            var tbDanhGiaXepLoaiCanBo = tbDanhGiaXepLoaiCanBos.FirstOrDefault(m => m.IdDanhGiaXepLoaiCanBo == id);
-            if (tbDanhGiaXepLoaiCanBo == null)
-            {
-                return NotFound();
-            }
-
-            return View(tbDanhGiaXepLoaiCanBo);
         }
 
         // POST: DanhGiaXepLoaiCanBo/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
-        {
+        {   //Tạo khối try - catch  để bắt lỗi nếu có và trả về kết quả HTTp Error 400
             try
             {
                 await ApiServices_.Delete<TbDanhGiaXepLoaiCanBo>("/api/cb/DanhGiaXepLoaiCanBo", id);
                 return RedirectToAction(nameof(Index));
             }
+            //Bắt lỗi nếu có và lưu lỗi vào BatLoi
             catch (Exception ex)
             {
+                //Trả về lỗi HTTP Error 400
                 return BadRequest();
             }
         }

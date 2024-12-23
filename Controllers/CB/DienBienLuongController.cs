@@ -24,17 +24,24 @@ namespace HemisCB.Controllers.CB
         //============================TẠO DANH SÁCH LẤY API========================
         private async Task<List<TbDienBienLuong>> TbDienBienLuongs()
         {
+            // Lấy danh sách TbDienBienLuong từ API
             List<TbDienBienLuong> tbDienBienLuongs = await ApiServices_.GetAll<TbDienBienLuong>("/api/cb/DienBienLuong");
+            // Lấy danh sách TbCanBo từ API
             List<TbCanBo> tbcanbos = await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo");
+            // Lấy danh sách DmHeSoLuong từ API
             List<DmHeSoLuong> dmheSoLuongs = await ApiServices_.GetAll<DmHeSoLuong>("/api/dm/HeSoLuong");
+            // Lấy danh sách TbNguoi từ API
             List<TbNguoi> tbNguois = await ApiServices_.GetAll<TbNguoi>("/api/Nguoi");
+            // Lấy danh sách DmTrinhDoDaoTao từ API
             List<DmTrinhDoDaoTao> dmtrinhDoDaoTaos = await ApiServices_.GetAll<DmTrinhDoDaoTao>("/api/dm/TrinhDoDaoTao");
+            // Lặp qua từng phần tử trong danh sách TbDienBienLuong
             tbDienBienLuongs.ForEach(item => {
                 item.IdCanBoNavigation = tbcanbos.FirstOrDefault(x => x.IdCanBo == item.IdCanBo);
                 item.IdHeSoLuongNavigation = dmheSoLuongs.FirstOrDefault(x => x.IdHeSoLuong == item.IdHeSoLuong);
                 item.IdCanBoNavigation.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdCanBoNavigation.IdNguoi);
                 item.IdTrinhDoDaoTaoNavigation = dmtrinhDoDaoTaos.FirstOrDefault(x => x.IdTrinhDoDaoTao == item.IdTrinhDoDaoTao);
             });
+            //Trả kết quả
             return tbDienBienLuongs;
         }
 
@@ -55,10 +62,10 @@ namespace HemisCB.Controllers.CB
             List<TbDienBienLuong> getall = await TbDienBienLuongs();
             return View(getall);
         }
-
+        //=========================================Index================================================/
         // GET: DienBienLuong
         public async Task<IActionResult> Index()
-        {
+        {   //Tạo try-catch bắt lỗi
             try
             {
                 List<TbDienBienLuong> getall = await TbDienBienLuongs();
@@ -68,16 +75,19 @@ namespace HemisCB.Controllers.CB
             }
             catch (Exception ex)
             {
+                //Trả về HTTP Error 400 
                 return BadRequest();
             }
 
         }
-
+        //======================================================Details=============================================//
         // GET: DienBienLuong/Details/5
         public async Task<IActionResult> Details(int? id)
-        {
-            // Kiểm tra nếu id là null
-            if (id == null)
+        {  //Tạo khối try - catch trong Detail để bắt lỗi nếu có và trả về kết quả HTTp Error 400
+            try
+            {
+                // Kiểm tra nếu id là null
+                if (id == null)
             {
                 return NotFound();
             }
@@ -94,20 +104,36 @@ namespace HemisCB.Controllers.CB
 
             // Trả về view với thông tin chi tiết
             return View(tbDienBienLuong);
+            }
+            catch (Exception ex)
+            {
+                //Trả về HTTP Error 400
+                return BadRequest();
+            }
         }
 
-
+        //=====================================Create=====================================//
         // GET: DienBienLuong/Create
       
 
         public async Task<IActionResult> Create()
         {
-            // Tạo danh sách lựa chọn cho IdCanBo, IdChucDanhGiangVien, IdChucVu
-            ViewData["IdTrinhDoDaoTao"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoDaoTao>("/api/dm/TrinhDoDaoTao"), "IdTrinhDoDaoTao", "TrinhDoDaoTao");
-            ViewData["IdHeSoLuong"] = new SelectList(await ApiServices_.GetAll<DmHeSoLuong>("/api/dm/HeSoLuong"), "IdHeSoLuong", "HeSoLuong");
-            //ViewData["IdBacLuong"] = new SelectList(await ApiServices_.GetAll<DmBacLuong1>("/api/dm/BacLuong"), "IdBacLuong", "BacLuong");
-            ViewData["IdCanBo"] = new SelectList(await TbCanBos(), "IdCanBo", "IdNguoiNavigation.name");
-            return View();
+            //Tạo khối try - catch trong Create để bắt lỗi nếu có và trả về kết quả HTTp Error 400
+            try
+            {
+                // Tạo danh sách lựa chọn cho IdCanBo, IdChucDanhGiangVien, IdChucVu
+                ViewData["IdTrinhDoDaoTao"] = new SelectList(await ApiServices_.GetAll<DmTrinhDoDaoTao>("/api/dm/TrinhDoDaoTao"), "IdTrinhDoDaoTao", "TrinhDoDaoTao");
+                ViewData["IdHeSoLuong"] = new SelectList(await ApiServices_.GetAll<DmHeSoLuong>("/api/dm/HeSoLuong"), "IdHeSoLuong", "HeSoLuong");
+                //ViewData["IdBacLuong"] = new SelectList(await ApiServices_.GetAll<DmBacLuong1>("/api/dm/BacLuong"), "IdBacLuong", "BacLuong");
+                ViewData["IdCanBo"] = new SelectList(await TbCanBos(), "IdCanBo", "IdNguoiNavigation.name");
+                return View();
+            }
+            //Bắt lỗi nếu có và lưu lỗi vào BatLoi
+            catch (Exception ex)
+            {
+                //Trả về lỗi HTTP Error 400
+                return BadRequest();
+            }
         }
 
 
@@ -119,7 +145,10 @@ namespace HemisCB.Controllers.CB
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdDienBienLuong,IdCanBo,IdTrinhDoDaoTao,NgayThangNam,IdBacLuong,IdHeSoLuong")] TbDienBienLuong tbDienBienLuong)
         {
-            if (ModelState.IsValid)
+            //Tạo khối try - catch trong Create để bắt lỗi nếu có và trả về kết quả HTTp Error 400
+            try
+            {
+                if (ModelState.IsValid)
             {
                 await ApiServices_.Create<TbDienBienLuong>("/api/cb/DienBienLuong", tbDienBienLuong);
                 return RedirectToAction(nameof(Index));
@@ -130,12 +159,23 @@ namespace HemisCB.Controllers.CB
             //ViewData["IdBacLuong"] = new SelectList(await ApiServices_.GetAll<DmBacLuong1>("/api/dm/BacLuong"), "IdBacLuong", "BacLuong", tbDienBienLuong.IdBacLuong);
             ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdNguoiNavigation.name", tbDienBienLuong.IdCanBo);
             return View(tbDienBienLuong);
-        }
+            }
+            //Bắt lỗi nếu có và lưu lỗi vào BatLoi
+            catch (Exception ex)
+            {
+                //Trả về lỗi HTTP Error 400
+                return BadRequest();
+            }
 
+        }
+        //=====================================================Edit=========================================//
         // GET: DienBienLuong/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            //Tạo khối try - catch  để bắt lỗi nếu có và trả về kết quả HTTp Error 400
+            try
+            {
+                if (id == null)
             {
                 return NotFound();
             }
@@ -150,6 +190,13 @@ namespace HemisCB.Controllers.CB
             //ViewData["IdBacLuong"] = new SelectList(await ApiServices_.GetAll<DmBacLuong1>("/api/dm/BacLuong"), "IdBacLuong", "BacLuong", tbDienBienLuong.IdBacLuong);
             ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbDienBienLuong.IdCanBo);
             return View(tbDienBienLuong);
+            }
+            //Bắt lỗi nếu có và lưu lỗi vào BatLoi
+            catch (Exception ex)
+            {
+                //Trả về lỗi HTTP Error 400
+                return BadRequest();
+            }
         }
 
         // POST: DienBienLuong/Edit/5
@@ -159,7 +206,10 @@ namespace HemisCB.Controllers.CB
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdDienBienLuong,IdCanBo,IdTrinhDoDaoTao,NgayThangNam,IdBacLuong,IdHeSoLuong")] TbDienBienLuong tbDienBienLuong)
         {
-            if (id != tbDienBienLuong.IdDienBienLuong)
+            //Tạo khối try - catch  để bắt lỗi nếu có và trả về kết quả HTTp Error 400
+            try
+            {
+                if (id != tbDienBienLuong.IdDienBienLuong)
             {
                 return NotFound();
             }
@@ -188,11 +238,21 @@ namespace HemisCB.Controllers.CB
             //ViewData["IdBacLuong"] = new SelectList(await ApiServices_.GetAll<DmBacLuong1>("/api/dm/BacLuong"), "IdBacLuong", "BacLuong", tbDienBienLuong.IdBacLuong);
             ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbDienBienLuong.IdCanBo);
             return View(tbDienBienLuong);
+            }
+            //Bắt lỗi nếu có và lưu lỗi vào BatLoi
+            catch (Exception ex)
+            {
+                //Trả về lỗi HTTP Error 400
+                return BadRequest();
+            }
         }
-
+        //===================================================================Delete=====================================//
         // GET: DienBienLuong/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            //Tạo khối try - catch  để bắt lỗi nếu có và trả về kết quả HTTp Error 400
+            try
+            {
             if (id == null)
             {
                 return NotFound();
@@ -206,13 +266,20 @@ namespace HemisCB.Controllers.CB
             }
 
             return View(tbDienBienLuong);
+            }
+            //Bắt lỗi nếu có và lưu lỗi vào BatLoi
+            catch (Exception ex)
+            {
+                //Trả về lỗi HTTP Error 400
+                return BadRequest();
+            }
         }
 
         // POST: DienBienLuong/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
-        {
+        {   //Tạo khối try-catch để bắt lỗi
             try
             {
                 await ApiServices_.Delete<TbDienBienLuong>("/api/cb/DienBienLuong", id);
@@ -220,6 +287,7 @@ namespace HemisCB.Controllers.CB
             }
             catch (Exception ex)
             {
+                //Trả về lỗi HTTP Error 400
                 return BadRequest();
             }
         }
