@@ -179,7 +179,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
             //Hiển thị SelectList của IdCanBo, chọn và lưu dữ liệu vào biến IdCanBo 
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdNguoiNavigation.name", tbCanBoHuongDanThanhCongSinhVien.IdCanBo);
+            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbCanBoHuongDanThanhCongSinhVien.IdCanBo);
                 return View(tbCanBoHuongDanThanhCongSinhVien);
           
         }
@@ -221,7 +221,7 @@ namespace HemisCB.Controllers.CB
                 return RedirectToAction(nameof(Index));
             }
             //Hiển thị SelectList của IdCanBo, chọn và lưu dữ liệu vào biến IdCanBo 
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdNguoiNavigation.name", tbCanBoHuongDanThanhCongSinhVien.IdCanBo);
+            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbCanBoHuongDanThanhCongSinhVien.IdCanBo);
             return View(tbCanBoHuongDanThanhCongSinhVien);
         }
 
