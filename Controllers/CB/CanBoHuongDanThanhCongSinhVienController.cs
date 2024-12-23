@@ -282,12 +282,19 @@ namespace HemisCB.Controllers.CB
         }
 
         //Import Excel 
-        public IActionResult Excel(string json)
+        public  IActionResult Excel(string json)
         {
             try
             {
                 List<List<string>> data = JsonConvert.DeserializeObject<List<List<string>>>(json);
-                Console.WriteLine(JsonConvert.SerializeObject(data));
+                data.ForEach(async item => {
+                    int id;
+                    Random rnd = new Random();
+                    while (await TbCanBoHuongDanThanhCongSinhVienExists(id = rnd.Next(1, 1000000)));
+                    TbCanBoHuongDanThanhCongSinhVien model = new TbCanBoHuongDanThanhCongSinhVien();
+                    model.IdCanBoHuongDanThanhCongSinhVien = id;
+                    model.ThoiGianBatDau = DateOnly.Parse(item[0]);
+                });
                 return Accepted(Json(new { msg = JsonConvert.SerializeObject(data) }));
             }
             catch (Exception ex)
