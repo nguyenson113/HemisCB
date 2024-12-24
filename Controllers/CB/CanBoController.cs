@@ -114,9 +114,7 @@ namespace HemisCB.Controllers.CB
             ViewData["IdChucDanhGiangVien"] = new SelectList(await ApiServices_.GetAll<DmChucDanhGiangVien>("/api/dm/ChucDanhGiangVien"), "IdChucDanhGiangVien", "ChucDanhGiangVien");
             ViewData["IdChucDanhNgheNghiep"] = new SelectList(await ApiServices_.GetAll<DmChucDanhNgheNghiep>("/api/dm/ChucDanhNgheNghiep"), "IdChucDanhNgheNghiep", "ChucDanhNgheNghiep");
             ViewData["IdChucDanhNghienCuuKhoaHoc"] = new SelectList(await ApiServices_.GetAll<DmChucDanhNckh>("/api/dm/ChucDanhNCKH"), "IdChucDanhNghienCuuKhoaHoc", "ChucDanhNghienCuuKhoaHoc");
-           
             ViewData["IdChucVuCongTac"] = new SelectList(await ApiServices_.GetAll<DmChucVu>("/api/dm/ChucVu"), "IdChucVu", "ChucVu");
-
             ViewData["IdHuyen"] = new SelectList(await ApiServices_.GetAll<DmHuyen>("/api/dm/Huyen"), "IdHuyen", "TenHuyen");
             ViewData["IdNgach"] = new SelectList(await ApiServices_.GetAll<DmNgach>("/api/dm/Ngach"), "IdNgach", "Ngach");
             ViewData["IdNguoi"] = new SelectList(await ApiServices_.GetAll<TbNguoi>("/api/Nguoi"), "IdNguoi", "IdNguoi");

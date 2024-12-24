@@ -9,9 +9,9 @@ namespace HemisCB.Models;
 
 public partial class TbGiaoVienQpan
 {
-    [DisplayName(displayName: "ID Giáo viên QPAN")]
+    [DisplayName(displayName: "Mã hồ sơ giáo viên QPAN")]
     public int IdGiaoVienQpan { get; set; }
-    [DisplayName(displayName: "ID Cán bộ")]
+    [DisplayName(displayName: " Cán bộ")]
     public int? IdCanBo { get; set; }
     [DisplayName(displayName: "Năm bắt đầu biệt phái")]
     [DataType(DataType.Date)]

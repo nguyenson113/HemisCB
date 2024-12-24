@@ -9,10 +9,10 @@ namespace HemisCB.Models;
 
 public partial class TbDanhGiaXepLoaiCanBo
 {
-    [DisplayName("ID Đánh giá xếp loại cán bộ")]
+    [DisplayName("Mã hồ sơ đánh giá xếp loại cán bộ")]
     public int IdDanhGiaXepLoaiCanBo { get; set; }
 
-    [DisplayName("ID Cán bộ")]
+    [DisplayName("Cán bộ")]
     public int? IdCanBo { get; set; }
 
     [DisplayName(" Đánh giá")]

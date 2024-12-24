@@ -11,7 +11,7 @@ namespace HemisCB.Models;
 
 public partial class TbNguoi
 {
-    [DisplayName("Id Người")]
+    [DisplayName("Mã hồ sơ người")]
   
     public int IdNguoi { get; set; }
 

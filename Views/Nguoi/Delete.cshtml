@@ -1,260 +1,408 @@
 ﻿@model HemisCB.Models.TbNguoi
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Xóa hồ sơ";
 }
 
-@section Styles {
+@section Heads {
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width:device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pridi:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        a, a:visited, a:hover, a:active {
-            color: inherit;
-            text-decoration: none;
-        }
-        /* Thiết lập cơ bản cho form */
-        .total {
-            display: flex;
-            justify-content: center;
-            margin-top: 50px;
-            margin-bottom: 50px;
+        body {
+            font-family: "Pridi", serif; /*Phông chữ */
+            font-style: normal; /*Kiểu chữ*/
+            background-color: rgba(255, 0, 0,0.5); /*Màu nền*/
         }
 
-        .form_del {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-            width: 50%;
+        /*ĐỊnh dạng chung cho khối container*/
+        .container {
+            background-color: WHITE; /*Màu nền */
+            justify-content: center; /*Căn chỉnh ở giưã theo chiều ngang */
+            align-items: center; /*Căn chỉnh nằm giữa theo chiều dọc*/
+            padding: 20px; /*Tạo khoảng trông xung quanh phần tử*/
+            font-weight: 500; /*In đậm chữ */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6); /*Chỉnh đổ bóng hiệu ứng cho lớp row */
+            border-radius: 25px; /*Bo viền cho lớp row */
         }
 
+        /*Định dạng cho tiêu đề h1 */
         h1 {
-            font-size: 36px;
-            text-align: center;
+            text-align: center; /*Căn giữa cho nội dung*/
+            font-family: "Pridi", serif; /*Phông chữ */
+            font-weight: 700; /*Độ dày của chữ */
+            font-style: normal; /*Kiểu chữ*/
+            color: red; /*Màu chữ*/
         }
 
+        /*Định dạng cho tiêu đề h3 */
         h3 {
-            text-align: center;
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 20px;
+            text-align: center; /*Căn giữa cho nội dung*/
+            font-family: "Pridi", serif; /*Phông chữ */
+            font-weight: 700; /*Độ dày của chữ */
+            font-style: normal; /*Kiểu chữ*/
         }
 
-        /* Định dạng cho bảng thông tin, ô nhỏ phía trong */
-        dl.row {
-            display: grid;
-            grid-template-columns: 50% 50%; /* Mỗi cột chiếm 50% */
-            gap: 10px; /* Khoảng cách giữa các phần tử */
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            margin: 20px;
+        /*Định dạng cho ảnh logo*/
+        img {
+            max-width: 150px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /*Định dạng cho khối info-block*/
+        .info-block {
+            margin-bottom: 25px;
+        }
+
+        /*Định dạng cho khối row*/
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        dt, dd {
+            flex: 1;
+            text-align: left;
+            margin: 0;
         }
 
         dt {
             font-weight: bold;
-            color: #444;
-            white-space: nowrap; /* Tránh xuống dòng */
-            align-self: center; /* Canh giữa theo trục dọc */
-            text-align: left; /* Căn phải để khoảng cách giữa dt và dd đều đặn hơn */
-            padding-right: 10px; /* Thêm khoảng cách giữa dt và dd */
         }
 
         dd {
-            color: #555;
-            margin-bottom: 0;
-            align-self: center; /* Canh giữa theo trục dọc */
+            text-align: right;
         }
 
-        /* Nút quay lại */
-        .back {
-            display: inline-block;
-            padding: 10px 15px;
-            background-color: #6c757d;
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-left: 10px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-            .back:hover {
-                transform: scale(1.05);
+        @@media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+                text-align: center;
             }
 
-        /* Canh giữa form */
-        .submit {
+            dd {
+                text-align: center;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            dt, dd {
+                flex: none;
+            }
+        }
+
+        /*Định dạng chuyển màu khi nhấn nút Xác nhận xóa */
+        .button_a_delete:hover {
+            background-color: red;
+            color: white;
+        }
+
+        /*Định dạng chuyển màu khi nhấn nút Trở về */
+        .button_a_back:hover {
+            background-color: grey;
+            color: white;
+        }
+
+
+        /* Định dạng cho nút bấm xóa và trở về*/
+        .button_a_back, .button_a_delete {
+            border-style: solid;
+            border-width: 1px;
+            text-align: center;
+            padding: 10px 30px;
+            font-size: 15px;
+            text-decoration: none;
+            border-radius: 35px;
+            color: black;
+            font-weight: bold;
+            width: 50%;
+            background-color: white;
+        }
+
+        /*Định dạng cho khối back*/
+        .back {
+            width: 100%;
             display: flex;
-            justify-content: center;
-            margin-top: 20px;
+            justify-content: center; /* Canh giữa các nút trong div */
+            align-items: center;
         }
     </style>
 }
+<h1> <i class="fa fa-trash"></i> XÓA HỒ SƠ </h1>
 
-<h1>Xóa</h1>
 
-<h3>Bạn muốn xóa dữ liệu này?</h3>
-<div class="total">
-    <div class="form_del">
-        <h1 style="text-align:center">THÔNG TIN CHI TIẾT</h1>
-        <hr />
-        <dl class="row ">
-            <dt>
-                @Html.DisplayNameFor(model => model.Ho)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Ho)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Ten)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Ten)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.SoCccd)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.SoCccd)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.NgayCapCccd)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.NgayCapCccd)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.NoiCapCccd)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.NoiCapCccd)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.NgaySinh)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.NgaySinh)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.NgayVaoDoan)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.NgayVaoDoan)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.NgayVaoDang)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.NgayVaoDang)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.NgayVaoDangChinhThuc)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.NgayVaoDangChinhThuc)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.NgayNhapNgu)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.NgayNhapNgu)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.NgayXuatNgu)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.NgayXuatNgu)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IdChucDanhKhoaHocNavigation)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IdChucDanhKhoaHocNavigation!.ChucDanhKhoaHoc)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IdChuyenMonDaoTaoNavigation)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IdChuyenMonDaoTaoNavigation!.NganhDaoTao)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IdTonGiaoNavigation)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IdTonGiaoNavigation!.TonGiao)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IdDanTocNavigation)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IdDanTocNavigation!.DanToc)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IdGiaDinhChinhSachNavigation)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IdGiaDinhChinhSachNavigation!.HoGiaDinhChinhSach)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IdGioiTinhNavigation)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IdGioiTinhNavigation!.GioiTinh)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IdKhungNangLucNgoaiNgucNavigation)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IdKhungNangLucNgoaiNgucNavigation!.TenKhungNangLucNgoaiNgu)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IdNgoaiNguNavigation)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IdNgoaiNguNavigation!.NgoaiNgu)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IdQuocTichNavigation)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IdQuocTichNavigation!.TenNuoc)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IdThuongBinhHangNavigation)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IdThuongBinhHangNavigation!.HangThuongBinh)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IdTrinhDoDaoTaoNavigation)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IdTrinhDoDaoTaoNavigation!.TrinhDoDaoTao)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IdTrinhDoLyLuanChinhTriNavigation)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IdTrinhDoLyLuanChinhTriNavigation!.TenTrinhDoLyLuanChinhTri)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IdTrinhDoQuanLyNhaNuocNavigation)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IdTrinhDoQuanLyNhaNuocNavigation!.TrinhDoQuanLyNhaNuoc)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IdTrinhDoTinHocNavigation)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IdTrinhDoTinHocNavigation!.TrinhDoTinHoc)
-            </dd>
-        </dl>
-        <form asp-action="Delete">
-            <div class="d-flex justify-content-center">
-                <input type="hidden" asp-for="IdNguoi" />
-                 <input type="submit" value="Xóa" class="btn btn-danger" />
-                <button class="btn btn-primary ms-3"><a asp-action="Index">Quay lại</a></button>
-            </div>
-        </form>
-    </div>
+<div class="container">
+    <p style="text-align: center;">
+        <img src="https://upload.wikimedia.org/wikipedia/vi/8/85/Logo_hoc_vien_ANND.png" alt="Học viện An ninh nhân dân">
+    </p>
+
+
+    <h3>
+        Bạn có muốn xóa hồ sơ nhiệm vụ?
+    </h3>
+
+    <hr />
+
+
+    <dl class="row" style="color:purple; font-weight:bold">
+        <dt>
+            Họ:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Ho)
+        </dd>
+    </dl>
+
+    <dl class="row" style="color:purple; font-weight:bold">
+        <dt>
+            Tên:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Ten)
+        </dd>
+    </dl>
+
+    <!-- Thông tin bổ sung của hồ sơ, gồm cơ quan chủ trì, người chủ trì, thời gian và kinh phí -->
+    <dl class="row">
+        <dt>
+            Số CCCD:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SoCccd)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            Ngày cấp CCCD:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NgayCapCccd)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            Nơi cấp CCCD:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NoiCapCccd)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            Ngày sinh:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NgaySinh)
+        </dd>
+    </dl>
+
+    <dl class="row" style="color:purple; font-weight:bold">
+        <dt>
+            Ngày vào Đoàn:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NgayVaoDoan)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            Ngày vào Đảng:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NgayVaoDang)
+        </dd>
+    </dl>
+
+    <!-- Đánh giá và sản phẩm của nhiệm vụ -->
+    <dl class="row">
+        <dt>
+            Ngày vào Đảng chính thức:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NgayVaoDangChinhThuc)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            Ngày nhập ngũ:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NgayNhapNgu)
+        </dd>
+    </dl>
+
+    <dl class="row" style="color:purple; font-weight:bold">
+        <dt>
+            Ngày xuất ngũ:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NgayXuatNgu)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            Chức danh khoa học:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdChucDanhKhoaHocNavigation.ChucDanhKhoaHoc)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            Chuyên môn đào tạo:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdChuyenMonDaoTaoNavigation.NganhDaoTao)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            Tôn giáo:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdTonGiaoNavigation.TonGiao)
+        </dd>
+    </dl>
+
+    <dl class="row" style="color:purple; font-weight:bold">
+        <dt>
+            Dân tộc:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdDanTocNavigation.DanToc)
+        </dd>
+    </dl>
+
+
+    <dl class="row">
+        <dt>
+            Gia đình chính sách:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdGiaDinhChinhSachNavigation.HoGiaDinhChinhSach)
+        </dd>
+    </dl>
+
+
+    <dl class="row">
+        <dt>
+            Giới tính:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdGioiTinhNavigation.GioiTinh)
+        </dd>
+    </dl>
+
+
+    <dl class="row">
+        <dt>
+            Khung năng lực ngoại ngữ:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdKhungNangLucNgoaiNgucNavigation.TenKhungNangLucNgoaiNgu)
+        </dd>
+    </dl>
+
+
+    <dl class="row">
+        <dt>
+            Ngoại ngữ:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdNgoaiNguNavigation.NgoaiNgu)
+        </dd>
+    </dl>
+
+
+    <dl class="row">
+        <dt>
+            Quốc tịch:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdQuocTichNavigation.TenNuoc)
+        </dd>
+    </dl>
+
+
+    <dl class="row">
+        <dt>
+            Hạng thương binh:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdThuongBinhHangNavigation.HangThuongBinh)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            Trình độ đào tạo:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdTrinhDoDaoTaoNavigation.TrinhDoDaoTao)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            Trình độ lí luận chính trị:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdTrinhDoLyLuanChinhTriNavigation.TenTrinhDoLyLuanChinhTri)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            Trình độ quản lí nhà nước:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdTrinhDoQuanLyNhaNuocNavigation.TrinhDoQuanLyNhaNuoc)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt>
+            Trình độ tin học:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdTrinhDoTinHocNavigation.TrinhDoTinHoc)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <div class="back">
+            <input type="hidden" asp-for="IdNguoi" />
+            <input type="submit" value="Xác nhận xóa" class="button_a_delete" />
+        </div> <br />
+
+        <div class="back">
+            <a class="button_a_back" asp-action="Index"><i class="fa fa-home"></i>Trở về</a>
+        </div><br />
+        <br />
+    </form>
+
 </div>
+

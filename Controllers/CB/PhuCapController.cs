@@ -31,7 +31,7 @@ namespace HemisCB.Controllers.CB
             List<TbCanBo> tbcanbos = await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo");
             List<TbNguoi> tbNguois = await ApiServices_.GetAll<TbNguoi>("/api/Nguoi");
             tbPhuCaps.ForEach(item => {
-                item.IdBacLuongNavigation = dmbacLuong1s.FirstOrDefault(x => x.IdBacLuong == item.IdBacLuong);
+                //item.IdBacLuongNavigation = dmbacLuong1s.FirstOrDefault(x => x.IdBacLuong == item.IdBacLuong);
                 item.IdHeSoLuongNavigation = dmheSoLuongs.FirstOrDefault(x => x.IdHeSoLuong == item.IdHeSoLuong);
                 item.IdCanBoNavigation = tbcanbos.FirstOrDefault(x => x.IdCanBo == item.IdCanBo);
                 item.IdCanBoNavigation.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdCanBoNavigation.IdNguoi);
@@ -110,7 +110,7 @@ namespace HemisCB.Controllers.CB
         public async Task<IActionResult> Create()
         {
           
-            ViewData["IdBacLuong"] = new SelectList(await ApiServices_.GetAll<DmBacLuong>("/api/dm/BacLuong"), "IdBacLuong", "BacLuong");
+            //ViewData["IdBacLuong"] = new SelectList(await ApiServices_.GetAll<DmBacLuong>("/api/dm/BacLuong"), "IdBacLuong", "BacLuong");
             ViewData["IdHeSoLuong"] = new SelectList(await ApiServices_.GetAll<DmHeSoLuong>("/api/dm/HeSoLuong"), "IdHeSoLuong", "HeSoLuong");
             ViewData["IdCanBo"] = new SelectList(await TbCanBos(), "IdCanBo", "IdNguoiNavigation.name");
             return View();
@@ -131,7 +131,7 @@ namespace HemisCB.Controllers.CB
                 return RedirectToAction(nameof(Index));
             }
             {
-                ViewData["IdBacLuong"] = new SelectList(await ApiServices_.GetAll<DmBacLuong>("/api/dm/BacLuong"), "IdBacLuong", "BacLuong", tbPhuCap.IdBacLuong);
+                //ViewData["IdBacLuong"] = new SelectList(await ApiServices_.GetAll<DmBacLuong>("/api/dm/BacLuong"), "IdBacLuong", "BacLuong", tbPhuCap.IdBacLuong);
                 ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdNguoiNavigation.name", tbPhuCap.IdCanBo);
                 ViewData["IdHeSoLuong"] = new SelectList(await ApiServices_.GetAll<DmHeSoLuong>("/api/dm/HeSoLuong"), "IdHeSoLuong", "HeSoLuong", tbPhuCap.IdHeSoLuong);
                 return View(tbPhuCap);
@@ -152,8 +152,8 @@ namespace HemisCB.Controllers.CB
             {
                 return NotFound();
             }
-            ViewData["IdBacLuong"] = new SelectList(await ApiServices_.GetAll<DmBacLuong>("/api/dm/BacLuong"), "IdBacLuong", "BacLuong", tbPhuCap.IdBacLuong);
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbPhuCap.IdCanBo);
+            //ViewData["IdBacLuong"] = new SelectList(await ApiServices_.GetAll<DmBacLuong>("/api/dm/BacLuong"), "IdBacLuong", "BacLuong", tbPhuCap.IdBacLuong);
+            ViewData["IdCanBo"] = new SelectList(await TbCanBos(), "IdCanBo", "IdNguoiNavigation.name", tbPhuCap.IdCanBo);
             ViewData["IdHeSoLuong"] = new SelectList(await ApiServices_.GetAll<DmHeSoLuong>("/api/dm/HeSoLuong"), "IdHeSoLuong", "HeSoLuong", tbPhuCap.IdHeSoLuong);
             return View(tbPhuCap);
         }
@@ -190,7 +190,7 @@ namespace HemisCB.Controllers.CB
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdBacLuong"] = new SelectList(await ApiServices_.GetAll<DmBacLuong>("/api/dm/BacLuong"), "IdBacLuong", "BacLuong", tbPhuCap.IdBacLuong);
+            //ViewData["IdBacLuong"] = new SelectList(await ApiServices_.GetAll<DmBacLuong>("/api/dm/BacLuong"), "IdBacLuong", "BacLuong", tbPhuCap.IdBacLuong);
             ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbPhuCap.IdCanBo);
             ViewData["IdHeSoLuong"] = new SelectList(await ApiServices_.GetAll<DmHeSoLuong>("/api/dm/HeSoLuong"), "IdHeSoLuong", "HeSoLuong", tbPhuCap.IdHeSoLuong);
             return View(tbPhuCap);

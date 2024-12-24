@@ -168,8 +168,9 @@
                                 <span asp-validation-for="PhuCapKhac" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="IdBacLuong" class="control-label">Bậc lương</label>
-                                <select asp-for="IdBacLuong" class="form-control" asp-items="ViewBag.IdBacLuong"></select>
+                                <label asp-for="IdBacLuong" class="control-label"></label>
+                                <input asp-for="IdBacLuong" class="form-control" />
+                                <span asp-validation-for="IdBacLuong" class="text-danger"></span>
                             </div>
 
                             <div class="form-group">

@@ -8,7 +8,7 @@ namespace HemisCB.Models;
 
 public partial class TbNganhDungTenGiangDay
 {
-    [Display(Name = "ID Ngành dùng tên giảng dạy  ")]
+    [Display(Name = "Mã hồ sơ ngành dùng tên giảng dạy  ")]
     public int IdNganhDungTenGiangDay { get; set; }
     [Display(Name = "Cán bộ  ")]
     public int? IdCanBo { get; set; }

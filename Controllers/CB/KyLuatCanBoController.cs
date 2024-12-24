@@ -165,7 +165,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
 
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbKyLuatCanBo.IdCanBo);
+            ViewData["IdCanBo"] = new SelectList(await TbCanBos(), "IdCanBo", "IdNguoiNavigation.name", tbKyLuatCanBo.IdCanBo);
             ViewData["IdCapQuyetDinh"] = new SelectList(await ApiServices_.GetAll<DmCapKhenThuong>("/api/dm/CapKhenThuong"), "IdCapKhenThuong", "CapKhenThuong", tbKyLuatCanBo.IdCapQuyetDinh);
             ViewData["IdLoaiKyLuat"] = new SelectList(await ApiServices_.GetAll<DmLoaiKyLuat>("/api/dm/LoaiKyLuat"), "IdLoaiKyLuat", "LoaiKyLuat", tbKyLuatCanBo.IdLoaiKyLuat);
             return View(tbKyLuatCanBo);

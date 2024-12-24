@@ -179,8 +179,8 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
             //Hiển thị SelectList của IdCanBo, chọn và lưu dữ liệu vào biến IdCanBo 
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbCanBoHuongDanThanhCongSinhVien.IdCanBo);
-                return View(tbCanBoHuongDanThanhCongSinhVien);
+            ViewData["IdCanBo"] = new SelectList(await TbCanBos(), "IdCanBo", "IdNguoiNavigation.name", tbCanBoHuongDanThanhCongSinhVien.IdCanBo);
+            return View(tbCanBoHuongDanThanhCongSinhVien);
           
         }
 

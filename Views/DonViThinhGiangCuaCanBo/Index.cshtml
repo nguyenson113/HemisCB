@@ -169,25 +169,25 @@
         <table class="table" id="ntable" style="background-color:rgba(200,226,177,0.85);">
             <thead>
                 <tr style="background-color: olivedrab">
-                    <th>
+                    <th style="text-align:center" nowrap>
                         ĐƠN VỊ THỈNH GIẢNG
                     </th>
-                    <th>
+                    <th style="text-align:center" nowrap>
                         SỐ HỢP ĐỒNG
                     </th>
-                    <th>
+                    <th style="text-align:center" nowrap>
                         THỜI GIAN BẮT ĐẦU
                     </th>
-                    <th>
+                 @*    <th style="text-align:center" nowrap>
                         THỜI GIAN KẾT THÚC
-                    </th>
-                    <th>
+                    </th> *@
+                    <th style="text-align:center" nowrap>
                         THÂM NIÊN GIẢNG DẠY
                     </th>
-                    <th>
-                        ID CÁN BỘ
+                    <th style="text-align:center" nowrap>
+                         CÁN BỘ
                     </th>
-                    <th>CHỨC NĂNG </th>
+                    <th style="text-align:center" nowrap>CHỨC NĂNG </th>
                 </tr>
             </thead>
             <tbody>
@@ -211,9 +211,9 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.ThoiGianBatDau)
                         </td>
-                        <td>
+                      @*   <td>
                             @Html.DisplayFor(modelItem => item.ThoiGianKetThuc)
-                        </td>
+                        </td> *@
                         <td>
                             @Html.DisplayFor(modelItem => item.ThamNienGiangDay)
                         </td>

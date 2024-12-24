@@ -8,7 +8,7 @@ namespace HemisCB.Models;
 
 public partial class TbKhoaBoiDuongTapHuanThamGiaCuaCanBo
 {
-    [Display(Name = "ID Khóa bồi dưỡng tập huấn tham gia của cán bộ")]
+    [Display(Name = "Mã hồ sơ khóa bồi dưỡng tập huấn tham gia của cán bộ")]
     public int IdKhoaBoiDuongTapHuanThamGiaCuaCanBo { get; set; }
     [Display(Name = "Cán bộ")]
     public int? IdCanBo { get; set; }

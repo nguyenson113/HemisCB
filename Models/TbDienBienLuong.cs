@@ -8,9 +8,9 @@ namespace HemisCB.Models;
 
 public partial class TbDienBienLuong
 {
-    [Display(Name = "ID Diễn biến lương")]
+    [Display(Name = "Mã hồ sơ diễn biến lương")]
     public int IdDienBienLuong { get; set; }
-    [Display(Name = "ID Cán bộ")]
+    [Display(Name = "Cán bộ")]
     public int? IdCanBo { get; set; }
     [Display(Name = "Trình độ đào tạo")]
     public int? IdTrinhDoDaoTao { get; set; }

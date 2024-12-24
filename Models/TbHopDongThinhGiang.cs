@@ -9,9 +9,9 @@ namespace HemisCB.Models;
 
 public partial class TbHopDongThinhGiang
 {
-    [Display(Name = "ID Hợp đồng thỉnh giảng ")]
+    [Display(Name = "Mã hồ sơ hợp đồng thỉnh giảng ")]
     public int IdHopDongThinhGiang { get; set; }
-    [Display(Name = "ID Cán bộ ")]
+    [Display(Name = "Cán bộ ")]
     public int? IdCanBo { get; set; }
     [DisplayName(displayName: "Mã hợp đồng thỉnh giảng")]
     public string? MaHopDongThinhGiang { get; set; }

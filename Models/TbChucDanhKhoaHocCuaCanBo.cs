@@ -10,11 +10,11 @@ namespace HemisCB.Models;
 
 public partial class TbChucDanhKhoaHocCuaCanBo
 {
-    [Display(Name = "ID chức danh khoa học của cán bộ")]
+    [Display(Name = "Mã hồ sơ chức danh khoa học của cán bộ")]
 
     public int IdChucDanhKhoaHocCuaCanBo { get; set; }
 
-    [Display(Name = "ID cán bộ")]
+    [Display(Name = "Cán bộ")]
 
     public int? IdCanBo { get; set; }
 
