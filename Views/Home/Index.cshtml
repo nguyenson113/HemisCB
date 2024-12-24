@@ -1,157 +1,989 @@
-﻿﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿
+<!DOCTYPE html>
+<html lang="en">
 
-<style>
-    body {
-        background-color: #f4f4f4; /* Màu nền nhẹ nhàng */
-        font-family: Arial, sans-serif; /* Font chữ đẹp */
-    }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout Horizontal - Mazer Admin Dashboard</title>
 
-    .editdiv {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 15px; /* Khoảng cách giữa các div */
-        justify-content: center;
-        padding: 20px; /* Khoảng đệm cho toàn bộ khu vực */
-    }
+    <link rel="shortcut icon" href="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2033%2034'%20fill-rule='evenodd'%20stroke-linejoin='round'%20stroke-miterlimit='2'%20xmlns:v='https://vecta.io/nano'%3e%3cpath%20d='M3%2027.472c0%204.409%206.18%205.552%2013.5%205.552%207.281%200%2013.5-1.103%2013.5-5.513s-6.179-5.552-13.5-5.552c-7.281%200-13.5%201.103-13.5%205.513z'%20fill='%23435ebe'%20fill-rule='nonzero'/%3e%3ccircle%20cx='16.5'%20cy='8.8'%20r='8.8'%20fill='%2341bbdd'/%3e%3c/svg%3e" type="image/x-icon">
+    <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAiCAYAAADRcLDBAAAEs2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS41LjAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iCiAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgZXhpZjpQaXhlbFhEaW1lbnNpb249IjMzIgogICBleGlmOlBpeGVsWURpbWVuc2lvbj0iMzQiCiAgIGV4aWY6Q29sb3JTcGFjZT0iMSIKICAgdGlmZjpJbWFnZVdpZHRoPSIzMyIKICAgdGlmZjpJbWFnZUxlbmd0aD0iMzQiCiAgIHRpZmY6UmVzb2x1dGlvblVuaXQ9IjIiCiAgIHRpZmY6WFJlc29sdXRpb249Ijk2LjAiCiAgIHRpZmY6WVJlc29sdXRpb249Ijk2LjAiCiAgIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiCiAgIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIKICAgeG1wOk1vZGlmeURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiCiAgIHhtcDpNZXRhZGF0YURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiPgogICA8eG1wTU06SGlzdG9yeT4KICAgIDxyZGY6U2VxPgogICAgIDxyZGY6bGkKICAgICAgc3RFdnQ6YWN0aW9uPSJwcm9kdWNlZCIKICAgICAgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWZmaW5pdHkgRGVzaWduZXIgMS4xMC4xIgogICAgICBzdEV2dDp3aGVuPSIyMDIyLTAzLTMxVDEwOjUwOjIzKzAyOjAwIi8+CiAgICA8L3JkZjpTZXE+CiAgIDwveG1wTU06SGlzdG9yeT4KICA8L3JkZjpEZXNjcmlwdGlvbj4KIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+Cjw/eHBhY2tldCBlbmQ9InIiPz5V57uAAAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kc8rRFEUxz9maORHo1hYKC9hISNGTWwsRn4VFmOUX5uZZ36oeTOv954kW2WrKLHxa8FfwFZZK0WkZClrYoOe87ypmWTO7dzzud97z+nec8ETzaiaWd4NWtYyIiNhZWZ2TvE946WZSjqoj6mmPjE1HKWkfdxR5sSbgFOr9Ll/rXoxYapQVik8oOqGJTwqPL5i6Q5vCzeo6dii8KlwpyEXFL519LjLLw6nXP5y2IhGBsFTJ6ykijhexGra0ITl5bRqmWU1fx/nJTWJ7PSUxBbxJkwijBBGYYwhBgnRQ7/MIQIE6ZIVJfK7f/MnyUmuKrPOKgZLpEhj0SnqslRPSEyKnpCRYdXp/9++msneoFu9JgwVT7b91ga+LfjetO3PQ9v+PgLvI1xkC/m5A+h7F32zoLXug38dzi4LWnwHzjeg8UGPGbFfySvuSSbh9QRqZ6H+Gqrm3Z7l9zm+h+iafNUV7O5Bu5z3L/wAdthn7QIme0YAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAJTSURBVFiF7Zi9axRBGIefEw2IdxFBRQsLWUTBaywSK4ubdSGVIY1Y6HZql8ZKCGIqwX/AYLmCgVQKfiDn7jZeEQMWfsSAHAiKqPiB5mIgELWYOW5vzc3O7niHhT/YZvY37/swM/vOzJbIqVq9uQ04CYwCI8AhYAlYAB4Dc7HnrOSJWcoJcBS4ARzQ2F4BZ2LPmTeNuykHwEWgkQGAet9QfiMZjUSt3hwD7psGTWgs9pwH1hC1enMYeA7sKwDxBqjGnvNdZzKZjqmCAKh+U1kmEwi3IEBbIsugnY5avTkEtIAtFhBrQCX2nLVehqyRqFoCAAwBh3WGLAhbgCRIYYinwLolwLqKUwwi9pxV4KUlxKKKUwxC6ZElRCPLYAJxGfhSEOCz6m8HEXvOB2CyIMSk6m8HoXQTmMkJcA2YNTHm3congOvATo3tE3A29pxbpnFzQSiQPcB55IFmFNgFfEQeahaAGZMpsIJIAZWAHcDX2HN+2cT6r39GxmvC9aPNwH5gO1BOPFuBVWAZue0vA9+A12EgjPadnhCuH1WAE8ivYAQ4ohKaagV4gvxi5oG7YSA2vApsCOH60WngKrA3R9IsvQUuhIGY00K4flQG7gHH/mLytB4C42EgfrQb0mV7us8AAMeBS8mGNMR4nwHamtBB7B4QRNdaS0M8GxDEog7iyoAguvJ0QYSBuAOcAt71Kfl7wA8DcTvZ2KtOlJEr+ByyQtqqhTyHTIeB+ONeqi3brh+VgIN0fohUgWGggizZFTplu12yW8iy/YLOGWMpDMTPXnl+Az9vj2HERYqPAAAAAElFTkSuQmCC" type="image/png">
 
-        .editdiv a {
-            text-decoration: none; /* Không gạch chân */
-            color: white; /* Màu chữ */
-            display: block; /* Đảm bảo toàn bộ div có thể nhấp vào */
-            height: 100%; /* Chiếm toàn bộ chiều cao của div */
-            transition: color 0.3s; /* Hiệu ứng chuyển màu chữ */
+
+    <link rel="stylesheet" crossorigin href="./assets/compiled/css/app.css">
+    <link rel="stylesheet" crossorigin href="./assets/compiled/css/app-dark.css">
+    <link rel="stylesheet" crossorigin href="./assets/compiled/css/iconly.css">
+
+    <style>
+        .hemiscb-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* Khoảng cách giữa logo và chữ */
         }
 
-    div.ner {
-        margin: 20px;
-        border-radius: 10px;
-        float: left;
-        width: 20vw;
-        background-color: deepskyblue;
-        justify-content: space-around;
-        transition: transform 0.3s, box-shadow 0.3s; /* Hiệu ứng chuyển động */
-        border: 1px solid #ccc; /* Đường viền giữa các thẻ */
-    }
-
-        div.ner:hover {
-            box-shadow: 1px 1px 6px rgb(143, 131, 131);
-            transform: translate(0px, -6px);
+        .hemiscb-logo {
+            width: 50px; /* Kích thước logo tròn */
+            height: 50px;
+            border-radius: 50%; /* Biến logo thành hình tròn */
+            object-fit: cover; /* Đảm bảo logo không bị méo */
         }
 
-        div.ner img {
-            border-radius: 10px;
+        .hemiscb {
+            font-size: 30px; /* Kích thước chữ */
+            font-weight: bold;
+            color: #3498db;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px; /* Giãn cách chữ */
+            background: linear-gradient(to right, #8e44ad, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 5px;
+        }
+
+            .hemiscb:hover {
+                color: #e74c3c;
+                text-shadow: 2px 2px 6px rgba(231, 76, 60, 0.5);
+                transform: scale(1.05); /* Tăng kích thước nhẹ khi hover */
+                transition: all 0.3s ease-in-out;
+            }
+
+        .university-name {
+            font-size: 14px; /* Kích thước chữ nhỏ cho tên trường */
+            color: #666; /* Màu xám nhẹ */
+            text-align: center;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container-fluid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .stats-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .stats-card h5 {
+                margin: 0;
+                font-size: 18px;
+                color: #333;
+            }
+
+            .stats-card span {
+                font-size: 24px;
+                font-weight: bold;
+                color: #007bff;
+            }
+
+        .recent-activities {
+            margin-top: 30px;
+        }
+
+        .activities-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+            .activities-header h4 {
+                margin: 0;
+                font-size: 20px;
+                color: #333;
+            }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+
+            .activity-item h6 {
+                margin: 0;
+                font-size: 16px;
+                color: #333;
+            }
+
+            .activity-item span {
+                font-size: 14px;
+                color: #999;
+            }
+
+        .image-card {
             width: 100%;
-            height: auto;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 10px;
+            border-radius: 12px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
         }
 
-    div.textunimg {
-        padding: 15px;
-        text-align: center;
-    }
+            .image-card img {
+                width: 100%;
+                margin: 0px;
+                border-radius: 8px;
+                object-fit: fill;
+                height: 500px;
+            }
 
-    h1 {
-        color: #333; /* Màu chữ tiêu đề */
-    }
-</style>
-
-
-
-<h1 style="display: flex; justify-content: center;">Phân hệ cán bộ </h1>
+    </style>
 
 
-<div class="editdiv">
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="CSDL người">
-        <div class="textunimg"><a href="/Nguoi/Index">CSDL người</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca2.jpg" alt="Cán bộ">
-        <div class="textunimg"><a href="/CanBo/Index">Cán bộ</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca3.jpg" alt="Hướng dẫn sinh viên">
-        <div class="textunimg"><a href="/CanBoHuongDanThanhCongSinhVien">Cán bộ hướng dẫn sinh viên</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca4.jpg" alt="Quá trình công tác">
-        <div class="textunimg"><a href="/QuaTrinhCongTacCuaCanBo">Quá trình công tác của cán bộ</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca5.jpg" alt="Quá trình đào tạo">
-        <div class="textunimg"><a href="/QuaTrinhDaoTaoCuaCanBo">Quá trình đào tạo của cán bộ</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca6.jpg" alt="Trình độ tiếng dân tộc">
-        <div class="textunimg"><a href="/TrinhDoTiengDanToc">Trình độ tiếng dân tộc</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="Chức danh khoa học">
-        <div class="textunimg"><a href="/ChucDanhKhoaHocCuaCanBo">Chức danh khoa học của cán bộ</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="Đánh giá xếp loại">
-        <div class="textunimg"><a href="/DanhGiaXepLoaiCanBo">Đánh giá xếp loại cán bộ</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="Danh hiệu thi đua">
-        <div class="textunimg"><a href="/DanhHieuThiDuaGiaiThuongKhenThuongCanBo">Danh hiệu thi đua và khen thưởng</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="Diễn biến lương">
-        <div class="textunimg"><a href="/DienBienLuong">Diễn biến lương</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="Đối tượng chính sách">
-        <div class="textunimg"><a href="/DoiTuongChinhSachCanBo">Đối tượng chính sách cán bộ</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="Đơn vị công tác">
-        <div class="textunimg"><a href="/DonViCongTacCuaCanBo">Đơn vị công tác của cán bộ</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="Đơn vị thỉnh giảng">
-        <div class="textunimg"><a href="/DonViThinhGiangCuaCanBo">Đơn vị thỉnh giảng của cán bộ</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="Giảng viên ngoại ngữ">
-        <div class="textunimg"><a href="/GiangVienNn">Giảng viên ngoại ngữ</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="Giáo viên quốc phòng">
-        <div class="textunimg"><a href="/GiaoVienQpan">Giáo viên quốc phòng an ninh</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="Hợp đồng">
-        <div class="textunimg"><a href="/HopDong">Hợp đồng</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="Hợp đồng thỉnh giảng">
-        <div class="textunimg"><a href="/HopDongThinhGiang">Hợp đồng thỉnh giảng</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="Khóa bồi dưỡng">
-        <div class="textunimg"><a href="/KhoaBoiDuongTapHuanThamGiaCuaCanBo">Khóa bồi dưỡng, tập huấn của cán bộ</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="Kỷ luật cán bộ">
-        <div class="textunimg"><a href="/KyLuatCanBo">Kỷ luật cán bộ</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="Lĩnh vực nghiên cứu">
-        <div class="textunimg"><a href="/LinhVucNghienCuuCuaCanBo">Lĩnh vực nghiên cứu của cán bộ</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="Ngành dùng tên giảng dạy">
-        <div class="textunimg"><a href="/NganhDungTenGiangDay">Ngành dùng tên giảng dạy</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="Ngành giảng dạy">
-        <div class="textunimg"><a href="/NganhGiangDayCuaCanBo">Ngành giảng dạy của cán bộ</a></div>
-    </div>
-    <div class="ner">
-        <img src="/images/ca1.jpg" alt="Phụ cấp">
-        <div class="textunimg"><a href="/PhuCap">Phụ cấp</a></div>
-    </div>
-</div>
+</head>
+
+<body>
+    <script src="assets/static/js/initTheme.js"></script>
+    <div id="app">
+        <div id="main" class="layout-horizontal">
+            <header class="mb-5">
+                <div class="header-top">
+                    <div class="container d-flex justify-content-between align-items-center">
+
+                        <!-- Phần logo và chữ HemisCB căn giữa -->
+                        <div class="text-center mx-auto">
+                            <div class="hemiscb-container">
+                                <img src="https://upload.wikimedia.org/wikipedia/vi/8/85/Logo_hoc_vien_ANND.png" alt="Logo" class="hemiscb-logo">
+                                <div class="hemiscb">
+                                    <a href="/Home/Index">Cán Bộ</a>
+                                </div>
+                            </div>
+                            <div class="university-name">Học Viện An Ninh Nhân Dân</div>
+                        </div>
+
+
+
+
+                        <div class="header-top-right">
+                            <div class="auth-buttons">
+                                <a href="register.html" class="btn btn-primary me-2">Đăng ký</a>
+                                <a href="login.html" class="btn btn-secondary">Đăng nhập</a>
+                            </div>
+
+
+
+                            <!-- Burger button responsive -->
+                            <a href="#" class="burger-btn d-block d-xl-none">
+                                <i class="bi bi-justify fs-3"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <nav class="main-navbar">
+                    <div class="container">
+                        <ul>
+
+
+
+                            <li class="menu-item  ">
+                                <a href="index.html" class='menu-link'>
+                                    <span><i class="bi bi-grid-fill"></i> Trang chủ</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="menu-item  has-sub">
+                                <a href="#" class='menu-link'>
+                                    <span><i class="bi bi-stack"></i> Tra cứu</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item  ">
+                                                <a href="component-alert.html"
+                                                   class='submenu-link'>Alert</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="component-badge.html"
+                                                   class='submenu-link'>Badge</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="component-breadcrumb.html"
+                                                   class='submenu-link'>Breadcrumb</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="component-button.html"
+                                                   class='submenu-link'>Button</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="component-card.html"
+                                                   class='submenu-link'>Card</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="component-carousel.html"
+                                                   class='submenu-link'>Carousel</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="component-collapse.html"
+                                                   class='submenu-link'>Collapse</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="component-dropdown.html"
+                                                   class='submenu-link'>Dropdown</a>
+
+
+                                            </li>
+
+                                        </ul>
+
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item  ">
+                                                <a href="component-list-group.html"
+                                                   class='submenu-link'>List Group</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="component-modal.html"
+                                                   class='submenu-link'>Modal</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="component-navs.html"
+                                                   class='submenu-link'>Navs</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="component-pagination.html"
+                                                   class='submenu-link'>Pagination</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="component-progress.html"
+                                                   class='submenu-link'>Progress</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="component-spinner.html"
+                                                   class='submenu-link'>Spinner</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="component-tooltip.html"
+                                                   class='submenu-link'>Tooltip</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  has-sub">
+                                                <a href="#"
+                                                   class='submenu-link'>Extra Components</a>
+
+
+                                                <!-- 3 Level Submenu -->
+                                                <ul class="subsubmenu">
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="extra-component-avatar.html" class="subsubmenu-link">Avatar</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="extra-component-comment.html" class="subsubmenu-link">Comment</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="extra-component-sweetalert.html" class="subsubmenu-link">Sweet Alert</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="extra-component-toastify.html" class="subsubmenu-link">Toastify</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="extra-component-rating.html" class="subsubmenu-link">Rating</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="extra-component-divider.html" class="subsubmenu-link">Divider</a>
+                                                    </li>
+
+                                                </ul>
+
+                                            </li>
+
+                                        </ul>
+
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item active has-sub">
+                                <a href="#" class='menu-link'>
+                                    <span><i class="bi bi-grid-1x2-fill"></i> Datatable</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item  ">
+                                                <a href="layout-default.html"
+                                                   class='submenu-link'>Default Layout</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="layout-vertical-1-column.html"
+                                                   class='submenu-link'>1 Column</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="layout-vertical-navbar.html"
+                                                   class='submenu-link'>Vertical Navbar</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="layout-rtl.html"
+                                                   class='submenu-link'>RTL Layout</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item active ">
+                                                <a href="layout-horizontal.html"
+                                                   class='submenu-link'>Horizontal Menu</a>
+
+
+                                            </li>
+
+                                        </ul>
+
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item  has-sub">
+                                <a href="#" class='menu-link'>
+                                    <span><i class="bi bi-file-earmark-medical-fill"></i> ChartJS</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item  has-sub">
+                                                <a href="#"
+                                                   class='submenu-link'>Form Elements</a>
+
+
+                                                <!-- 3 Level Submenu -->
+                                                <ul class="subsubmenu">
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="form-element-input.html" class="subsubmenu-link">Input</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="form-element-input-group.html" class="subsubmenu-link">Input Group</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="form-element-select.html" class="subsubmenu-link">Select</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="form-element-radio.html" class="subsubmenu-link">Radio</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="form-element-checkbox.html" class="subsubmenu-link">Checkbox</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="form-element-textarea.html" class="subsubmenu-link">Textarea</a>
+                                                    </li>
+
+                                                </ul>
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="form-layout.html"
+                                                   class='submenu-link'>Form Layout</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  has-sub">
+                                                <a href="#"
+                                                   class='submenu-link'>Form Validation</a>
+
+
+                                                <!-- 3 Level Submenu -->
+                                                <ul class="subsubmenu">
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="form-validation-parsley.html" class="subsubmenu-link">Parsley</a>
+                                                    </li>
+
+                                                </ul>
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  has-sub">
+                                                <a href="#"
+                                                   class='submenu-link'>Form Editor</a>
+
+
+                                                <!-- 3 Level Submenu -->
+                                                <ul class="subsubmenu">
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="form-editor-quill.html" class="subsubmenu-link">Quill</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="form-editor-ckeditor.html" class="subsubmenu-link">CKEditor</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="form-editor-summernote.html" class="subsubmenu-link">Summernote</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="form-editor-tinymce.html" class="subsubmenu-link">TinyMCE</a>
+                                                    </li>
+
+                                                </ul>
+
+                                            </li>
+
+                                        </ul>
+
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item  has-sub">
+                                <a href="#" class='menu-link'>
+                                    <span><i class="bi bi-table"></i> Lịch trình</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item  ">
+                                                <a href="table.html"
+                                                   class='submenu-link'>Bắt đầu dự án</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="table-datatable.html"
+                                                   class='submenu-link'>Tiến độ dự án</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="table-datatable-jquery.html"
+                                                   class='submenu-link'>Lịch trình công tác khác</a>
+
+
+                                            </li>
+
+                                        </ul>
+
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item  has-sub">
+                                <a href="#" class='menu-link'>
+                                    <span><i class="bi bi-file-earmark-fill"></i>Trang</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item  has-sub">
+                                                <a href="#"
+                                                   class='submenu-link'>Hướng dẫn sử dụng</a>
+
+
+                                                <!-- 3 Level Submenu -->
+                                                <ul class="subsubmenu">
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="ui-widgets-chatbox.html" class="subsubmenu-link">Chức năng</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="ui-widgets-pricing.html" class="subsubmenu-link">Thao tác</a>
+                                                    </li>
+
+
+
+                                                </ul>
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  has-sub">
+                                                <a href="#"
+                                                   class='submenu-link'>Thống kê</a>
+
+
+                                                <!-- 3 Level Submenu -->
+                                                <ul class="subsubmenu">
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="ui-icons-bootstrap-icons.html" class="subsubmenu-link">Bootstrap Icons </a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="ui-icons-fontawesome.html" class="subsubmenu-link">Fontawesome</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="ui-icons-dripicons.html" class="subsubmenu-link">Dripicons</a>
+                                                    </li>
+
+                                                </ul>
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  has-sub">
+                                                <a href="#"
+                                                   class='submenu-link'>Thanh toán</a>
+
+
+                                                <!-- 3 Level Submenu -->
+                                                <ul class="subsubmenu">
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="ui-chart-chartjs.html" class="subsubmenu-link">ChartJS</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="ui-chart-apexcharts.html" class="subsubmenu-link">Apexcharts</a>
+                                                    </li>
+
+                                                </ul>
+
+                                            </li>
+
+                                        </ul>
+
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item  has-sub">
+                                <a href="#" class='menu-link'>
+                                    <span><i class="bi bi-plus-square-fill"></i> Về chúng tôi</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item  has-sub">
+                                                <a href="#"
+                                                   class='submenu-link'>Thông tin thành viên</a>
+
+
+                                                <!-- 3 Level Submenu -->
+                                                <ul class="subsubmenu">
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="auth-login.html" class="subsubmenu-link">Nguyễn Tấn Sơn</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="auth-register.html" class="subsubmenu-link">Lê Mỹ Trường Thọ</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="auth-forgot-password.html" class="subsubmenu-link">Lê Đình Việt</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="auth-forgot-password.html" class="subsubmenu-link">Nguyễn Thu Hà</a>
+                                                    </li>
+
+                                                </ul>
+
+                                            </li>
+
+
+
+
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="ui-file-uploader.html"
+                                                   class='submenu-link'>Thông tin dự án</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  has-sub">
+                                                <a href="#"
+                                                   class='submenu-link'>Liên hệ</a>
+
+
+                                                <!-- 3 Level Submenu -->
+                                                <ul class="subsubmenu">
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="ui-map-google-map.html" class="subsubmenu-link">Điện thoại</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item has-sub">
+                                                        <a href="ui-map-jsvectormap.html" class="subsubmenu-link">Facebook</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item has-sub">
+                                                        <a href="ui-map-jsvectormap.html" class="subsubmenu-link">Instagram</a>
+                                                    </li>
+                                                </ul>
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="application-email.html"
+                                                   class='submenu-link'>Gửi Email ý kiến</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="application-chat.html"
+                                                   class='submenu-link'>Chính sách pháp lý</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="application-gallery.html"
+                                                   class='submenu-link'>Thư viện ảnh</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="application-checkout.html"
+                                                   class='submenu-link'>Checkout Page</a>
+
+
+                                            </li>
+
+                                        </ul>
+
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item  has-sub">
+                                <a href="#" class='menu-link'>
+                                    <span><i class="bi bi-life-preserver"></i> Hỗ trợ</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item  ">
+                                                <a href="https://zuramai.github.io/mazer/docs"
+                                                   class='submenu-link'>Câu hỏi thường gặp</a>
+
+
+                                            </li>
+
+                                            <li class="submenu-item  has-sub">
+                                                <a href="#"
+                                                   class='submenu-link'>Các lỗi thường gặp</a>
+
+
+                                                <!-- 3 Level Submenu -->
+                                                <ul class="subsubmenu">
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="error-403.html" class="subsubmenu-link">403 Forbidden</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="error-404.html" class="subsubmenu-link">404 not found</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="error-500.html" class="subsubmenu-link">500 Internal server errol</a>
+                                                    </li>
+
+                                                </ul>
+
+                                            </li>
+
+                                            <li class="submenu-item  ">
+                                                <a href="https://github.com/zuramai/mazer/blob/main/CONTRIBUTING.md"
+                                                   class='submenu-link'>Đóng góp ý kiến</a>
+
+
+                                            </li>
+
+
+
+                                            <li class="submenu-item  ">
+                                                <a href="https://github.com/zuramai/mazer#donation"
+                                                   class='submenu-link'>Quyên góp hỗ trợ</a>
+
+
+                                            </li>
+
+                                        </ul>
+
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                </nav>
+
+            </header>
+
+
+
+            <script src="assets/static/js/components/dark.js"></script>
+            <script src="assets/static/js/pages/horizontal-layout.js"></script>
+            <script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+            <script src="assets/compiled/js/app.js"></script>
+
+
+            <script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
+            <script src="assets/static/js/pages/dashboard.js"></script>
+
+            <div class="container-fluid">
+
+
+                <section class="row g-4">
+                    <!-- Stats Overview -->
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <h5>Tổng lượng truy cập</h5>
+                            <span>190580</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <h5>Lượt truy cập hôm nay</h5>
+                            <span>2945</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <h5>Lượng dữ liệu được ghi hôm nay</h5>
+                            <span>7554</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <h5>Lượng dữ liệu đã xoá hôm nay</h5>
+                            <span>3004</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Image Card Section -->
+                <div class="image-card">
+                    <img src="https://xdcs.cdnchinhphu.vn/446259493575335936/2023/8/24/hvan-16928633464792060908039.jpg" alt="Image">
+                </div>
+
+                <!-- Recent Activities -->
+                <section class="recent-activities">
+                    <div class="activities-header">
+                        <h4>Recent Activities</h4>
+                        <button class="btn btn-primary btn-sm">View All</button>
+                    </div>
+
+                    <div class="activity-item">
+                        <h6>John Duck commented on your post</h6>
+                        <span>5 mins ago</span>
+                    </div>
+
+                    <div class="activity-item">
+                        <h6>New follower: Hank Schrader</h6>
+                        <span>10 mins ago</span>
+                    </div>
+
+                    <div class="activity-item">
+                        <h6>Dean Winchester liked your profile</h6>
+                        <span>20 mins ago</span>
+                    </div>
+
+                    <div class="activity-item">
+                        <h6>John Dodol saved your post</h6>
+                        <span>30 mins ago</span>
+                    </div>
+                </section>
+            </div>
+
+
+</body>
+
+</html>
