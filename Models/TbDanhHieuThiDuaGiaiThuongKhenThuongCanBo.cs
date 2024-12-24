@@ -25,6 +25,7 @@ public partial class TbDanhHieuThiDuaGiaiThuongKhenThuongCanBo
     public int? IdPhuongThucKhenThuong { get; set; }
 
     [Display(Name = "Năm khen thưởng ")]
+    [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:yyyy}", ApplyFormatInEditMode = false)]
 
     public DateTime? NamKhenThuong { get; set; }

@@ -199,7 +199,7 @@
                     <tr class="value" style="text-align: center; cursor: pointer;"
                         onclick="window.location.href='@Url.Action("Details", new { id = item.IdGvnn })'">
                         <td style="text-align:center;">
-                            @Html.DisplayFor(modelItem => item.IdCanBoNavigation.IdNguoiNavigation.name)
+                            @Html.DisplayFor(modelItem => item.IdCanBo)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.CoQuanChuQuanOnuocNgoai)
@@ -284,7 +284,7 @@
 
                          {
                             className: 'button_a_function',
-                            text: 'Import Excel',
+                            text: 'Nhập Excel',
                             action: function (e, dt, node, config) {
                                 import_excel((json) => {
                                     let data = JSON.parse(json);
