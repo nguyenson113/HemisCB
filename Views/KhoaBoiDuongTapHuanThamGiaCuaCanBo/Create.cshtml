@@ -99,7 +99,7 @@
     <div class="row">
 
         <h1> <i class="fa fa-plus"></i> TẠO MỚI</h1>
-        <h3>HỒ SƠ NHIỆM VỤ KHOA HỌC CÔNG NGHỆ</h3>
+        <h3>HỒ SƠ KHÓA BỒI DƯỠNG VÀ TẬP HUẤN CỦA CÁN BỘ</h3>
         <p style="text-align: center;">
             <img src="https://upload.wikimedia.org/wikipedia/vi/8/85/Logo_hoc_vien_ANND.png" alt="Học viện An ninh nhân dân">
         </p>
@@ -112,12 +112,12 @@
                     <div class="col-md-6">
                         <div
                     <div class="form-group">
-                        <label asp-for="IdKhoaBoiDuongTapHuanThamGiaCuaCanBo" class="control-label">ID Khóa bồi dưỡng tập huấn tham gia của cán bộ</label>
+                        <label asp-for="IdKhoaBoiDuongTapHuanThamGiaCuaCanBo" class="control-label">Mã hồ sơ khóa bồi dưỡng tập huấn tham gia của cán bộ</label>
                         <input asp-for="IdKhoaBoiDuongTapHuanThamGiaCuaCanBo" class="form-control" />
                         <span asp-validation-for="IdKhoaBoiDuongTapHuanThamGiaCuaCanBo" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="IdCanBo" class="control-label">ID Cán bộ</label>
+                        <label asp-for="IdCanBo" class="control-label">Cán bộ</label>
                         <select asp-for="IdCanBo" class="form-control" asp-items="ViewBag.IdCanBo"></select>
                     </div>
                     <div class="form-group">
