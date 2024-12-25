@@ -9,6 +9,7 @@ using HemisCB.Models;
 using HemisCB.API;
 using HemisCB.Models.DM;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace HemisCB.Controllers.CB
 {
@@ -36,7 +37,8 @@ namespace HemisCB.Controllers.CB
                 item.IdCanBoNavigation = tbcanbos.FirstOrDefault(x => x.IdCanBo == item.IdCanBo);
                 item.IdChucDanhKhoaHocNavigation = dmChucDanhKhoaHocs.FirstOrDefault(x => x.IdChucDanhKhoaHoc == item.IdChucDanhKhoaHoc);
                 item.IdThamQuyenQuyetDinhNavigation = dmLoaiQuyetDinhs.FirstOrDefault(x => x.IdLoaiQuyetDinh == item.IdThamQuyenQuyetDinh);
-                item.IdCanBoNavigation.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdCanBoNavigation.IdNguoi);
+                if (item.IdCanBoNavigation != null)
+                    item.IdCanBoNavigation.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdCanBoNavigation.IdNguoi);
             });
             return tbChucDanhKhoaHocCuaCanBos;
         }
@@ -241,19 +243,74 @@ namespace HemisCB.Controllers.CB
             return tbChucDanhKhoaHocCuaCanBos.Any(e => e.IdChucDanhKhoaHocCuaCanBo == id);
         }
 
-        public IActionResult Excel(string json)
+        //Import Excel 
+        public async Task<IActionResult> Receive(string json)
         {
             try
             {
+                // Khai báo thông báo mặc định
+                var message = "Không phát hiện lỗi";
+                // Giải mã dữ liệu JSON từ client
                 List<List<string>> data = JsonConvert.DeserializeObject<List<List<string>>>(json);
-                Console.WriteLine(JsonConvert.SerializeObject(data));
-                return Accepted(Json(new { msg = JsonConvert.SerializeObject(data) }));
+
+                List<TbChucDanhKhoaHocCuaCanBo> lst = new List<TbChucDanhKhoaHocCuaCanBo>();
+
+                // Khởi tạo Random để tạo ID ngẫu nhiên
+                Random rnd = new Random();
+                List<TbChucDanhKhoaHocCuaCanBo> TbChucDanhKhoaHocCuaCanBos = await ApiServices_.GetAll<TbChucDanhKhoaHocCuaCanBo>("/api/cb/ChucDanhKhoaHocCuaCanBo");
+                // Duyệt qua từng dòng dữ liệu từ Excel
+                foreach (var item in data)
+                {
+                    TbChucDanhKhoaHocCuaCanBo model = new TbChucDanhKhoaHocCuaCanBo();
+
+                    // Tạo id ngẫu nhiên và kiểm tra xem id đã tồn tại chưa
+                    int id;
+                    do
+                    {
+                        id = rnd.Next(1, 100000); // Tạo id ngẫu nhiên
+                    } while (lst.Any(t => t.IdChucDanhKhoaHocCuaCanBo == id) || TbChucDanhKhoaHocCuaCanBos.Any(t => t.IdChucDanhKhoaHocCuaCanBo == id)); // Kiểm tra id có tồn tại không
+
+                    // Gán dữ liệu cho các thuộc tính của model
+                    model.IdChucDanhKhoaHocCuaCanBo = id; // Gán ID
+                    model.SoQuyetDinh = item[0];
+                    model.NgayQuyetDinh = DateOnly.ParseExact(item[1], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    model.IdCanBo = ParseInt(item[2]);
+                    model.IdChucDanhKhoaHoc = ParseInt(item[3]);
+               
+                    // Thêm model vào danh sách
+                    lst.Add(model);
+                }
+
+                // Lưu danh sách vào cơ sở dữ liệu (giả sử có một phương thức tạo đối tượng trong DB)
+                foreach (var item in lst)
+                {
+                    await CreateTbChucDanhKhoaHocCuaCanBo(item); // Giả sử có phương thức tạo dữ liệu vào DB
+                }
+
+                return Accepted(Json(new { msg = message }));
             }
             catch (Exception ex)
             {
-                return BadRequest(Json(new { msg = "Lỗi nè mấy má !!!!!!!!" }));
+                // Nếu có lỗi, trả về thông báo lỗi
+                return BadRequest(Json(new { msg = ex.Message }));
             }
+        }
 
+        private async Task CreateTbChucDanhKhoaHocCuaCanBo(TbChucDanhKhoaHocCuaCanBo item)
+        {
+            await ApiServices_.Create<TbChucDanhKhoaHocCuaCanBo>("/api/cb/ChucDanhKhoaHocCuaCanBo", item);
+        }
+
+        private int? ParseInt(string v)
+        {
+            if (int.TryParse(v, out int result)) // Nếu chuỗi có thể chuyển thành int
+            {
+                return result; // Trả về giá trị int
+            }
+            else
+            {
+                return null; // Nếu không thể chuyển thành int, trả về null
+            }
         }
     }
 }

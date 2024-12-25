@@ -9,6 +9,7 @@ using HemisCB.Models;
 using HemisCB.Models.DM;
 using HemisCB.API;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace HemisCB.Controllers.CB
 {
@@ -31,7 +32,8 @@ namespace HemisCB.Controllers.CB
             tbNganhDungTenGiangDays.ForEach(item => {
                 item.IdCanBoNavigation = tbcanbos.FirstOrDefault(x => x.IdCanBo == item.IdCanBo);
                 item.IdNganhDaoTaoNavigation = dmnganhDaoTaos.FirstOrDefault(x => x.IdNganhDaoTao == item.IdNganhDaoTao);
-                item.IdCanBoNavigation.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdCanBoNavigation.IdNguoi);
+                if (item.IdCanBoNavigation != null)
+                    item.IdCanBoNavigation.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdCanBoNavigation.IdNguoi);
             });
             return tbNganhDungTenGiangDays;
         }
@@ -225,19 +227,72 @@ namespace HemisCB.Controllers.CB
 
 
         //Import Excel 
-        public IActionResult Excel(string json)
+        public async Task<IActionResult> Receive(string json)
         {
             try
             {
+                // Khai báo thông báo mặc định
+                var message = "Không phát hiện lỗi";
+                // Giải mã dữ liệu JSON từ client
                 List<List<string>> data = JsonConvert.DeserializeObject<List<List<string>>>(json);
-                Console.WriteLine(JsonConvert.SerializeObject(data));
-                return Accepted(Json(new { msg = JsonConvert.SerializeObject(data) }));
+
+                List<TbNganhDungTenGiangDay> lst = new List<TbNganhDungTenGiangDay>();
+
+                // Khởi tạo Random để tạo ID ngẫu nhiên
+                Random rnd = new Random();
+                List<TbNganhDungTenGiangDay> TbNganhDungTenGiangDays = await ApiServices_.GetAll<TbNganhDungTenGiangDay>("/api/cb/NganhDungTenGiangDay");
+                // Duyệt qua từng dòng dữ liệu từ Excel
+                foreach (var item in data)
+                {
+                    TbNganhDungTenGiangDay model = new TbNganhDungTenGiangDay();
+
+                    // Tạo id ngẫu nhiên và kiểm tra xem id đã tồn tại chưa
+                    int id;
+                    do
+                    {
+                        id = rnd.Next(1, 100000); // Tạo id ngẫu nhiên
+                    } while (lst.Any(t => t.IdNganhDungTenGiangDay == id) || TbNganhDungTenGiangDays.Any(t => t.IdNganhDungTenGiangDay == id)); // Kiểm tra id có tồn tại không
+
+                    // Gán dữ liệu cho các thuộc tính của model
+                    model.IdNganhDungTenGiangDay = id; // Gán ID
+                    model.IdNganhDaoTao = ParseInt(item[0]);
+                    model.TenNganhGiangDay = item[1];
+                    model.IdCanBo = ParseInt(item[2]);
+                 
+                    // Thêm model vào danh sách
+                    lst.Add(model);
+                }
+
+                // Lưu danh sách vào cơ sở dữ liệu (giả sử có một phương thức tạo đối tượng trong DB)
+                foreach (var item in lst)
+                {
+                    await CreateTbNganhDungTenGiangDay(item); // Giả sử có phương thức tạo dữ liệu vào DB
+                }
+
+                return Accepted(Json(new { msg = message }));
             }
             catch (Exception ex)
             {
-                return BadRequest(Json(new { msg = "Lỗi nè mấy má !!!!!!!!" }));
+                // Nếu có lỗi, trả về thông báo lỗi
+                return BadRequest(Json(new { msg = ex.Message }));
             }
+        }
 
+        private async Task CreateTbNganhDungTenGiangDay(TbNganhDungTenGiangDay item)
+        {
+            await ApiServices_.Create<TbNganhDungTenGiangDay>("/api/cb/NganhDungTenGiangDay", item);
+        }
+
+        private int? ParseInt(string v)
+        {
+            if (int.TryParse(v, out int result)) // Nếu chuỗi có thể chuyển thành int
+            {
+                return result; // Trả về giá trị int
+            }
+            else
+            {
+                return null; // Nếu không thể chuyển thành int, trả về null
+            }
         }
     }
 }

@@ -266,7 +266,7 @@
 
                          {
                             className: 'button_a_function',
-                            text: 'Import Excel',
+                            text: 'Nhập Excel',
                             action: function (e, dt, node, config) {
                                 import_excel((json) => {
                                     let data = JSON.parse(json);
@@ -283,17 +283,17 @@
                                     console.log(_json);
                                     $.ajax({
                                         method: "post",
-                                        url: "/HopDong/Excel",
+                                        url: "/TrinhDoTiengDanToc/Receive",
                                         data: {
                                             "json": _json,
                                         },
                                         success: function (response) {
                                             // Code to execute if the request succeeds
-                                            console.log('Success:', response.value['msg']);
+                                           alert('Success:Bạn đã nhập file thành công !!!', response.value['msg']);
                                         },
                                         error: function (xhr, status, error) {
                                             // Code to execute if the request fails
-                                            alert('Error:' + xhr.responseJSON.value['msg']);
+                                            alert('Error:Bạn đã nhập file thất bại. ' + xhr.responseJSON.value['msg']);
                                         }
                                     });
                                 });

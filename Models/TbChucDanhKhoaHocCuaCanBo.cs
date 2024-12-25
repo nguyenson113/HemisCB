@@ -30,7 +30,7 @@ public partial class TbChucDanhKhoaHocCuaCanBo
     [Display(Name = "Ngày quyết định")]
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
-    public DateTime NgayQuyetDinh { get; set; }
+    public DateOnly NgayQuyetDinh { get; set; }
 
 
     public virtual TbCanBo? IdCanBoNavigation { get; set; }

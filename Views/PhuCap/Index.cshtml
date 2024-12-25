@@ -172,16 +172,16 @@
             <thead>
                 <tr style="background-color: olivedrab">
                     <th style="text-align:center" nowrap>CÁN BỘ </th>
-                    <th style="text-align:center" nowrap>PHỤ CẤP </th>
-            @*         <th>PHỤ CẤP THU HÚT NGHỀ</th>
+                  @*   <th style="text-align:center" nowrap>PHỤ CẤP </th> *@
+                    <th>PHỤ CẤP THU HÚT NGHỀ</th>
                     <th>PHỤ CẤP THÂM NIÊN </th>
-                    <th>PHỤ CẤP ƯU ĐÃI NGHỀ </th>
+                   @*  <th>PHỤ CẤP ƯU ĐÃI NGHỀ </th>
                     <th>PHỤ CẤP CHỨC VỤ</th>
                     <th>PHỤ CẤP ĐỘC HẠI</th>
                     <th>PHỤ CẤP KHÁC</th>
                     <th>PHẦN TRĂM VƯỢT KHUNG</th> *@
                     <th style="text-align:center" nowrap>NGÀY BẮT ĐẦU HƯỞNG LƯƠNG </th>
-                    <th style="text-align:center" nowrap>BẬC LƯƠNG</th>
+                  @*   <th style="text-align:center" nowrap>BẬC LƯƠNG</th> *@
                     <th style="text-align:center" nowrap>HỆ SỐ LƯƠNG</th>
                     <th style="text-align:center" nowrap>CHỨC NĂNG</th>
                 </tr>
@@ -199,16 +199,16 @@
                     <tr class="value" style="text-align: center; cursor: pointer;"
                         onclick="window.location.href='@Url.Action("Details", new { id = item.IdPhuCap })'">
                         <td>@Html.DisplayFor(modelItem => item.IdCanBoNavigation.IdNguoiNavigation.name)</td>
-                        <td>@Html.DisplayFor(modelItem => item.IdPhuCap)</td>
-                        @* <td>@Html.DisplayFor(modelItem => item.PhuCapThuHutNghe)</td>
+                       @*  <td>@Html.DisplayFor(modelItem => item.IdPhuCap)</td> *@
+                        <td>@Html.DisplayFor(modelItem => item.PhuCapThuHutNghe)</td>
                         <td>@Html.DisplayFor(modelItem => item.PhuCapThamNien)</td>
-                        <td>@Html.DisplayFor(modelItem => item.PhuCapUuDaiNghe)</td>
+                       @*  <td>@Html.DisplayFor(modelItem => item.PhuCapUuDaiNghe)</td>
                         <td>@Html.DisplayFor(modelItem => item.PhuCapChucVu)</td>
                         <td>@Html.DisplayFor(modelItem => item.PhuCapDocHai)</td>
                         <td>@Html.DisplayFor(modelItem => item.PhuCapKhac)</td>
                         <td>@Html.DisplayFor(modelItem => item.PhanTramVuotKhung)</td> *@
                         <td>@Html.DisplayFor(modelItem => item.NgayThangNamHuongLuong)</td>
-                        <td>@Html.DisplayFor(modelItem => item.IdBacLuong)</td>
+                    @*     <td>@Html.DisplayFor(modelItem => item.IdBacLuong)</td> *@
                         <td>@Html.DisplayFor(modelItem => item.IdHeSoLuongNavigation.HeSoLuong)</td>
                         <td>
                             <div class="edit_del">
@@ -303,13 +303,13 @@
                                     console.log(_json);
                                     $.ajax({
                                         method: "post",
-                                        url: "/PhuCap/Excel",
+                                        url: "/PhuCap/Receive",
                                         data: {
                                             "json": _json,
                                         },
                                         success: function (response) {
                                             // Code to execute if the request succeeds
-                                            console.log('Success:', response.value['msg']);
+                                            alert('Thành công: Bạn đã nhập dữ liệu từ file Excel thành công!!!', response.value['msg']);
                                         },
                                         error: function (xhr, status, error) {
                                             // Code to execute if the request fails

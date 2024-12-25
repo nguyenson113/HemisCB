@@ -301,17 +301,17 @@
                                     console.log(_json);
                                     $.ajax({
                                         method: "post",
-                                        url: "/DoiTuongChinhSachCanBo/Excel",
+                                        url: "/DoiTuongChinhSachCanBo/Receive",
                                         data: {
                                             "json": _json,
                                         },
                                         success: function (response) {
                                             // Code to execute if the request succeeds
-                                            console.log('Success:', response.value['msg']);
+                                           alert('Success: Bạn đã nhập File thành công rồi', response.value['msg']);
                                         },
                                         error: function (xhr, status, error) {
                                             // Code to execute if the request fails
-                                            alert('Error:' + xhr.responseJSON.value['msg']);
+                                            alert('Error: Chưa thành công' + xhr.responseJSON.value['msg']);
                                         }
                                     });
                                 });

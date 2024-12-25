@@ -320,13 +320,13 @@
                                     console.log(_json);
                                     $.ajax({
                                         method: "post",
-                                        url: "/KyLuatCanBo/Excel",
+                                        url: "/KyLuatCanBo/Receive",
                                         data: {
                                             "json": _json,
                                         },
                                         success: function (response) {
                                             // Code to execute if the request succeeds
-                                            console.log('Success:', response.value['msg']);
+                                            alert('Thành công: Bạn đã thêm dữ liệu từ file thành công!!!', response.value['msg']);
                                         },
                                         error: function (xhr, status, error) {
                                             // Code to execute if the request fails

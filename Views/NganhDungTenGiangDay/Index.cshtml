@@ -296,13 +296,13 @@
                                     console.log(_json);
                                     $.ajax({
                                         method: "post",
-                                        url: "/NganhDungTenGiangDay/Excel",
+                                        url: "/NganhDungTenGiangDay/Receive",
                                         data: {
                                             "json": _json,
                                         },
                                         success: function (response) {
                                             // Code to execute if the request succeeds
-                                            console.log('Success:', response.value['msg']);
+                                            alert('Thành công: Bạn đã nhập dữ liệu từ file Excel thành công!!!', response.value['msg']);
                                         },
                                         error: function (xhr, status, error) {
                                             // Code to execute if the request fails

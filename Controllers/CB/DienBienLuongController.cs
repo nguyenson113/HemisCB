@@ -33,7 +33,8 @@ namespace HemisCB.Controllers.CB
             tbDienBienLuongs.ForEach(item => {
                 item.IdCanBoNavigation = tbcanbos.FirstOrDefault(x => x.IdCanBo == item.IdCanBo);
                 item.IdHeSoLuongNavigation = dmheSoLuongs.FirstOrDefault(x => x.IdHeSoLuong == item.IdHeSoLuong);
-                item.IdCanBoNavigation.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdCanBoNavigation.IdNguoi);
+                if (item.IdCanBoNavigation != null)
+                    item.IdCanBoNavigation.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdCanBoNavigation.IdNguoi);
                 item.IdTrinhDoDaoTaoNavigation = dmtrinhDoDaoTaos.FirstOrDefault(x => x.IdTrinhDoDaoTao == item.IdTrinhDoDaoTao);
             });
             return tbDienBienLuongs;

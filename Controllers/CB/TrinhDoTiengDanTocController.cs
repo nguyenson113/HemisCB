@@ -9,6 +9,7 @@ using HemisCB.Models;
 using HemisCB.API;
 using HemisCB.Models.DM;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace HemisCB.Controllers.CB
 {
@@ -34,7 +35,8 @@ namespace HemisCB.Controllers.CB
                 item.IdCanBoNavigation = tbcanbos.FirstOrDefault(x => x.IdCanBo == item.IdCanBo);
                 item.IdKhungNangLucNgoaiNguNavigation = dmkhungNangLucNgoaiNgus.FirstOrDefault(x => x.IdKhungNangLucNgoaiNgu == item.IdKhungNangLucNgoaiNgu);
                 item.IdTiengDanTocNavigation = dmtiengDanTocs.FirstOrDefault(x => x.IdTiengDanToc == item.IdTiengDanToc);
-                item.IdCanBoNavigation.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdCanBoNavigation.IdNguoi);
+                if (item.IdCanBoNavigation != null)
+                    item.IdCanBoNavigation.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdCanBoNavigation.IdNguoi);
             });
             return tbTrinhDoTiengDanTocs;
         }
@@ -238,19 +240,73 @@ namespace HemisCB.Controllers.CB
 
 
         //Import Excel 
-        public IActionResult Excel(string json)
+        public async Task<IActionResult> Receive(string json)
         {
             try
             {
+                // Khai báo thông báo mặc định
+                var message = "Không phát hiện lỗi";
+                // Giải mã dữ liệu JSON từ client
                 List<List<string>> data = JsonConvert.DeserializeObject<List<List<string>>>(json);
-                Console.WriteLine(JsonConvert.SerializeObject(data));
-                return Accepted(Json(new { msg = JsonConvert.SerializeObject(data) }));
+
+                List<TbTrinhDoTiengDanToc> lst = new List<TbTrinhDoTiengDanToc>();
+
+                // Khởi tạo Random để tạo ID ngẫu nhiên
+                Random rnd = new Random();
+                List<TbTrinhDoTiengDanToc> TbTrinhDoTiengDanTocs = await ApiServices_.GetAll<TbTrinhDoTiengDanToc>("/api/cb/TrinhDoTiengDanToc");
+                // Duyệt qua từng dòng dữ liệu từ Excel
+                foreach (var item in data)
+                {
+                    TbTrinhDoTiengDanToc model = new TbTrinhDoTiengDanToc();
+
+                    // Tạo id ngẫu nhiên và kiểm tra xem id đã tồn tại chưa
+                    int id;
+                    do
+                    {
+                        id = rnd.Next(1, 100000); // Tạo id ngẫu nhiên
+                    } while (lst.Any(t => t.IdTrinhDoTiengDanToc == id) || TbTrinhDoTiengDanTocs.Any(t => t.IdTrinhDoTiengDanToc == id)); // Kiểm tra id có tồn tại không
+
+                    // Gán dữ liệu cho các thuộc tính của model
+                    model.IdTrinhDoTiengDanToc = id; // Gán ID
+                    //model.NgayThangNam = DateOnly.ParseExact(item[0], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    //model.IdBacLuong = ParseInt(item[1]);
+                    model.IdCanBo = ParseInt(item[0]);
+                    model.IdKhungNangLucNgoaiNgu = ParseInt(item[1]);
+                    model.IdTiengDanToc = ParseInt(item[2]);
+                    // Thêm model vào danh sách
+                    lst.Add(model);
+                }
+
+                // Lưu danh sách vào cơ sở dữ liệu (giả sử có một phương thức tạo đối tượng trong DB)
+                foreach (var item in lst)
+                {
+                    await CreateTbTrinhDoTiengDanToc(item); // Giả sử có phương thức tạo dữ liệu vào DB
+                }
+
+                return Accepted(Json(new { msg = message }));
             }
             catch (Exception ex)
             {
-                return BadRequest(Json(new { msg = "Lỗi nè mấy má !!!!!!!!" }));
+                // Nếu có lỗi, trả về thông báo lỗi
+                return BadRequest(Json(new { msg = ex.Message }));
             }
+        }
 
+        private async Task CreateTbTrinhDoTiengDanToc(TbTrinhDoTiengDanToc item)
+        {
+            await ApiServices_.Create<TbTrinhDoTiengDanToc>("/api/cb/TrinhDoTiengDanToc", item);
+        }
+
+        private int? ParseInt(string v)
+        {
+            if (int.TryParse(v, out int result)) // Nếu chuỗi có thể chuyển thành int
+            {
+                return result; // Trả về giá trị int
+            }
+            else
+            {
+                return null; // Nếu không thể chuyển thành int, trả về null
+            }
         }
     }
 }
