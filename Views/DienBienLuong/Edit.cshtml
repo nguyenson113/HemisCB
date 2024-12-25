@@ -1,60 +1,5 @@
 ﻿@model HemisCB.Models.TbDienBienLuong
 
-@{
-    ViewData["Title"] = "Edit";
-}
-
-<h1>Edit</h1>
-
-<h4>TbDienBienLuong</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdDienBienLuong" />
-            <div class="form-group">
-                <label asp-for="IdCanBo" class="control-label"></label>
-                <select asp-for="IdCanBo" class="form-control" asp-items="ViewBag.IdCanBo"></select>
-                <span asp-validation-for="IdCanBo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdTrinhDoDaoTao" class="control-label"></label>
-                <select asp-for="IdTrinhDoDaoTao" class="form-control" asp-items="ViewBag.IdTrinhDoDaoTao"></select>
-                <span asp-validation-for="IdTrinhDoDaoTao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NgayThangNam" class="control-label"></label>
-                <input asp-for="NgayThangNam" class="form-control" />
-                <span asp-validation-for="NgayThangNam" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-               
-                    <label asp-for="IdBacLuong" class="control-label"></label>
-                    <input asp-for="IdBacLuong" class="form-control" />
-                    <span asp-validation-for="IdBacLuong" class="text-danger"></span>
-               
-            </div>
-            <div class="form-group">
-                <label asp-for="IdHeSoLuong" class="control-label"></label>
-                <select asp-for="IdHeSoLuong" class="form-control" asp-items="ViewBag.IdHeSoLuong"></select>
-                <span asp-validation-for="IdHeSoLuong" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-
 
 @{
     ViewData["Title"] = "Cập nhật hồ sơ";
@@ -183,7 +128,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="IdBacLuong" class="control-label"></label>
-                        <select asp-for="IdBacLuong" class="form-control" asp-items="ViewBag.IdBacLuong"></select>
+                        <input asp-for="IdBacLuong" class="form-control" />
                         <span asp-validation-for="IdBacLuong" class="text-danger"></span>
                     </div>
                     <div class="form-group">

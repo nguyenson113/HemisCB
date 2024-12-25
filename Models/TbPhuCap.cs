@@ -8,7 +8,7 @@ namespace HemisCB.Models;
 
 public partial class TbPhuCap
 {
-    [Display(Name = "ID Phụ cấp")]
+    [Display(Name = "Mã hồ sơ phụ cấp")]
     public int IdPhuCap { get; set; }
 
     [Display(Name = "Cán bộ ")]

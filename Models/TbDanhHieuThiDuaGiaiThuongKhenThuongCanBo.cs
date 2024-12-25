@@ -8,10 +8,10 @@ namespace HemisCB.Models;
 
 public partial class TbDanhHieuThiDuaGiaiThuongKhenThuongCanBo
 {
-    [Display(Name = "ID Đánh giá danh hiệu thi đua giải thưởng khen thưởng cán bộ")]
+    [Display(Name = "Mã hồ sơ đánh giá danh hiệu thi đua giải thưởng khen thưởng cán bộ")]
     public int IdDanhHieuThiDuaGiaiThuongKhenThuongCanBo { get; set; }
 
-    [Display(Name = "ID Cán bộ")]
+    [Display(Name = "Cán bộ")]
     public int? IdCanBo { get; set; }
 
     [Display(Name = "Loại danh hiệu")]
@@ -25,9 +25,10 @@ public partial class TbDanhHieuThiDuaGiaiThuongKhenThuongCanBo
     public int? IdPhuongThucKhenThuong { get; set; }
 
     [Display(Name = "Năm khen thưởng ")]
+    [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:yyyy}", ApplyFormatInEditMode = false)]
 
-    public DateTime? NamKhenThuong { get; set; }
+    public DateOnly NamKhenThuong { get; set; }
     [Display(Name = "Cấp khen thưởng")]
     public int? IdCapKhenThuong { get; set; }
 

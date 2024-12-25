@@ -10,6 +10,7 @@ using HemisCB.API;
 using HemisCB.Models.DM;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace HemisCB.Controllers.CB
 {
@@ -34,7 +35,8 @@ namespace HemisCB.Controllers.CB
                 {
                     //Lấy dữ liệu cho IdCanBoNavigation 
                     item.IdCanBoNavigation = tbcanbos.FirstOrDefault(x => x.IdCanBo == item.IdCanBo);
-                    item.IdCanBoNavigation.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdCanBoNavigation.IdNguoi);
+                    if (item.IdCanBoNavigation != null)
+                        item.IdCanBoNavigation.IdNguoiNavigation = tbNguois.FirstOrDefault(x => x.IdNguoi == item.IdCanBoNavigation.IdNguoi);
                 });
                 //Trả kết quả 
                 return tbCanBoHuongDanThanhCongSinhViens;
@@ -179,8 +181,8 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
             //Hiển thị SelectList của IdCanBo, chọn và lưu dữ liệu vào biến IdCanBo 
-            ViewData["IdCanBo"] = new SelectList(await ApiServices_.GetAll<TbCanBo>("/api/cb/CanBo"), "IdCanBo", "IdCanBo", tbCanBoHuongDanThanhCongSinhVien.IdCanBo);
-                return View(tbCanBoHuongDanThanhCongSinhVien);
+            ViewData["IdCanBo"] = new SelectList(await TbCanBos(), "IdCanBo", "IdNguoiNavigation.name", tbCanBoHuongDanThanhCongSinhVien.IdCanBo);
+            return View(tbCanBoHuongDanThanhCongSinhVien);
           
         }
 
@@ -282,27 +284,75 @@ namespace HemisCB.Controllers.CB
         }
 
         //Import Excel 
-        public  IActionResult Excel(string json)
+        public async Task<IActionResult> Receive(string json)
         {
             try
             {
+                // Khai báo thông báo mặc định
+                var message = "Không phát hiện lỗi";
+                // Giải mã dữ liệu JSON từ client
                 List<List<string>> data = JsonConvert.DeserializeObject<List<List<string>>>(json);
-                data.ForEach(async item => {
-                    int id;
-                    Random rnd = new Random();
-                    while (await TbCanBoHuongDanThanhCongSinhVienExists(id = rnd.Next(1, 1000000)));
+
+                List<TbCanBoHuongDanThanhCongSinhVien> lst = new List<TbCanBoHuongDanThanhCongSinhVien>();
+
+                // Khởi tạo Random để tạo ID ngẫu nhiên
+                Random rnd = new Random();
+                List<TbCanBoHuongDanThanhCongSinhVien> TbCanBoHuongDanThanhCongSinhViens = await ApiServices_.GetAll<TbCanBoHuongDanThanhCongSinhVien>("/api/cb/CanBoHuongDanThanhCongSinhVien");
+                // Duyệt qua từng dòng dữ liệu từ Excel
+                foreach (var item in data)
+                {
                     TbCanBoHuongDanThanhCongSinhVien model = new TbCanBoHuongDanThanhCongSinhVien();
-                    model.IdCanBoHuongDanThanhCongSinhVien = id;
-                    model.ThoiGianBatDau = DateOnly.Parse(item[0]);
-                });
-                return Accepted(Json(new { msg = JsonConvert.SerializeObject(data) }));
+
+                    // Tạo id ngẫu nhiên và kiểm tra xem id đã tồn tại chưa
+                    int id;
+                    do
+                    {
+                        id = rnd.Next(1, 100000); // Tạo id ngẫu nhiên
+                    } while (lst.Any(t => t.IdCanBoHuongDanThanhCongSinhVien == id) || TbCanBoHuongDanThanhCongSinhViens.Any(t => t.IdCanBoHuongDanThanhCongSinhVien == id)); // Kiểm tra id có tồn tại không
+
+                    // Gán dữ liệu cho các thuộc tính của model
+                    model.IdCanBoHuongDanThanhCongSinhVien = id; // Gán ID
+                    model.IdSinhVien = ParseInt(item[0]);
+                    model.TrachNhiemHuongDan = item[1];
+                    model.ThoiGianBatDau = DateOnly.ParseExact(item[2], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    model.IdCanBo = ParseInt(item[3]);
+                  
+                    // Thêm model vào danh sách
+                    lst.Add(model);
+                }
+
+                // Lưu danh sách vào cơ sở dữ liệu (giả sử có một phương thức tạo đối tượng trong DB)
+                foreach (var item in lst)
+                {
+                    await CreateTbCanBoHuongDanThanhCongSinhVien(item); // Giả sử có phương thức tạo dữ liệu vào DB
+                }
+
+                return Accepted(Json(new { msg = message }));
             }
             catch (Exception ex)
             {
-                return BadRequest(Json(new { msg = "Lỗi nè mấy má !!!!!!!!" }));
+                // Nếu có lỗi, trả về thông báo lỗi
+                return BadRequest(Json(new { msg = ex.Message }));
             }
-
         }
+
+        private async Task CreateTbCanBoHuongDanThanhCongSinhVien(TbCanBoHuongDanThanhCongSinhVien item)
+        {
+            await ApiServices_.Create<TbCanBoHuongDanThanhCongSinhVien>("/api/cb/CanBoHuongDanThanhCongSinhVien", item);
+        }
+
+        private int? ParseInt(string v)
+        {
+            if (int.TryParse(v, out int result)) // Nếu chuỗi có thể chuyển thành int
+            {
+                return result; // Trả về giá trị int
+            }
+            else
+            {
+                return null; // Nếu không thể chuyển thành int, trả về null
+            }
+        }
+
 
     }
 }

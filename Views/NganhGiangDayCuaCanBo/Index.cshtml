@@ -170,12 +170,12 @@
         <table class="table" id="ntable" style="background-color:rgba(200,226,177,0.85);">
             <thead>
                 <tr style="background-color: olivedrab">
-                    <th>LÀ NGÀNH CHÍNH</th>
-                    <th>ĐƠN VỊ THỈNH GIẢNG </th>
-                    <th>CÁN BỘ </th>
-                    <th>NGÀNH</th>
-                    <th>TRÌNH ĐỘ ĐÀO TẠO </th>
-                    <th>CHỨC NĂNG</th>
+                    <th style="text-align:center" nowrap>LÀ NGÀNH CHÍNH</th>
+                    <th style="text-align:center" nowrap>ĐƠN VỊ THỈNH GIẢNG </th>
+                    <th style="text-align:center" nowrap>CÁN BỘ </th>
+                    <th style="text-align:center" nowrap>NGÀNH</th>
+                    <th style="text-align:center" nowrap>TRÌNH ĐỘ ĐÀO TẠO </th>
+                    <th style="text-align:center" nowrap>CHỨC NĂNG</th>
                 </tr>
             </thead>
             <tbody>
@@ -281,7 +281,7 @@
 
                          {
                             className: 'button_a_function',
-                            text: 'Import Excel',
+                            text: 'Nhập Excel',
                             action: function (e, dt, node, config) {
                                 import_excel((json) => {
                                     let data = JSON.parse(json);

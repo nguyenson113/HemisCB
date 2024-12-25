@@ -9,7 +9,7 @@ public partial class TbCanBoHuongDanThanhCongSinhVien
 {
     [DisplayName("Mã cán bộ hướng dẫn")]
     public int IdCanBoHuongDanThanhCongSinhVien { get; set; }
-
+    [DisplayName("Cán bộ ")]
     public int? IdCanBo { get; set; }
     [DisplayName("Mã sinh viên ")]
     public int? IdSinhVien { get; set; }

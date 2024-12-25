@@ -9,10 +9,10 @@ namespace HemisCB.Models;
 
 public partial class TbTrinhDoTiengDanToc
 {
-    [Display(Name = "ID Trình độ tiếng dân tộc")]
+    [Display(Name = "Mã hồ sơ trình độ tiếng dân tộc")]
 
     public int IdTrinhDoTiengDanToc { get; set; }
-    [Display(Name = "ID Cán bộ")]
+    [Display(Name = " Cán bộ")]
     public int? IdCanBo { get; set; }
     [Display(Name = "Tiếng dân tộc")]
     public int? IdTiengDanToc { get; set; }

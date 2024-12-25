@@ -8,7 +8,7 @@ namespace HemisCB.Models;
 
 public partial class TbKyLuatCanBo
 {
-    [Display(Name = "ID kỷ luật")]
+    [Display(Name = "Mã hồ sơ kỷ luật")]
     public int IdKyLuatCanBo { get; set; }
 
     [Display(Name = "Họ và tên cán bộ")]
@@ -40,7 +40,7 @@ public partial class TbKyLuatCanBo
     [Display(Name = "Họ và Tên")]
     public virtual TbCanBo? IdCanBoNavigation { get; set; }
 
-    [Display(Name = "Cấp QĐ")]
+    [Display(Name = "Cấp quyết định")]
     public virtual DmCapKhenThuong? IdCapQuyetDinhNavigation { get; set; }
 
     [Display(Name = "Hình thức kỷ luật")]

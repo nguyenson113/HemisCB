@@ -1,19 +1,21 @@
-﻿@model IEnumerable<HemisCB.Models.TbHoiThaoHoiNghi>
-
+﻿@model IEnumerable<HemisCB.Models.TbCanBo>
 @using Newtonsoft.Json
 @{
-    ViewData["Title"] = "Statistics";
+    ViewData["Title"] = "Thống kê - Cán bộ ";
     string labelJson = "", dataJson = "";
     Dictionary<string, int> Times_Thu = new Dictionary<string, int>();
+    // ======================================================== Biểu đồ 1 ===============================================================
     foreach (var item in Model)
     {
-        string nguon = "";
-        if (item.IdNguonKinhPhiHoiThao.HasValue)
+        //Biểu đồ 1
+        string hinhthuc = "";
+        if (item.IdChucDanhGiangVien.HasValue)
         {
-            nguon = item.IdNguonKinhPhiHoiThaoNavigation.NguonKinhPhi;
+            //Lấy dữ liệu từ biến để vẽ biểu đồ 1
+            hinhthuc = item.IdChucDanhGiangVienNavigation.ChucDanhGiangVien;
         }
-        if (Times_Thu.ContainsKey(nguon)) ++Times_Thu[nguon];
-        else Times_Thu[nguon] = 1;
+        if (Times_Thu.ContainsKey(hinhthuc)) ++Times_Thu[hinhthuc];
+        else Times_Thu[hinhthuc] = 1;
     }
     List<string> label = new List<string>();
     List<int> data = new List<int>();
@@ -24,13 +26,106 @@
     }
     labelJson = JsonConvert.SerializeObject(label);
     dataJson = JsonConvert.SerializeObject(data);
+
+    string labelJson1 = "", dataJson1 = "";
+    Dictionary<string, int> Times_Thu1 = new Dictionary<string, int>();
+    // ================================================================ BIEU DO 2 =================================================
+    foreach (var item in Model)
+    {
+        //Biểu đồ 2
+        string nuoc = "";
+        if (item.IdChucDanhNgheNghiep.HasValue)
+        {
+            //Lấy dữ liệu từ biến để vẽ biểu đồ 2
+            nuoc = item.IdChucDanhNgheNghiepNavigation.ChucDanhNgheNghiep;
+        }
+        if (Times_Thu1.ContainsKey(nuoc)) ++Times_Thu1[nuoc];
+        else Times_Thu1[nuoc] = 1;
+    }
+    List<string> label1 = new List<string>();
+    List<int> data1 = new List<int>();
+    foreach (var it in Times_Thu1)
+    {
+        label1.Add(it.Key);
+        data1.Add(it.Value);
+    }
+    labelJson1 = JsonConvert.SerializeObject(label1);
+    dataJson1 = JsonConvert.SerializeObject(data1);
+
+    string labelJson2 = "", dataJson2 = "";
+    Dictionary<string, int> Times_Thu2 = new Dictionary<string, int>();
+    // ===================================================== BIEU DO 3 ================================================
+    foreach (var item in Model)
+    {
+        string tinhtrang = "";
+        if (item.IdChucDanhNghienCuuKhoaHoc.HasValue)
+        {
+            //Dữ liệu biểu đồ 1
+            tinhtrang = item.IdChucDanhNghienCuuKhoaHocNavigation.ChucDanhNghienCuuKhoaHoc;
+        }
+        if (Times_Thu2.ContainsKey(tinhtrang)) ++Times_Thu2[tinhtrang];
+        else Times_Thu2[tinhtrang] = 1;
+    }
+    List<string> label2 = new List<string>();
+    List<int> data2 = new List<int>();
+    foreach (var it in Times_Thu2)
+    {
+        label2.Add(it.Key);
+        data2.Add(it.Value);
+    }
+    labelJson2 = JsonConvert.SerializeObject(label2);
+    dataJson2 = JsonConvert.SerializeObject(data2);
+
+    string labelJson3 = "", dataJson3 = "";
+    Dictionary<string, int> Times_Thu3 = new Dictionary<string, int>();
+
+    // =========================================================== BIEU DO 4 =======================================================
+    foreach (var item in Model)
+    {
+        string nguon = "";
+        if (item.IdChucVuCongTac.HasValue)
+        {
+            //Dữ liệu biểu đồ 2
+            nguon = item.IdChucVuCongTacNavigation.ChucVu;
+        }
+        if (Times_Thu3.ContainsKey(nguon)) ++Times_Thu3[nguon];
+        else Times_Thu3[nguon] = 1;
+    }
+    List<string> label3 = new List<string>();
+    List<int> data3 = new List<int>();
+    foreach (var it in Times_Thu3)
+    {
+        label3.Add(it.Key);
+        data3.Add(it.Value);
+    }
+    labelJson3 = JsonConvert.SerializeObject(label3);
+    dataJson3 = JsonConvert.SerializeObject(data3);
+    // ================================================================ BIEU DO 5  =================================================
+
+
 }
+
+
+
 <head>
     <meta charset="utf-8">
     <title>Visualize Data Beautifully Using JS Charts</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        .popup {
+            margin-bottom: 100px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
 
@@ -54,14 +149,14 @@
                 labels: labels,
                 datasets: [{
                     data: data,
-                        backgroundColor: ['rgba(33, 150, 243, 0.8)', 'rgba(56, 142, 60, 0.8)', 'rgba(253, 216, 53, 0.8)', 'rgba(255, 87, 34, 0.8)', 'rgba(103, 58, 183, 0.8)', 'rgba(0, 188, 212, 0.8)', 'rgba(255, 64, 129, 0.8)', 'rgba(158, 158, 158, 0.8)', 'rgba(245, 34, 45, 0.8)', 'rgba(0, 150, 136, 0.8)', 'rgba(121, 85, 72, 0.8)', 'rgba(253, 216, 53, 0.8)', 'rgba(21, 101, 192, 0.8)', 'rgba(0, 105, 92, 0.8)', 'rgba(96, 125, 139, 0.8)'
-                        ], borderWidth: 1
+                    backgroundColor: ['rgba(33, 150, 243, 0.8)', 'rgba(56, 142, 60, 0.8)', 'rgba(253, 216, 53, 0.8)', 'rgba(255, 87, 34, 0.8)', 'rgba(103, 58, 183, 0.8)', 'rgba(0, 188, 212, 0.8)', 'rgba(255, 64, 129, 0.8)', 'rgba(158, 158, 158, 0.8)', 'rgba(245, 34, 45, 0.8)', 'rgba(0, 150, 136, 0.8)', 'rgba(121, 85, 72, 0.8)', 'rgba(253, 216, 53, 0.8)', 'rgba(21, 101, 192, 0.8)', 'rgba(0, 105, 92, 0.8)', 'rgba(96, 125, 139, 0.8)'
+                    ], borderWidth: 1
                 }]
             },
             options: {
                 title: {
                     display: true,
-                    text: 'CƠ CẤU HỘI THẢO HỘI NGHỊ THEO NGUỒN NGÂN SÁCH',
+                    text: 'CƠ CẤU CHỨC VỤ CÔNG TÁC CỦA CÁN BỘ  ', //BIỂU ĐỒ TRÒN 1
                     fontSize: 25
                 },
                 maintainAspectRatio: false,// Để thu phóng tự do
@@ -87,25 +182,35 @@
             <canvas id="myChart2"></canvas>
         </div>
     </div>
+    <div class="popup">
+        <div class="popup" style="margin-bottom:100px">
+            <canvas id="myChart3"></canvas>
+        </div>
+    </div>
+    <div class="popup" style="margin-bottom:100px; width: 100%">
+        <div class="popup">
+            <canvas id="myChart4"></canvas>
+        </div>
+    </div>
 
     <script>
-        let myChart = document.getElementById('myChart2').getContext('2d');
+        let myChart2 = document.getElementById('myChart2').getContext('2d');
         // Global Options
         Chart.defaults.global.defaultFontFamily = 'Lato';
         Chart.defaults.global.defaultFontSize = 18;
         Chart.defaults.global.defaultFontColor = '#777';
 
-        let massPopChart = new Chart(myChart, {
+        let massPopChart2 = new Chart(myChart2, {
             type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
             data: {
                 labels: @Html.Raw(labelJson),
                 datasets: [{
-                    label: 'Số hội thảo, hội nghị',
+                    label: 'Chức vụ công tác ',
                     data: @Html.Raw(dataJson),
-                        backgroundColor: (function () {
-                            const dataArray = @Html.Raw(dataJson); // Chèn dữ liệu JavaScript từ Razor
-                            return new Array(dataArray.length).fill('rgb(30,41,107)'); // Tạo mảng màu xanh với chiều dài tương ứng
-                        })(),
+                    backgroundColor: (function () {
+                        const dataArray = @Html.Raw(dataJson); // Chèn dữ liệu JavaScript từ Razor
+                        return new Array(dataArray.length).fill('rgb(30,41,107)'); // Tạo mảng màu xanh với chiều dài tương ứng
+                    })(),
                     borderWidth: 1,
                     borderColor: '#777',
                     hoverBorderWidth: 3,
@@ -145,7 +250,7 @@
                 },
                 title: {
                     display: true,
-                    text: 'THỐNG KÊ HỘI THẢO HỘI NGHỊ THEO NGUỒN NGÂN SÁCH',
+                    text: 'THỐNG KÊ CHỨC VỤ CÔNG TÁC CỦA CÁN BỘ ', //BIỂU ĐỒ CỘT 1
                     fontSize: 25
                 },
                 legend: {
@@ -169,5 +274,413 @@
             }
         });
     </script>
+    <script>
+        // Dữ liệu từ C#
+        const labels1 = @Html.Raw(labelJson1); //
+        const data1 = @Html.Raw(dataJson1);    //
+
+        // Lấy phần tử canvas
+        const ctx1 = document.getElementById('myChart3').getContext('2d');
+
+        // Cấu hình biểu đồ
+        const config1 = {
+            type: 'pie',
+            data: {
+                labels: labels1,
+                datasets: [{
+                    data: data1,
+                    backgroundColor: ['rgba(33, 150, 243, 0.8)', 'rgba(56, 142, 60, 0.8)', 'rgba(253, 216, 53, 0.8)', 'rgba(255, 87, 34, 0.8)', 'rgba(103, 58, 183, 0.8)', 'rgba(0, 188, 212, 0.8)', 'rgba(255, 64, 129, 0.8)', 'rgba(158, 158, 158, 0.8)', 'rgba(245, 34, 45, 0.8)', 'rgba(0, 150, 136, 0.8)', 'rgba(121, 85, 72, 0.8)', 'rgba(253, 216, 53, 0.8)', 'rgba(21, 101, 192, 0.8)', 'rgba(0, 105, 92, 0.8)', 'rgba(96, 125, 139, 0.8)'
+                    ], borderWidth: 1
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'CƠ CẤU CHỨC DANH NGHỀ NGHIỆP CỦA CÁN BỘ ',  // BIỂU ĐỒ TRÒN 2
+                    fontSize: 25
+                },
+                maintainAspectRatio: false,// Để thu phóng tự do
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Biểu đồ phân loại theo ca'
+                    }
+                }
+            }
+        };
+
+        // Vẽ biểu đồ
+        new Chart(ctx1, config1);
+
+    </script>
+
+
+    <script>
+        let myChart4 = document.getElementById('myChart4').getContext('2d');
+        // Global Options
+        Chart.defaults.global.defaultFontFamily = 'Lato';
+        Chart.defaults.global.defaultFontSize = 18;
+        Chart.defaults.global.defaultFontColor = '#777';
+
+        let massPopChart4 = new Chart(myChart4, {
+            type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            data: {
+                labels: @Html.Raw(labelJson1),
+                datasets: [{
+                    label: 'Chức danh nghề nghiệp',
+                    data: @Html.Raw(dataJson1),
+                    backgroundColor: (function () {
+                        const dataArray = @Html.Raw(dataJson1); // Chèn dữ liệu JavaScript từ Razor
+                        return new Array(dataArray.length).fill('rgb(30,41,107)'); // Tạo mảng màu xanh với chiều dài tương ứng
+                    })(),
+                    borderWidth: 1,
+                    borderColor: '#777',
+                    hoverBorderWidth: 3,
+                    hoverBorderColor: '#000',
+                    barThickness: 10,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            autoSkip: false, // Hiển thị đầy đủ các nhãn
+                            fontSize: 16, // Giảm kích thước font chữ
+                            callback: function (value) {
+                                // Chia nhãn thành các dòng dựa trên độ dài
+                                let words = value.split(' '); // Tách nhãn thành mảng từ
+                                let lines = [];
+                                let line = '';
+                                words.forEach(word => {
+                                    if ((line + word).length > 25) { // Đặt giới hạn mỗi dòng là 15 ký tự
+                                        lines.push(line.trim());
+                                        line = '';
+                                    }
+                                    line += word + ' ';
+                                });
+                                if (line) lines.push(line.trim()); // Thêm dòng còn lại
+                                return lines; // Trả về mảng dòng
+                            }
+                        }
+                    }],
+                },
+                title: {
+                    display: true,
+                    text: 'THỐNG KÊ CHỨC DANH NGHỀ NGHIỆP CỦA CÁN BỘ ',//BIỂU ĐỒ CỘT 2
+                    fontSize: 25
+                },
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 0,
+                        bottom: 0,
+                        top: 0
+                    }
+                },
+                tooltips: {
+                    enabled: true
+                }
+            }
+        });
+    </script>
+
+
+
+
+    <div class="popup">
+        <div class="popup" style="margin-bottom:100px">
+            <canvas id="myChart5"></canvas>
+        </div>
+    </div>
+    <script>
+        // Dữ liệu từ C#
+        const labels5 = @Html.Raw(labelJson2); //
+        const data5 = @Html.Raw(dataJson2);    //
+
+        // Lấy phần tử canvas
+        const ctx5 = document.getElementById('myChart5').getContext('2d');
+
+        // Cấu hình biểu đồ
+        const config5 = {
+            type: 'pie',
+            data: {
+                labels: labels5,
+                datasets: [{
+                    data: data5,
+                    backgroundColor: ['rgba(33, 150, 243, 0.8)', 'rgba(56, 142, 60, 0.8)', 'rgba(253, 216, 53, 0.8)', 'rgba(255, 87, 34, 0.8)', 'rgba(103, 58, 183, 0.8)', 'rgba(0, 188, 212, 0.8)', 'rgba(255, 64, 129, 0.8)', 'rgba(158, 158, 158, 0.8)', 'rgba(245, 34, 45, 0.8)', 'rgba(0, 150, 136, 0.8)', 'rgba(121, 85, 72, 0.8)', 'rgba(253, 216, 53, 0.8)', 'rgba(21, 101, 192, 0.8)', 'rgba(0, 105, 92, 0.8)', 'rgba(96, 125, 139, 0.8)'
+                    ], borderWidth: 1
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'CƠ CẤU CHỨC DANH NGHIÊN CỨU CỦA CÁN BỘ  ', //BIỀU ĐỒ TRÒN 3
+                    fontSize: 25
+                },
+                maintainAspectRatio: false,// Để thu phóng tự do
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Biểu đồ phân loại theo ca'
+                    }
+                }
+            }
+        };
+
+        // Vẽ biểu đồ
+        new Chart(ctx5, config5);
+
+    </script>
+    <div class="popup" style="margin-bottom:100px; width: 100%">
+        <div class="popup">
+            <canvas id="myChart6"></canvas>
+        </div>
+    </div>
+    <div class="popup">
+        <div class="popup" style="margin-bottom:100px">
+            <canvas id="myChart7"></canvas>
+        </div>
+    </div>
+    <div class="popup" style="margin-bottom:100px; width: 100%">
+        <div class="popup">
+            <canvas id="myChart8"></canvas>
+        </div>
+    </div>
+    <script>
+        let myChart6 = document.getElementById('myChart6').getContext('2d');
+        // Global Options
+        Chart.defaults.global.defaultFontFamily = 'Lato';
+        Chart.defaults.global.defaultFontSize = 18;
+        Chart.defaults.global.defaultFontColor = '#777';
+
+        let massPopChart6 = new Chart(myChart6, {
+            type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            data: {
+                labels: @Html.Raw(labelJson2),
+                datasets: [{
+                    label: 'Chức danh nghiên cứu',
+                    data: @Html.Raw(dataJson2),
+                    backgroundColor: (function () {
+                        const dataArray = @Html.Raw(dataJson2); // Chèn dữ liệu JavaScript từ Razor
+                        return new Array(dataArray.length).fill('rgb(30,41,107)'); // Tạo mảng màu xanh với chiều dài tương ứng
+                    })(),
+                    borderWidth: 1,
+                    borderColor: '#777',
+                    hoverBorderWidth: 3,
+                    hoverBorderColor: '#000',
+                    barThickness: 10,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            autoSkip: false, // Hiển thị đầy đủ các nhãn
+                            fontSize: 16, // Giảm kích thước font chữ
+                            callback: function (value) {
+                                // Chia nhãn thành các dòng dựa trên độ dài
+                                let words = value.split(' '); // Tách nhãn thành mảng từ
+                                let lines = [];
+                                let line = '';
+                                words.forEach(word => {
+                                    if ((line + word).length > 25) { // Đặt giới hạn mỗi dòng là 15 ký tự
+                                        lines.push(line.trim());
+                                        line = '';
+                                    }
+                                    line += word + ' ';
+                                });
+                                if (line) lines.push(line.trim()); // Thêm dòng còn lại
+                                return lines; // Trả về mảng dòng
+                            }
+                        }
+                    }],
+                },
+                title: {
+                    display: true,
+                    text: 'THỐNG KÊ CHỨC DANH NGHIÊN CỨU CỦA CÁN BỘ  ', //BIỂU ĐỒ 3 CỘT
+                    fontSize: 25
+                },
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 0,
+                        bottom: 0,
+                        top: 0
+                    }
+                },
+                tooltips: {
+                    enabled: true
+                }
+            }
+        });
+    </script>
+
+
+    <script>
+        // Dữ liệu từ C#
+        const labels7 = @Html.Raw(labelJson3); //
+        const data7 = @Html.Raw(dataJson3);    //
+
+        // Lấy phần tử canvas
+        const ctx7 = document.getElementById('myChart7').getContext('2d');
+
+        // Cấu hình biểu đồ
+        const config7 = {
+            type: 'pie',
+            data: {
+                labels: labels7,
+                datasets: [{
+                    data: data7,
+                    backgroundColor: ['rgba(33, 150, 243, 0.8)', 'rgba(56, 142, 60, 0.8)', 'rgba(253, 216, 53, 0.8)', 'rgba(255, 87, 34, 0.8)', 'rgba(103, 58, 183, 0.8)', 'rgba(0, 188, 212, 0.8)', 'rgba(255, 64, 129, 0.8)', 'rgba(158, 158, 158, 0.8)', 'rgba(245, 34, 45, 0.8)', 'rgba(0, 150, 136, 0.8)', 'rgba(121, 85, 72, 0.8)', 'rgba(253, 216, 53, 0.8)', 'rgba(21, 101, 192, 0.8)', 'rgba(0, 105, 92, 0.8)', 'rgba(96, 125, 139, 0.8)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'CƠ CẤU CHỨC VỤ CÔNG TÁC CỦA CÁN BỘ', //BIỂU ĐỒ 4 PHẦN BIỂU ĐỒ TRÒN
+                    fontSize: 25
+                },
+                maintainAspectRatio: false,// Để thu phóng tự do
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Biểu đồ phân loại theo ca'
+                    }
+                }
+            }
+        };
+
+        // Vẽ biểu đồ
+        new Chart(ctx7, config7);
+
+    </script>
+
+
+    <script>
+        let myChart8 = document.getElementById('myChart8').getContext('2d');
+        // Global Options
+        Chart.defaults.global.defaultFontFamily = 'Lato';
+        Chart.defaults.global.defaultFontSize = 18;
+        Chart.defaults.global.defaultFontColor = '#777';
+
+        let massPopChart8 = new Chart(myChart8, {
+            type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            data: {
+                labels: @Html.Raw(labelJson3),
+                datasets: [{
+                    label: 'Quốc gia',
+                    data: @Html.Raw(dataJson3),
+                    backgroundColor: (function () {
+                        const dataArray = @Html.Raw(dataJson3); // Chèn dữ liệu JavaScript từ Razor
+                        return new Array(dataArray.length).fill('rgb(30,41,107)'); // Tạo mảng màu xanh với chiều dài tương ứng
+                    })(),
+                    borderWidth: 1,
+                    borderColor: '#777',
+                    hoverBorderWidth: 3,
+                    hoverBorderColor: '#000',
+                    barThickness: 10,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            autoSkip: false, // Hiển thị đầy đủ các nhãn
+                            fontSize: 16, // Giảm kích thước font chữ
+                            callback: function (value) {
+                                // Chia nhãn thành các dòng dựa trên độ dài
+                                let words = value.split(' '); // Tách nhãn thành mảng từ
+                                let lines = [];
+                                let line = '';
+                                words.forEach(word => {
+                                    if ((line + word).length > 25) { // Đặt giới hạn mỗi dòng là 15 ký tự
+                                        lines.push(line.trim());
+                                        line = '';
+                                    }
+                                    line += word + ' ';
+                                });
+                                if (line) lines.push(line.trim()); // Thêm dòng còn lại
+                                return lines; // Trả về mảng dòng
+                            }
+                        }
+                    }],
+                },
+                title: {
+                    display: true,
+                    text: 'THỐNG KÊ CHỨC VỤ CÔNG TÁC CỦA CÁN BỘ ',  // BIỂU ĐỒ 4
+                    fontSize: 25
+                },
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 0,
+                        bottom: 0,
+                        top: 0
+                    }
+                },
+                tooltips: {
+                    enabled: true
+                }
+            }
+        });
+    </script>
+
+
+
+
+
 
 </body>

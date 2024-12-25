@@ -8,9 +8,9 @@ namespace HemisCB.Models;
 
 public partial class TbQuaTrinhCongTacCuaCanBo
 {
-    [Display(Name = "ID Quá trình công tác của cán bộ")]
+    [Display(Name = "Mã hồ sơ quá trình công tác của cán bộ")]
     public int IdQuaTrinhCongTacCuaCanBo { get; set; }
-    [Display(Name = "ID Cán bộ")]
+    [Display(Name = " Cán bộ")]
     public int? IdCanBo { get; set; }
 
     [Display(Name = "Từ tháng năm")]

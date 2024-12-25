@@ -172,7 +172,7 @@
                     <th style="text-align:center" nowrap>TỪ THÁNG NĂM </th>
                   
                     <th style="text-align:center" nowrap>ĐƠN VỊ CÔNG TÁC</th>
-                    <th style="text-align:center" nowrap>ID Cán bộ</th>
+                    <th style="text-align:center" nowrap>CÁN BỘ</th>
                     <th style="text-align:center" nowrap>CHỨC DANH GIẢNG VIÊN</th>
                     <th style="text-align:center" nowrap>CHỨC VỤ </th>
 
@@ -291,17 +291,17 @@
                                     console.log(_json);
                                     $.ajax({
                                         method: "post",
-                                        url: "/HopDong/Excel",
+                                        url: "/QuaTrinhCongTacCuaCanBo/Receive",
                                         data: {
                                             "json": _json,
                                         },
                                         success: function (response) {
                                             // Code to execute if the request succeeds
-                                            console.log('Success:', response.value['msg']);
+                                            alert('Success: Bạn đã nhập file thành công!!!', response.value['msg']);
                                         },
                                         error: function (xhr, status, error) {
                                             // Code to execute if the request fails
-                                            alert('Error:' + xhr.responseJSON.value['msg']);
+                                            alert('Error: Bạn chưa  nhập file thành công!!!' + xhr.responseJSON.value['msg']);
                                         }
                                     });
                                 });

@@ -4,67 +4,182 @@
     ViewData["Title"] = "Người";
 }
 
-@section Heads{
+@section Heads {
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width:device-width, initial-scale=1" />
+
     <link href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.1.7/r-3.0.3/datatables.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pridi:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        a:visited, a:link, a:hover {
-            text-decoration: none;
-            color: inherit;
+        body {
+            background-image: url(https://upload.wikimedia.org/wikipedia/vi/8/85/Logo_hoc_vien_ANND.png); /*ẢNh nền */
+            background-position: center; /*Chỉnh ảnh nằm giữa */
+            background-repeat: no-repeat; /*Không lặp lại nền*/
+            background-color: rgba(230,241,216,0.8); /*Chỉnh màu nền */
         }
-        #views {
-            border-collapse: collapse;
-            border: 2px solid #ddd;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+
+        .background-image {
+            opacity: 0.6; /*Làm mờ ảnh*/
         }
-        #views th, td{
-            border-bottom: 2px solid #ddd;
+        /*Định dạng cho Table */
+        table {
+            width: 100%; /*Căn chỉnh bảng hiển thị 100% với màn hình hiển thị*/
+            border-collapse: collapse; /*Thu gọn viền cho table*/
+            margin-top: 20px; /*Căn chỉnh lề trên */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.85); /*hiệu ứng đổ bóng cho bảng */
         }
-        .dtr-modal table {
-            width: 100%;
+
+            /*Định dạng cho table, tiêu đề table, nội dung các bản ghi hiển thị trong table */
+            table th, table td {
+                padding: 12px; /*Khoảng trống cho nội dung*/
+                text-align: center; /*Căn giữa cho nội dung*/
+                border-bottom: 5px solid #ddd; /*Căn chỉnh đường viền, kiểu viền*/
+                font-family: "Pridi", serif; /*Phông chữ*/
+                font-weight: 600; /*Độ dày chữ*/
+                font-style: normal; /*Kiểu chữ */
+            }
+
+            /*Định dạng chung cho table và tiêu đề của table*/
+            table th {
+                background-color: rgba(200,226,177,0.85); /*Màu nền*/
+                color: black; /*Màu chữ*/
+                font-size: 16px; /*Cỡ chữ */
+                font-family: "Pridi", serif; /*Phông chữ*/
+                font-weight: 600; /*Độ dày chữ*/
+                font-style: normal; /*Kiểu chữ */
+            }
+
+        /*Định dạng khối nổi lên khi di chuyển chuột vào*/
+        .value:hover {
+            background-color: rgba(200,226,177,0.85); /*Chỉnh màu cho nền khi nổi lên trùng với màu nền */
+            transform: scale(1.1); /*Chỉnh trường thông tin nổi lên trước và to hơn so với khi chưa chạm vào*/
+            transition: transform 1s ease; /*Thời gian chuyển cảnh là 1s */
+        }
+
+        /*Định dạng nút sửa + xóa*/
+        /* NÚT CẬP NHẬT, XÓA ,THÊM VÀ NÚT CHỨC NĂNG MƠR RỘNG */
+        .button_a_edit, .button_a_del, .button_a_add, .button_a_function {
+            border-style: solid; /*định dạng kiểu viền của nút  */
+            font-family: "Pridi", serif; /*Phông chữ */
+            font-weight: 600; /*Độ dày của chữ*/
+            font-style: normal; /*Kiểu chữ*/
+            border-width: 0.5px; /*định dạng độ rộng của đuường viền nút */
+            font-size: 14px; /* định dạng cỡ chữ */
+            display: inline-block; /*kiểu hiển thị */
+            justify-content: center; /*Căn giữa nút theo chiều ngang*/
+            align-items: center; /*Căn giữa nút theo chiều dọc*/
+            padding: 5px 15px; /*căn chỉnh lề của nút*/
+            text-decoration: none; /* trang trí nội dung của nút nếu mà không có thì cứ mỗi khi đưa chuột vào thì link sẽ hiện lên màu xanh dương */
+            color: black; /*màu chữ */
+            border-radius: 5px; /*bo tròn của đường viền nút */
+            text-align: center; /*chỉnh chữ ở giữa nút */
+            transition: transform 0.3s ease, background-color 0.3s ease; /* Hiệu ứng chuyển màu khi di chuột */
+            margin: 2px; /* Khoảng cách giữa các nút */
+        }
+
+
+
+        /* màu mặc định của 2 nút trùng màu khi hover vào dòng */
+        .button_a_edit, .button_a_del {
+            background-color: #D3D3D3; /* Trùng màu bảng */
+        }
+
+            /* Khi di chuột vào nút "SỬA" */
+            .button_a_edit:hover {
+                background-color: orange; /* nền màu cam khi di chuyển chuột vào nút */
+                color: white; /*khi di chuyển chuột vào nút thì nền chuyển cam và chữ hiển thị màu trắng */
+            }
+
+            /* Khi di chuột vào nút "XÓA" */
+            .button_a_del:hover {
+                background-color: red; /* nền màu đỏ khi di chuyển chuột vào nút */
+                color: white; /*khi di chuyển chuột vào nút thì nền chuyển đỏ và chữ hiển thị màu trắng */
+            }
+
+        /* Khi di chuột vào nút "+ THEM MOI HO SO" */
+        .button_a_add:hover {
+            background-color: forestgreen; /*Chuyển màu sang màu xanh lá khi di chuyển chuột vào*/
+            color: white; /*Chuyển màu chữ sang trắng */
+        }
+
+        /* Khi di chuột vào nút "Mở rộng chức năng" */
+        .button_a_function:hover {
+            background-color: forestgreen; /*Chuyển màu sang màu xanh lá khi di chuyển chuột vào*/
+            color: white; /*Chuyển màu chữ sang trắng */
+        }
+
+        /* Đặt kiểu bố cục cho khối chứa các nút */
+        .edit_del, .add_button {
+            width: 100%; /*Độ rộng với màn hình 100%*/
+            display: flex; /*Kiểu hiển thị nổi */
+            justify-content: center; /* Canh giữa các nút trong div theo chiều ngang  */
+            align-items: center; /* Canh giữa các nút trong div theo chiều dọc  */
+        }
+
+        /*Căn giữa cho khối contain*/
+        .contain {
+            margin-bottom: 100px;
+        }
+
+        /*Định dạng tiêu đề h1*/
+        h1 {
+            font-family: "Pridi", serif; /*Phông chữ */
+            font-weight: 700; /*Độ dày chữ*/
+            font-style: normal; /*Kiểu chữ*/
+            text-align: center; /*Căn giữa nội dung*/
+            color: forestgreen;
         }
     </style>
 }
 
-<h1 class="text-center">Danh sách người trong cơ sở dữ liệu</h1>
+<h1 class="text-center">DANH SÁCH NGƯỜI CÓ TRONG CƠ SỞ DỮ LIỆU </h1>
 
 <table id="views" class="table table-striped table-light nowrap">
     <thead class="">
         <tr>
             <th class="_nonorder"></th>
-            <th>
+            <th style="text-align:center" nowrap>
                 STT
             </th>
-            <th>
+            <th style="text-align:center" nowrap>
                @*  @Html.DisplayNameFor(model => model.name) *@
             </th>
-            <th>
+            <th style="text-align:center" nowrap>
                GIỚI TÍNH 
             </th>
-            <th>
+            <th style="text-align:center" nowrap>
                 NGÀY SINH 
             </th>
-            <th>
+            <th style="text-align:center" nowrap>
               QUỐC TỊCH 
             </th>
-            <th>
+            <th style="text-align:center" nowrap>
                DÂN TỘC 
             </th>
-            <th>
+            <th style="text-align:center" nowrap>
                TÔN GIÁO 
             </th>
-            <th>
+            <th style="text-align:center" nowrap>
                 CHỨC DANH KHOA HỌC 
             </th>
-            <th>
+            <th style="text-align:center" nowrap>
                SỐ CCCD 
             </th>
-            <th>
+            <th style="text-align:center" nowrap>
                 NGÀY CẤP CCCD 
             </th>
-            <th>
+            <th style="text-align:center" nowrap>
                 NƠI CẤP CCCD 
             </th>
-            <th>
+            <th style="text-align:center" nowrap>
                 NGÀY VÀO ĐOÀN 
             </th>
             <th>
@@ -106,7 +221,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.IdTrinhDoTinHocNavigation)
             </th>
-            <th class="_nonorder">Hành động</th>
+            <th class="_nonorder" style="text-align:center" nowrap>CHỨC NĂNG </th>
         </tr>
     </thead>
     <tbody>
@@ -258,22 +373,52 @@
                 topStart: {
                     buttons: [//extension buttons: https://datatables.net/extensions/buttons/config
                         {
-                            className: 'btn btn-primary', //Thêm class cho button
+                            className: 'button_a_function', //Thêm class cho button
                             text: 'Thêm người',
                             action: function (e, dt, node, config) {//Hành động của button
                                 window.location.href = '@Url.Action("Create")';
                             }
                         },
-                        {
-                            extend: "excel",
-                            className: 'btn btn-primary', //Thêm class cho button
-                            text: 'Xuất excel',
-                            exportOptions: {
-                                columns: function(idx, data, node) {
-                                    if (node.classList.contains("_nonorder")) return false;
-                                    return true;
-                                }
+                         {
+                            className: 'button_a_function', //Định dạng CSS cho Collection
+                            extend: 'collection', //Để sổ ra các chức năng khác
+                            text: 'Mở rộng chức năng',
+                            buttons: ['print', 'excel', 'pdf', 'copy'],
+                        },
 
+                         {
+                            className: 'button_a_function',
+                            text: 'Nhập Excel',
+                            action: function (e, dt, node, config) {
+                                import_excel((json) => {
+                                    let data = JSON.parse(json);
+                                    let list = data['Sheet1'];
+                                    let _ExcelNoSheet = [];
+                                    for (let i = 0; i < list.length; ++i) {
+                                        let arr = [];
+                                        for (const [key, value] of Object.entries(list[i])) {
+                                            arr.push(value.toString());
+                                        }
+                                        _ExcelNoSheet.push(arr);
+                                    }
+                                    let _json = JSON.stringify(_ExcelNoSheet, null, 4);
+                                    console.log(_json);
+                                    $.ajax({
+                                        method: "post",
+                                        url: "/CanBo/Excel",
+                                        data: {
+                                            "json": _json,
+                                        },
+                                        success: function (response) {
+                                            // Code to execute if the request succeeds
+                                            console.log('Success:', response.value['msg']);
+                                        },
+                                        error: function (xhr, status, error) {
+                                            // Code to execute if the request fails
+                                            alert('Error:' + xhr.responseJSON.value['msg']);
+                                        }
+                                    });
+                                });
                             }
                         }
                     ]

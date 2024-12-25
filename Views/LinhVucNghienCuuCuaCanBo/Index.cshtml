@@ -172,11 +172,11 @@
         <table class="table" id="ntable" style="background-color:rgba(200,226,177,0.85);">
             <thead>
                 <tr style="background-color: olivedrab">
-                    <th class="text-center">LÀ LĨNH VỰC NGHIÊN CỨU CHUYÊN SÂU </th>
-                    <th class="text-center"> SỐ NĂM NGHIÊN CỨU </th>
+                    <th class="text-center" nowrap>LÀ LĨNH VỰC NGHIÊN CỨU CHUYÊN SÂU </th>
+                    <th class="text-center" nowrap> SỐ NĂM NGHIÊN CỨU </th>
                     <th class="text-center">CÁN BỘ </th>
-                    <th class="text-center">LINH VỰC NGHIÊN CỨU </th>
-                    <th class="text-center">Hành Động</th>
+                    <th class="text-center" nowrap>LINH VỰC NGHIÊN CỨU </th>
+                    <th class="text-center">CHỨC NĂNG </th>
                 </tr>
             </thead>
             <tbody>
@@ -286,7 +286,7 @@
 
                          {
                             className: 'button_a_function',
-                            text: 'Import Excel',
+                            text: 'Nhập Excel',
                             action: function (e, dt, node, config) {
                                 import_excel((json) => {
                                     let data = JSON.parse(json);
@@ -303,13 +303,13 @@
                                     console.log(_json);
                                     $.ajax({
                                         method: "post",
-                                        url: "/LinhVucNghienCuuCuaCanBo/Excel",
+                                        url: "/LinhVucNghienCuuCuaCanBo/Receive",
                                         data: {
                                             "json": _json,
                                         },
                                         success: function (response) {
                                             // Code to execute if the request succeeds
-                                            console.log('Success:', response.value['msg']);
+                                            alert('Thông báo: Bạn đã thêm file Excel thành công !!!', response.value['msg']);
                                         },
                                         error: function (xhr, status, error) {
                                             // Code to execute if the request fails

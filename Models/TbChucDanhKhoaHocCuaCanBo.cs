@@ -10,11 +10,11 @@ namespace HemisCB.Models;
 
 public partial class TbChucDanhKhoaHocCuaCanBo
 {
-    [Display(Name = "ID chức danh khoa học của cán bộ")]
+    [Display(Name = "Mã hồ sơ chức danh khoa học của cán bộ")]
 
     public int IdChucDanhKhoaHocCuaCanBo { get; set; }
 
-    [Display(Name = "ID cán bộ")]
+    [Display(Name = "Cán bộ")]
 
     public int? IdCanBo { get; set; }
 
@@ -30,7 +30,7 @@ public partial class TbChucDanhKhoaHocCuaCanBo
     [Display(Name = "Ngày quyết định")]
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
-    public DateTime NgayQuyetDinh { get; set; }
+    public DateOnly NgayQuyetDinh { get; set; }
 
 
     public virtual TbCanBo? IdCanBoNavigation { get; set; }

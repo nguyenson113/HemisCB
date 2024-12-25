@@ -5,7 +5,7 @@
 
 
 
-    ViewData["Title"] = "Quá trình công tác của cán bộ ";
+    ViewData["Title"] = "Quá trình đào tạo của cán bộ ";
 
 
 
@@ -280,7 +280,7 @@
 
                          {
                             className: 'button_a_function',
-                            text: 'Import Excel',
+                            text: 'Nhập Excel',
                             action: function (e, dt, node, config) {
                                 import_excel((json) => {
                                     let data = JSON.parse(json);
@@ -297,13 +297,13 @@
                                     console.log(_json);
                                     $.ajax({
                                         method: "post",
-                                        url: "/QuaTrinhDaoTaoCuaCanBo/Excel",
+                                        url: "/QuaTrinhDaoTaoCuaCanBo/Receive",
                                         data: {
                                             "json": _json,
                                         },
                                         success: function (response) {
                                             // Code to execute if the request succeeds
-                                            console.log('Success:', response.value['msg']);
+                                            alert('Success:', response.value['msg']);
                                         },
                                         error: function (xhr, status, error) {
                                             // Code to execute if the request fails

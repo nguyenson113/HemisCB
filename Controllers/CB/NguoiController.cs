@@ -297,7 +297,7 @@ namespace HemisCB.Controllers.CB
                     return NotFound();
                 }
 
-                var tbNguois = await ApiServices_.GetAll<TbNguoi>("/api/Nguoi");
+                var tbNguois = await TbNguois();
                 var tbNguoi = tbNguois.FirstOrDefault(m => m.IdNguoi == id);
                 if (tbNguoi == null)
                 {

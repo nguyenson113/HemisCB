@@ -113,7 +113,7 @@
                     <div class="col-md-12">
                         <div
                     <div class="form-group">
-                <label asp-for="IdPhuCap" class="control-label">ID Phụ cấp</label>
+                <label asp-for="IdPhuCap" class="control-label">Mã hồ sơ phụ cấp</label>
                 <input asp-for="IdPhuCap" class="form-control" placeholder="Nhập ID Phụ Cấp" />
                 <span asp-validation-for="IdPhuCap" class="text-danger"></span>
             </div>
@@ -168,8 +168,9 @@
                                 <span asp-validation-for="PhuCapKhac" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="IdBacLuong" class="control-label">Bậc lương</label>
-                                <select asp-for="IdBacLuong" class="form-control" asp-items="ViewBag.IdBacLuong"></select>
+                                <label asp-for="IdBacLuong" class="control-label"></label>
+                                <input asp-for="IdBacLuong" class="form-control" />
+                                <span asp-validation-for="IdBacLuong" class="text-danger"></span>
                             </div>
 
                             <div class="form-group">

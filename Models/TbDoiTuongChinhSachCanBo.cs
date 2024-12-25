@@ -8,9 +8,9 @@ namespace HemisCB.Models;
 
 public partial class TbDoiTuongChinhSachCanBo
 {
-    [Display(Name = "ID Đối tượng chính sách cán bộ  ")]
+    [Display(Name = "Mã hồ sơ đối tượng chính sách cán bộ  ")]
     public int IdDoiTuongChinhSachCanBo { get; set; }
-    [Display(Name = "ID Cán bộ")]
+    [Display(Name = "Cán bộ")]
     public int? IdCanBo { get; set; }
     [Display(Name = " Đối tượng chính sách ")]
     public int? IdDoiTuongChinhSach { get; set; }

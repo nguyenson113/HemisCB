@@ -9,9 +9,9 @@ namespace HemisCB.Models;
 
 public partial class TbHopDong
 {
-    [Display(Name = "ID Hợp đồng")]
+    [Display(Name = "Mã hồ sơ hợp đồng")]
     public int IdHopDong { get; set; }
-    [Display(Name = "ID Cán bộ")]
+    [Display(Name = "Cán bộ")]
     public int? IdCanBo { get; set; }
     [Display(Name = "Số hợp đồng")]
     public string? SoHopDong { get; set; }

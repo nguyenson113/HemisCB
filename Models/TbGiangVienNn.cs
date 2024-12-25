@@ -9,9 +9,9 @@ namespace HemisCB.Models;
 
 public partial class TbGiangVienNn
 {
-    [Display(Name = "ID Giảng viên ngoại ngữ ")]
+    [Display(Name = "Mã hồ sơ giảng viên ngoại ngữ ")]
     public int IdGvnn { get; set; }
-    [Display(Name = "ID Cán bộ ")]
+    [Display(Name = " Cán bộ ")]
     public int? IdCanBo { get; set; }
     [Display(Name = "Cơ quan chủ quản ở nước ngoài ")]
     public string? CoQuanChuQuanOnuocNgoai { get; set; }

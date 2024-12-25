@@ -171,14 +171,14 @@
             <thead>
                 <tr style="background-color: olivedrab">
                   
-                    <th>SỐ QUYẾT ĐỊNH</th>
-                    <th>NĂM KHEN THƯỞNG </th>
-                    <th>CÁN BỘ</th>
-                    <th>CẤP KHEN THƯỞNG </th>
-                    <th>LOẠI DANH HIỆU </th>
-                    <th>PHƯƠNG THỨC KHEN THƯỞNG </th>
-                    <th>THI ĐUA GIẢI THƯỞNG</th>
-                    <th>CHỨC NĂNG</th>
+                    <th style="text-align:center" nowrap>SỐ QUYẾT ĐỊNH</th>
+                    <th style="text-align:center" nowrap>NĂM KHEN THƯỞNG </th>
+                    <th style="text-align:center" nowrap>CÁN BỘ</th>
+                    <th style="text-align:center" nowrap>CẤP KHEN THƯỞNG </th>
+                    @* <th>LOẠI DANH HIỆU </th> *@
+@*                     <th>PHƯƠNG THỨC KHEN THƯỞNG </th> *@
+                    <th style="text-align:center" nowrap>THI ĐUA GIẢI THƯỞNG</th>
+                    <th style="text-align:center" nowrap>CHỨC NĂNG</th>
                 </tr>
             </thead>
             <tbody>
@@ -196,11 +196,11 @@
                         onclick="window.location.href='@Url.Action("Details", new { id = item.IdDanhHieuThiDuaGiaiThuongKhenThuongCanBo })'">
                         
                         <td>@item.SoQuyetDinh</td>
-                        <td>@item.NamKhenThuong?.ToString("yyyy")</td>
+                        <td>@item.NamKhenThuong</td>
                         <td>@item.IdCanBoNavigation.IdNguoiNavigation.name</td>
                         <td>@item.IdCapKhenThuongNavigation?.CapKhenThuong</td>
-                        <td>@item.IdLoaiDanhHieuThiDuaGiaiThuongKhenThuongNavigation?.LoaiDanhHieuThiDuaGiaiThuongKhenThuong</td>
-                        <td>@item.IdPhuongThucKhenThuongNavigation?.PhuongThucKhenThuong</td>
+                       @*  <td>@item.IdLoaiDanhHieuThiDuaGiaiThuongKhenThuongNavigation?.LoaiDanhHieuThiDuaGiaiThuongKhenThuong</td>
+                        <td>@item.IdPhuongThucKhenThuongNavigation?.PhuongThucKhenThuong</td> *@
                         <td>@item.IdThiDuaGiaiThuongKhenThuongNavigation?.ThiDuaGiaiThuongKhenThuong</td>
                         <td>
                             <div class="edit_del">
@@ -278,7 +278,7 @@
 
                          {
                             className: 'button_a_function',
-                            text: 'Import Excel',
+                            text: 'Nhập Excel',
                             action: function (e, dt, node, config) {
                                 import_excel((json) => {
                                     let data = JSON.parse(json);
@@ -295,13 +295,13 @@
                                     console.log(_json);
                                     $.ajax({
                                         method: "post",
-                                        url: "/DanhHieuThiDuaGiaiThuongKhenThuongCanBo/Excel",
+                                        url: "/DanhHieuThiDuaGiaiThuongKhenThuongCanBo/Receive",
                                         data: {
                                             "json": _json,
                                         },
                                         success: function (response) {
                                             // Code to execute if the request succeeds
-                                            console.log('Success:', response.value['msg']);
+                                            alert('Success: Bạn đã nhập file thành công!!!', response.value['msg']);
                                         },
                                         error: function (xhr, status, error) {
                                             // Code to execute if the request fails
