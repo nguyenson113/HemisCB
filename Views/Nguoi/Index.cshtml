@@ -146,9 +146,9 @@
     <thead class="">
         <tr>
             <th class="_nonorder"></th>
-            <th style="text-align:center" nowrap>
+           @*  <th style="text-align:center" nowrap>
                 STT
-            </th>
+            </th> *@
             <th style="text-align:center" nowrap>
                @*  @Html.DisplayNameFor(model => model.name) *@
             </th>
@@ -232,9 +232,9 @@
             dem++;
             <tr>
             <td></td>
-            <td>
+           @*  <td>
                 @dem
-            </td>
+            </td> *@
             <td>
               @*   @Html.DisplayFor(modelItem => item.name) *@
             </td>
@@ -363,7 +363,7 @@
                 //Điều chỉnh phần hiển thị label của thanh tìm kiếm - Xem thêm thông tin: https://datatables.net/reference/option/language.search
                 search: "Tìm kiếm",
                 //Điều chỉnh phần hiển thị thông tin của table - Xem thêm thông tin: https://datatables.net/reference/option/language.info
-                info: "Tổng cộng _TOTAL_ bản ghi",
+                info: "Hiển thị từ hồ sơ _START_ đến _END_ trong _TOTAL_ hồ sơ",
                 zeroRecords: "Không tìm thấy bản ghi nào"
 
             },
@@ -405,13 +405,13 @@
                                     console.log(_json);
                                     $.ajax({
                                         method: "post",
-                                        url: "/CanBo/Excel",
+                                        url: "/Nguoi/Receive",
                                         data: {
                                             "json": _json,
                                         },
                                         success: function (response) {
                                             // Code to execute if the request succeeds
-                                            console.log('Success:', response.value['msg']);
+                                            console.log('Thông báo: Bạn đã nhập dữ liệu từ file Excel thành công!!!', response.value['msg']);
                                         },
                                         error: function (xhr, status, error) {
                                             // Code to execute if the request fails

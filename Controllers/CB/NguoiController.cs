@@ -14,6 +14,7 @@ using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 using HemisCB.API;
 using HemisCB.Models.DM;
+using System.Globalization;
 
 namespace HemisCB.Controllers.CB
 {
@@ -388,19 +389,75 @@ namespace HemisCB.Controllers.CB
 
 
         //Import Excel 
-        public IActionResult Excel(string json)
+        public async Task<IActionResult> Receive(string json)
         {
             try
             {
+                // Khai báo thông báo mặc định
+                var message = "Không phát hiện lỗi";
+                // Giải mã dữ liệu JSON từ client
                 List<List<string>> data = JsonConvert.DeserializeObject<List<List<string>>>(json);
-                Console.WriteLine(JsonConvert.SerializeObject(data));
-                return Accepted(Json(new { msg = JsonConvert.SerializeObject(data) }));
+
+                List<TbNguoi> lst = new List<TbNguoi>();
+
+                // Khởi tạo Random để tạo ID ngẫu nhiên
+                Random rnd = new Random();
+                List<TbNguoi> TbNguois = await ApiServices_.GetAll<TbNguoi>("/api/cb/Nguoi");
+                // Duyệt qua từng dòng dữ liệu từ Excel
+                foreach (var item in data)
+                {
+                    TbNguoi model = new TbNguoi();
+
+                    // Tạo id ngẫu nhiên và kiểm tra xem id đã tồn tại chưa
+                    int id;
+                    do
+                    {
+                        id = rnd.Next(1, 100000); // Tạo id ngẫu nhiên
+                    } while (lst.Any(t => t.IdNguoi == id) || TbNguois.Any(t => t.IdNguoi == id)); // Kiểm tra id có tồn tại không
+
+                    // Gán dữ liệu cho các thuộc tính của model
+                    model.IdNguoi = id; // Gán ID
+                    model.NgaySinh = DateOnly.ParseExact(item[1], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    model.IdGioiTinh = ParseInt(item[0]);
+                    model.IdQuocTich = ParseInt(item[2]);
+                    model.IdDanToc = ParseInt(item[3]);
+                    model.IdTonGiao = ParseInt(item[4]);
+                    model.IdChucDanhKhoaHoc = ParseInt(item[5]);
+                    model.SoCccd = item[6];
+                    // Thêm model vào danh sách
+                    lst.Add(model);
+                }
+
+                // Lưu danh sách vào cơ sở dữ liệu (giả sử có một phương thức tạo đối tượng trong DB)
+                foreach (var item in lst)
+                {
+                    await CreateTbNguoi(item); // Giả sử có phương thức tạo dữ liệu vào DB
+                }
+
+                return Accepted(Json(new { msg = message }));
             }
             catch (Exception ex)
             {
-                return BadRequest(Json(new { msg = "Lỗi nè mấy má !!!!!!!!" }));
+                // Nếu có lỗi, trả về thông báo lỗi
+                return BadRequest(Json(new { msg = ex.Message }));
             }
+        }
 
+        private async Task CreateTbNguoi(TbNguoi item)
+        {
+            await ApiServices_.Create<TbNguoi>("/api/cb/Nguoi", item);
+        }
+
+        private int? ParseInt(string v)
+        {
+            if (int.TryParse(v, out int result)) // Nếu chuỗi có thể chuyển thành int
+            {
+                return result; // Trả về giá trị int
+            }
+            else
+            {
+                return null; // Nếu không thể chuyển thành int, trả về null
+            }
         }
     }
 }

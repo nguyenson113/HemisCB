@@ -175,10 +175,10 @@
                     <th style="text-align:center" nowrap>
                         CƠ QUAN CÔNG TÁC
                     </th>
-                   
-                   
+
+
                     <th style="text-align:center" nowrap>
-                        LÀ CÔNG CHỨC
+                        @Html.DisplayNameFor(model => model.NgayChuyenTrangThai)
                     </th>
                    
                   
@@ -191,8 +191,8 @@
                     </th>
                     
                    
-                    <th style="text-align:center" nowrap>
-                        ID NGƯỜI
+                    <th>
+                     TỈNH 
                     </th>
                     
                     <th style="text-align:center" nowrap>
@@ -222,23 +222,11 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.CoQuanCongTac)
                         </td>
-                  
-                        
+
+
                         <td>
-                            @if (item.LaCongChuc.HasValue)
-                            {
-                                @if (item.LaCongChuc.Value)
-                                {
-                                    <span class="badge bg-success" style="text-align:center">Là công chức </span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-secondary" style="text-align:center">Không phải là công chức </span>
-                                }
-                            }
+                            @Html.DisplayFor(modelItem => item.NgayChuyenTrangThai)
                         </td>
-                       
-                 
                        
                        
                       
@@ -246,10 +234,10 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.IdChucVuCongTacNavigation.ChucVu)
                         </td>
-                       
-                      
+
+
                         <td>
-                            @Html.DisplayFor(modelItem => item.IdNguoiNavigation.IdNguoi)
+                            @Html.DisplayFor(modelItem => item.IdTinhNavigation.TenTinh)
                         </td>
                         
                         <td>
@@ -302,7 +290,7 @@
                 processing: "Bạn vui lòng đợi! Đang tải dữ liệu...",
                 search: "Tìm kiếm: ",
                 lengthMenu: "Số lượng hồ sơ trên 1 trang: _MENU_ ",
-                info: "Hiển thị từ hồ sơ _START_ đến _END_ của _TOTAL_ hồ sơ", // Thể hiện số bản ghi hồ sơ đang có ở trang hiện tại trên tổng số bản ghi hồ sơ
+                info: "Hiển thị từ hồ sơ _START_ đến _END_ trong _TOTAL_ hồ sơ", // Thể hiện số bản ghi hồ sơ đang có ở trang hiện tại trên tổng số bản ghi hồ sơ
                 infoEmpty: "Hiển thị 0 bản ghi trong 0 tổng cộng _MAX_ hồ sơ ", //Khi không có dữ liệu sẽ hiển thị tin nhắn
                 infoFiltered: "(Hệ thống không thể tìm thấy hồ sơ nào trong _MAX_ hồ sơ)", //Khi không có dữ liệu sẽ hiển thị tin nhắn liền sau ìnoEmpty
 
@@ -351,13 +339,13 @@
                                     console.log(_json);
                                     $.ajax({
                                         method: "post",
-                                        url: "/CanBo/Excel",
+                                        url: "/CanBo/Receive",
                                         data: {
                                             "json": _json,
                                         },
                                         success: function (response) {
                                             // Code to execute if the request succeeds
-                                            console.log('Success:', response.value['msg']);
+                                            alert('Thông báo: Bạn đã nhập dữ liệu từ file Excel thành công!!!', response.value['msg']);
                                         },
                                         error: function (xhr, status, error) {
                                             // Code to execute if the request fails
@@ -373,30 +361,7 @@
                 }
             }
 
-            /*className: 'button_a_function',
-            buttons: [
-                'copy', 'excel', 'pdf'
-            ],
-            layout: {
-                className: 'button_a_function',
-                topStart: 'buttons'
-            }*/
-
-            /*topStart: {
-                className:'button_a_function',
-                buttons: [
-                    'csv',
-                    'excel',
-                    'pdf',
-                    {
-                        extend: 'spacer',
-                        style: 'bar'
-                    },
-                    'copy',
-                    'print'
-                ]
-            }
-        }*/
+           
         });
     </script>
 
