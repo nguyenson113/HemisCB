@@ -140,7 +140,7 @@ namespace HemisCB.Controllers.CB
                 return NotFound();
             }
 
-            var tbHopDong = await ApiServices_.GetId<TbHopDong>("/api/cb/HopDong ", id ?? 0);
+            var tbHopDong = await ApiServices_.GetId<TbHopDong>("/api/cb/HopDong", id ?? 0);
             if (tbHopDong == null)
             {
                 return NotFound();
